@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚴‍♀️ Rate Your Track Bogotá</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2563eb;
+        }
+        
+        nav {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        nav button {
+            background: none;
+            border: 2px solid transparent;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        nav button:hover {
+            background-color: #f1f5f9;
+        }
+        
+        nav button.active {
+            background-color: #2563eb;
+            color: white;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section h2 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .placeholder {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #64748b;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🚴‍♀️ Rate Your Track Bogotá</div>
+        <nav>
+            <button class="nav-btn active" data-section="accueil">Accueil</button>
+            <button class="nav-btn" data-section="forum">Forum</button>
+            <button class="nav-btn" data-section="carte-existantes">Pistes existantes</button>
+            <button class="nav-btn" data-section="carte-souhaitees">Pistes souhaitées</button>
+            <button class="nav-btn" data-section="apropos">À propos</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Section Accueil -->
+        <section class="section active" id="accueil">
+            <h2>🌍 Bienvenue sur Rate Your Track Bogotá</h2>
+            <p>Un site collaboratif pour améliorer les pistes cyclables de Bogotá !</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <div style="background: #f0f9ff; padding: 1.5rem; border-radius: 8px;">
+                    <h3>🗣️ Forum</h3>
+                    <p>Discutez avec la communauté cycliste</p>
+                </div>
+                <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px;">
+                    <h3>🗺️ Évaluez les pistes</h3>
+                    <p>Notez la sécurité, le bruit, la qualité de l'air...</p>
+                </div>
+                <div style="background: #fef3f2; padding: 1.5rem; border-radius: 8px;">
+                    <h3>✨ Proposez des améliorations</h3>
+                    <p>Tracez de nouvelles pistes sur la carte</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Forum -->
+        <section class="section" id="forum">
+            <h2>🗣️ Forum de discussion</h2>
+            <p>Espace de discussion pour la communauté cycliste de Bogotá</p>
+            <div class="placeholder">
+                Interface du forum à venir...
+                <br>Style inspiré des forums classiques
+            </div>
+        </section>
+
+        <!-- Section Carte Existantes -->
+        <section class="section" id="carte-existantes">
+            <h2>🗺️ Pistes cyclables existantes</h2>
+            <p>Évaluez les pistes selon 5 critères : Sécurité, Bruit, Qualité de l'air, Fluidité, Accessibilité</p>
+            <div class="placeholder">
+                Carte interactive Leaflet.js à venir...
+                <br>Import automatique depuis CyclOSM/OpenStreetMap
+            </div>
+        </section>
+
+        <!-- Section Carte Souhaitées -->
+        <section class="section" id="carte-souhaitees">
+            <h2>✨ Pistes cyclables souhaitées</h2>
+            <p>Proposez de nouveaux tracés pour améliorer le réseau cyclable</p>
+            <div class="placeholder">
+                Carte avec outils de dessin à venir...
+                <br>Tracez vos pistes idéales !
+            </div>
+        </section>
+
+        <!-- Section À propos -->
+        <section class="section" id="apropos">
+            <h2>📋 À propos du projet</h2>
+            <p><strong>Objectif :</strong> Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo plus attractif.</p>
+            
+            <div style="margin-top: 2rem;">
+                <h3>🎯 Mission</h3>
+                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                    <li>Améliorer la sécurité des cyclistes</li>
+                    <li>Encourager la participation citoyenne</li>
+                    <li>Promouvoir le vélo comme alternative à la voiture</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <h3>📧 Contact</h3>
+                <p>Pour toute question : <strong>contact@rateyourtrack-bogota.com</strong></p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Navigation simple
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.section');
+
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Retirer active de tous les boutons et sections
+                navButtons.forEach(btn => btn.classList.remove('active'));
+                sections.forEach(section => section.classList.remove('active'));
+                
+                // Activer le bouton cliqué
+                button.classList.add('active');
+                
+                // Afficher la section correspondante
+                const targetSection = button.getAttribute('data-section');
+                document.getElementById(targetSection).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
