@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    <!-- Données des pistes cyclables intégrées -->
+    <script src="./data/pistes-data.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -224,18 +227,84 @@
             try {
                 console.log('Initialisation de la carte...');
                 
-                // Créer la carte centrée sur Bogotá
-                mapExistantes = L.map('map-existantes').setView([4.6097, -74.0817], 12);
+                // Créer la carte centrée sur Bogotá avec zoom optimal
+                mapExistantes = L.map('map-existantes', {
+                    maxZoom: 18  // Limiter le zoom max pour éviter le flou
+                }).setView([4.6097, -74.0817], 13);  // Zoom initial un peu plus proche
                 
-                // Ajouter les tuiles OpenStreetMap
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(mapExistantes);
+                // Couches de base avec zoom optimisé
+                const baseNeutre = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '© OpenStreetMap contributors | © CARTO',
+                    maxZoom: 18  // Zoom cohérent
+                });
                 
-                // Ajouter un marqueur exemple sur Bogotá
+                const baseStandard = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 18  // Zoom cohérent
+                });
+                
+                // Ajouter la couche de base par défaut
+                baseNeutre.addTo(mapExistantes);
+                
+                // Contrôle des couches (seulement les fonds de carte)
+                const baseMaps = {
+                    "🎨 Carte neutre": baseNeutre,
+                    "📍 Carte standard": baseStandard
+                };
+                
+                L.control.layers(baseMaps).addTo(mapExistantes);
+                
+                // Utiliser les données intégrées directement (évite les problèmes CORS)
+                console.log('🔍 Chargement des pistes cyclables...');
+                
+                try {
+                    if (typeof pistesCyclablesBogota === 'undefined') {
+                        throw new Error('Données des pistes non disponibles');
+                    }
+                    
+                    console.log('✅ Données chargées:', pistesCyclablesBogota.features.length, 'pistes principales');
+                    
+                    // Ajouter les pistes cyclables à la carte
+                    const pistesLayer = L.geoJSON(pistesCyclablesBogota, {
+                        style: function(feature) {
+                            return {
+                                color: '#22c55e',
+                                weight: 3,
+                                opacity: 0.8
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            const props = feature.properties;
+                            layer.bindPopup(`
+                                <strong>🚴‍♀️ ${props.name}</strong><br>
+                                <em>Type:</em> ${props.highway}<br>
+                                <em>Surface:</em> ${props.surface}<br>
+                                <em>Cycleway:</em> ${props.cycleway}<br>
+                                <br>
+                                <button onclick="noterPiste('${feature.id}')">⭐ Noter cette piste</button>
+                            `);
+                        }
+                    }).addTo(mapExistantes);
+                    
+                    console.log('🗺️ Pistes ajoutées à la carte !');
+                    
+                    // Ajuster la vue sur les pistes
+                    if (pistesCyclablesBogota.features.length > 0) {
+                        mapExistantes.fitBounds(pistesLayer.getBounds(), {padding: [20, 20]});
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Erreur:', error);
+                    L.popup()
+                        .setLatLng([4.6097, -74.0817])
+                        .setContent(`❌ Erreur: ${error.message}`)
+                        .openOn(mapExistantes);
+                }
+                
+                // Marqueur centre-ville
                 L.marker([4.6097, -74.0817])
                     .addTo(mapExistantes)
-                    .bindPopup('📍 Bogotá - Centre ville<br>Ici bientôt les pistes cyclables !');
+                    .bindPopup('📍 Centro de Bogotá<br>Explorez les pistes cyclables !');
                 
                 console.log('Carte initialisée avec succès !');
                 
@@ -249,6 +318,12 @@
                 document.getElementById('map-existantes').innerHTML = 
                     '<div style="padding: 2rem; text-align: center; color: #ef4444;">❌ Erreur lors du chargement de la carte. Vérifiez votre connexion internet.</div>';
             }
+        }
+
+        // Fonction pour noter une piste (placeholder pour l'instant)
+        function noterPiste(pisteId) {
+            alert(`🎯 Bientôt : Interface de notation pour la piste ${pisteId} !`);
+            // TODO: Implémenter l'interface de notation avec les 5 critères
         }
 
         // Initialiser la carte après le chargement de la page si Leaflet est disponible
