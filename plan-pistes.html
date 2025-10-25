@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Pistes Cyclables Bogotá</title>
+    
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Données des pistes cyclables -->
+    <script src="./data/pistes-data.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        /* Style du titre en overlay */
+        .map-title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        /* Légende en bas à gauche */
+        .legend {
+            position: absolute;
+            bottom: 30px;
+            left: 10px;
+            background: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 13px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .legend-line {
+            width: 30px;
+            height: 4px;
+            background: #0066ff;
+            margin-right: 8px;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="map-title">🚴‍♀️ Plan des Pistes Cyclables - Bogotá</div>
+    
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-line"></div>
+            <span>Pistes cyclables</span>
+        </div>
+    </div>
+    
+    <div id="map"></div>
+
+    <script>
+        // Créer la carte centrée sur Bogotá
+        const map = L.map('map', {
+            zoomControl: true
+        }).setView([4.6097, -74.0817], 13);
+        
+        // Options de fonds de carte (tous avec noms de rues visibles)
+        const baseMaps = {
+            "🗺️ OpenStreetMap Standard": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap',
+                maxZoom: 18
+            }),
+            
+            "📍 OpenStreetMap France": L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap France',
+                maxZoom: 18
+            }),
+            
+            "🌐 OpenStreetMap DE": L.tileLayer('https://{s}.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap Deutschland',
+                maxZoom: 18
+            }),
+            
+            "🏙️ OpenTopoMap": L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenTopoMap',
+                maxZoom: 17
+            }),
+            
+            "📋 CartoDB Voyager": L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+                attribution: '© CARTO',
+                maxZoom: 18
+            })
+        };
+        
+        // Ajouter le fond par défaut (OpenStreetMap Standard)
+        baseMaps["🗺️ OpenStreetMap Standard"].addTo(map);
+        
+        // Charger et afficher les pistes cyclables
+        if (typeof pistesCyclablesBogota !== 'undefined') {
+            console.log(`✅ ${pistesCyclablesBogota.features.length} pistes cyclables chargées`);
+            
+            // Ajouter les pistes en bleu bien visible
+            const pistesLayer = L.geoJSON(pistesCyclablesBogota, {
+                style: function(feature) {
+                    return {
+                        color: '#0066ff',        // Bleu vif
+                        weight: 4,               // Ligne épaisse
+                        opacity: 0.85            // Bien visible
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    const props = feature.properties;
+                    // Popup simple au clic
+                    layer.bindPopup(`
+                        <strong>🚴‍♀️ ${props.name}</strong><br>
+                        <small>${props.highway} - ${props.surface}</small>
+                    `);
+                }
+            }).addTo(map);
+            
+            // Ajuster la vue sur toutes les pistes
+            map.fitBounds(pistesLayer.getBounds(), {padding: [20, 20]});
+            
+            // Ajouter le contrôle de sélection des fonds de carte
+            L.control.layers(baseMaps, null, {
+                position: 'topright'
+            }).addTo(map);
+            
+        } else {
+            console.error('❌ Données des pistes non disponibles');
+            alert('Erreur : Impossible de charger les pistes cyclables');
+        }
+    </script>
+</body>
+</html>
