@@ -1,4 +1,77 @@
-# 🚴‍♀️ Rate Your Track Bogotá
+# 🚴‍♀️ Rate ---
+
+## 💡 Philosophie du projet
+
+> Ce projet est conçu pour être développé **en vibe coding**, avec l'aide de GitHub Copilot.  
+> L'objectif est que le développeur (moi) soit **guidé pas à pas**, car je suis encore **novice**.  
+> Je souhaite que Copilot m'indique :
+> - quand sauvegarder mes progrès (`git add .`, `git commit -m "message"`, `git push`),  
+> - quand tester localement le code,  
+> - quand passer à l'étape suivante,  
+> - et qu'il garde toujours en tête que je préfère **les interfaces simples et propres**, sans complexité inutile.
+
+🧑‍💻 Note à GitHub Copilot :
+Ce projet doit être développé de manière progressive, avec des explications claires à chaque étape.
+L'utilisateur est débutant.
+Tu dois expliquer chaque commande, signaler quand sauvegarder, tester, et passer à l'étape suivante.
+Ne jamais supposer que tout est évident.
+
+---
+
+## ⏱️ Méthodologie de développement
+
+### 🎯 **SESSIONS DE TRAVAIL DE 30 MINUTES**
+
+En tant que développeur débutant avec peu de temps libre, j'ai adopté une méthodologie de **sessions courtes et productives** :
+
+**📋 OBJECTIFS DE CHAQUE SESSION :**
+- ✅ **Une amélioration concrète** → Ajouter/corriger UNE fonctionnalité précise
+- ✅ **Résultat visible** → Changement immédiatement perceptible sur le site
+- ✅ **Fonctionnalité complète** → Ce qui est fait marche parfaitement
+- ✅ **Progression claire** → Sentiment d'avancement vers l'objectif final
+
+**🔄 WORKFLOW TYPE D'UNE SESSION 30MIN :**
+
+**⏱️ 0-20min : DÉVELOPPEMENT**
+- Choisir 1 point précis de la TODO liste (NOTES.md)
+- Implémenter la fonctionnalité de A à Z
+- Tester que ça marche correctement
+
+**⏱️ 20-25min : VALIDATION & NETTOYAGE**
+- Vérifier que le site fonctionne globalement
+- Supprimer code/fichiers devenus inutiles
+- S'assurer qu'aucune régression
+
+**⏱️ 25-30min : DOCUMENTATION & SAUVEGARDE**
+- Mettre à jour NOTES.md (état actuel + prochaine session)
+- Git commit + push avec message descriptif
+- Noter la prochaine tâche prioritaire
+
+**💫 PRINCIPE FONDAMENTAL :**
+> "Je ne quitte jamais une session avec un truc en route ou cassé. Chaque session doit apporter un progrès concret et terminé."
+
+**🎯 EXEMPLE DE RÉSULTAT ATTENDU :**
+> "✅ Session réussie ! Le bouton de notation s'affiche maintenant correctement, les couleurs des pistes sont neutres par défaut, et les sliders commencent à 3. Le site est plus user-friendly et la TODO liste a été mise à jour."
+
+**📝 AVANTAGES DE CETTE APPROCHE :**
+- ✅ **Motivation maintenue** : Progrès visible à chaque fois
+- ✅ **Pas de frustration** : Sessions courtes et productives  
+- ✅ **Continuité assurée** : NOTES.md permet de reprendre facilement
+- ✅ **Code propre** : Nettoyage systématique
+- ✅ **Historique clair** : Chaque commit = une amélioration
+
+---
+
+## 🤝 Instructions pour l'assistant IA
+
+Si tu m'aides sur ce projet, garde en tête :
+
+1. **Je suis débutant** → Explique chaque étape clairement
+2. **Sessions de 30min max** → Propose des tâches réalisables rapidement
+3. **Résultat concret obligatoire** → Chaque session doit apporter une amélioration visible
+4. **Guide-moi étape par étape** → Dis-moi quand tester, sauvegarder, passer à l'étape suivante
+5. **Interface simple** → Pas de complexité inutile, design minimaliste
+6. **Une tâche à la fois** → Ne jamais laisser quelque chose d'inachevé
 
 ## 🌍 Objectif général
 

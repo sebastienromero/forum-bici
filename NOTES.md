@@ -1,7 +1,13 @@
 # 📋 Notes de développement - Rate Your Track Bogotá
 
-## 🎯 État actuel du### 💬 Message exact pour GitHub Copilot
-"Salut ! On reprend le projet Rate Your Track Bogotá. Regarde NOTES.md, README.md et index.html pour voir exactement où on en est. Le système de notation avec sliders 1-5 est développé et fonctionnel. On peut soit finaliser la notation par portions géolocalisées, soit passer au backend collaboratif."rojet (28 octobre 2024)
+## 🎯 État actuel du projet (1 novembre 2025)
+
+### 💬 MÉTHODOLOGIE DÉVELOPPEMENT
+**Sessions de 30 minutes maximum** - Approche "une fonctionnalité complète par session"
+- ✅ Résultat concret obligatoire à chaque session
+- ✅ Jamais quitter avec quelque chose d'inachevé  
+- ✅ Développeur débutant → explications étape par étape
+- ✅ Nettoyage code + sauvegarde Git systématiques
 
 ### ✅ ACCOMPLI - Ce qui fonctionne parfaitement
 - **Dépôt Git** : Initialisé et connecté à GitHub (sebastienromero/forum-bici)
@@ -10,9 +16,9 @@
 - **2597 pistes cyclables RÉELLES** : Extraites de CyclOSM/OpenStreetMap de Bogotá
 - **Données locales** : Intégrées dans data/pistes-data.js (pas de dépendance serveur)
 - **Design responsive** : Police DM Sans, style minimaliste et propre
-- **Projet nettoyé** : Structure finale optimisée, fichiers temporaires supprimés
-- **📍 NOUVEAU : Plan simple (plan-pistes.html)** : Carte dédiée pour navigation quotidienne à vélo
-- **🎨 NOUVEAU : Système de notation développé** : Interface avec sliders 1-5 pour les 5 critères (sécurité, bruit, air, fluidité, inclusion)
+- **✅ SYSTÈME RATE YOUR TRACK COMPLET** : Tracé interactif + détection pistes proches + notation 5 critères
+- **✅ SAUVEGARDE & VISUALISATION** : localStorage + affichage pistes colorées selon notes
+- **✅ CODE NETTOYÉ** : Suppression ~100 lignes obsolètes, structure optimisée
 
 ### 📁 Structure finale du projet
 ```
@@ -51,13 +57,34 @@ forum-bici-bogota/
 🔍 **Avantages** : Précision géographique, portions spécifiques notables  
 🔍 **Implémentation** : Code prêt mais non activé (utilisateur a annulé)
 
-### 🎯 PROCHAINE ÉTAPE CONVENUE : Améliorer le système actuel
+### 🔧 TODO LISTE - PROCHAINES SESSIONS 30MIN
 
-#### Options pour la suite :
-1. **Finaliser notation par portions** : Implémenter le système géolocalisé
-2. **Backend Flask** : Rendre les notes collaboratives (base dans rate_your_track/)
-3. **Forum simple** : Développer la section discussions
-4. **Pistes souhaitées** : Outils de tracé sur carte
+#### 🎨 **AMÉLIORATIONS UX (Sessions 5-15min)**
+1. **Notes par défaut à 3** - Sliders commencent à 3 au lieu de 1 (plus intuitif)
+2. **Couleur neutre pistes** - Changer vert #22c55e vers gris neutre #9ca3af
+3. **Corriger texte bouton** - Réparer émojis mal encodés "Noter les portions"
+
+#### 🐛 **CORRECTIONS TECHNIQUES (Sessions 15-25min)**
+4. **Affichage commentaires** - Faire apparaître les commentaires dans les tooltips
+5. **Supprimer contours bleus** - Éliminer interactions visuelles sur les pistes
+6. **Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a
+7. **Supprimer numéros pistes** - Retirer l'affichage des IDs au survol
+
+#### 🚀 **NOUVELLES FONCTIONNALITÉS (Sessions 25-30min)**
+8. **Section Forum** - Créer la page de discussions
+9. **Authentification simple** - Système de pseudo/email basique
+10. **Export des données** - Bouton pour télécharger ses notes
+
+### 📋 PROCHAINE SESSION RECOMMANDÉE
+
+**Option 1 : Notes par défaut à 3** ⏱️ ~10min
+- Problème : Sliders commencent à 1, peu intuitif
+- Action : Changer `value="1"` → `value="3"` dans HTML
+- Résultat : Interface plus user-friendly
+
+**Option 2 : Couleur neutre + Notes à 3** ⏱️ ~20min
+- Double amélioration UX immédiatement visible
+- Rend l'interface plus professionnelle
 
 #### Après le système de notation :
 - Phase 2 : Forum de discussion  
