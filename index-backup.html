@@ -545,31 +545,10 @@
         }
 
         // Fonctions pour le système de notation
-        function openRatingPanel(segmentId, segmentName) {
-            currentSegment = segmentId;
-            document.getElementById('segment-name').textContent = segmentName || `Segment ${segmentId}`;
-            
-            // Charger les notes existantes ou valeurs par défaut
-            const ratings = segmentRatings[segmentId] || {
-                security: 1,
-                noise: 1,
-                air: 1,
-                flow: 1,
-                inclusion: 1
-            };
-            
-            // Mettre à jour les sliders et valeurs
-            ['security', 'noise', 'air', 'flow', 'inclusion'].forEach(criterion => {
-                document.getElementById(`${criterion}-slider`).value = ratings[criterion];
-                document.getElementById(`${criterion}-value`).textContent = ratings[criterion];
-            });
-            
-            // Afficher le panneau
-            document.getElementById('rating-panel').classList.add('show');
-        }
         
         function closeRatingPanel() {
             document.getElementById('rating-panel').classList.remove('show');
+            currentSegment = null;
         }
         
 
@@ -980,12 +959,7 @@
         }
         
         // Fonction de test simple
-        function testFunction() {
-            alert('Les fonctions JavaScript marchent !');
-            console.log('Test réussi');
-        }
-        
-        // === NOUVEAU SYSTÈME RATE_YOUR_TRACK ===
+        // === SYSTÈME RATE_YOUR_TRACK ===
         
         // Trouve les pistes entières proches de l'itinéraire tracé
         function findNearbyTrackPortions() {
@@ -1109,7 +1083,6 @@
         window.toggleTracingMode = toggleTracingMode;
         window.toggleRatingsDisplay = toggleRatingsDisplay;
         window.changeView = changeView;
-        window.testFunction = testFunction;
         window.savePortionRatings = savePortionRatings;
         window.closeRatingPanel = closeRatingPanel;
         
@@ -1196,11 +1169,105 @@
             console.log('=== FIN savePortionRatings ===');
         }
 
-
+        function updateMapColors() {
+            if (!mapExistantes) return;
+            
+            // Parcourir toutes les couches de pistes
+            mapExistantes.eachLayer(layer => {
+                if (layer.feature && layer.feature.id) {
+                    const featureId = layer.feature.id;
+                    let color = '#22c55e'; // Vert par défaut (vue neutre)
+                    
+                    if (showRatings) {
+                        const ratings = segmentRatings[featureId];
+                        if (ratings) {
+                            let value;
+                            switch(currentView) {
+                                case 'security':
+                                    value = ratings.security;
+                                    break;
+                                case 'noise':
+                                    value = ratings.noise;
+                                    break;
+                                case 'air':
+                                    value = ratings.air;
+                                    break;
+                                case 'flow':
+                                    value = ratings.flow;
+                                    break;
+                                case 'inclusion':
+                                    value = ratings.inclusion;
+                                    break;
+                                default: // global
+                                    value = (ratings.security + ratings.noise + ratings.air + ratings.flow + ratings.inclusion) / 5;
+                            }
+                            color = getColorFromRating(value);
+                        }
+                    }
+                    
+                    layer.setStyle({
+                        color: color,
+                        weight: 3,
+                        opacity: 0.8
+                    });
+                }
+            });
+        }
 
         // SYSTÈME DE PORTIONS PRÉCISES (inspiré de rate_your_track)
         
-
+        function findIntersectedSegments(routePoints) {
+            // Simulation simple du buffer 80m et intersection
+            // Fonctionne avec 1 seul point (zone) ou plusieurs points (itinéraire)
+            
+            const BUFFER_METERS = 80;
+            const intersectedSegments = new Set();
+            
+            if (!window.pistesCyclablesBogota || !routePoints.length) return [];
+            
+            console.log(`Recherche intersections pour ${routePoints.length} point(s)`);
+            
+            // Pour chaque point du tracé (marche avec 1 seul point aussi)
+            routePoints.forEach((point, index) => {
+                const [lng, lat] = point;
+                console.log(`Point ${index + 1}: [${lat.toFixed(4)}, ${lng.toFixed(4)}]`);
+                
+                // Chercher les segments proches (approximation)
+                window.pistesCyclablesBogota.features.forEach(feature => {
+                    if (!feature.geometry) return;
+                    
+                    let coordinates = [];
+                    if (feature.geometry.type === 'LineString') {
+                        coordinates = feature.geometry.coordinates;
+                    } else if (feature.geometry.type === 'MultiLineString') {
+                        coordinates = feature.geometry.coordinates.flat();
+                    }
+                    
+                    // Vérifier si le point est proche d'un des points du segment
+                    coordinates.forEach(coord => {
+                        const distance = calculateDistance(lat, lng, coord[1], coord[0]);
+                        if (distance <= BUFFER_METERS) {
+                            intersectedSegments.add(feature.id);
+                        }
+                    });
+                });
+            });
+            
+            console.log(`${intersectedSegments.size} segment(s) intersecté(s)`);
+            return Array.from(intersectedSegments);
+        }
+        
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            // Distance euclidienne approximative en mètres
+            const R = 6371000; // Rayon de la Terre en mètres
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
 
         // Initialiser la carte après le chargement de la page si Leaflet est disponible
         document.addEventListener('DOMContentLoaded', function() {
