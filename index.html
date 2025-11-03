@@ -157,6 +157,14 @@
             margin-bottom: 5px;
         }
         
+        /* Supprimer les contours bleus d'interaction Leaflet */
+        .leaflet-interactive:focus {
+            outline: none !important;
+        }
+        .leaflet-control:focus {
+            outline: none !important;
+        }
+        
         .rating-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -357,7 +365,7 @@
                     </div>
                     
                     <div class="rating-buttons">
-                        <button class="btn primary" onclick="savePortionRatings()">�‍♀️ Noter les portions</button>
+                        <button class="btn primary" onclick="savePortionRatings()">🚴‍♀️ Noter les portions</button>
                         <button class="btn secondary" onclick="closeRatingPanel()">❌ Annuler</button>
                     </div>
                     
