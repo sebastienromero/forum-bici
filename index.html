@@ -313,7 +313,7 @@
                 </button>
 
                 <button id="toggle-ratings-display" onclick="toggleRatingsDisplay()" style="padding: 0.5rem 1rem; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
-                    👁️ Afficher les avis
+                    � Cacher les avis
                 </button>
                 <select id="view-selector" onchange="changeView()" style="padding: 0.5rem; border-radius: 6px; border: 1px solid #d1d5db; font-size: 0.9rem;">
                     <option value="global">🗺️ Vue globale</option>
@@ -323,6 +323,11 @@
                     <option value="flow">⚡ Fluidité</option>
                     <option value="inclusion">👥 Inclusion</option>
                 </select>
+                
+                <button id="fullscreen-btn" onclick="toggleFullscreen()" style="padding: 0.5rem; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-left: 0.5rem;" title="Plein écran">
+                    ⛶
+                </button>
+                
                 <span id="tracing-status" style="color: #6b7280; font-size: 0.9rem;"></span>
             </div>
             
@@ -374,11 +379,6 @@
                         1 = Très mauvais | 2 = Mauvais | 3 = Moyen | 4 = Bon | 5 = Excellent
                     </div>
                 </div>
-            </div>
-            
-            <!-- Légende -->
-            <div style="margin-top: 1rem; padding: 1rem; background: #f8fafc; border-radius: 8px; font-size: 0.9rem;">
-                <strong>🎯 Instructions :</strong> Cliquez sur une piste verte pour la noter selon les 5 critères !
             </div>
         </section>
 
@@ -527,11 +527,6 @@
                         .openOn(mapExistantes);
                 }
                 
-                // Marqueur centre-ville
-                L.marker([4.6097, -74.0817])
-                    .addTo(mapExistantes)
-                    .bindPopup('📍 Centro de Bogotá<br>Explorez les pistes cyclables !');
-                
                 console.log('Carte initialisée avec succès !');
                 
                 // Ajouter la gestion du clic pour le tracé d'itinéraire
@@ -578,6 +573,21 @@
         
         function closeRatingPanel() {
             document.getElementById('rating-panel').classList.remove('show');
+            
+            // Désactiver le mode tracé
+            if (isTracingMode) {
+                isTracingMode = false;
+                const btn = document.getElementById('toggle-tracing');
+                const status = document.getElementById('tracing-status');
+                
+                if (btn) {
+                    btn.textContent = '📍 Mode tracé OFF';
+                    btn.style.background = '#374151';
+                }
+                if (status) {
+                    status.textContent = 'Cliquez sur "Mode tracé" pour commencer';
+                }
+            }
         }
         
 
@@ -780,13 +790,16 @@
         function toggleRatingsDisplay() {
             showRatings = !showRatings;
             const btn = document.getElementById('toggle-ratings-display');
+            const viewSelector = document.getElementById('view-selector');
             
             if (showRatings) {
                 btn.textContent = '🙈 Cacher les avis';
                 btn.style.background = '#16a34a';
+                if (viewSelector) viewSelector.style.display = 'inline-block';
             } else {
                 btn.textContent = '👁️ Afficher les avis';
                 btn.style.background = '#6b7280';
+                if (viewSelector) viewSelector.style.display = 'none';
             }
             
             // Afficher/cacher les portions rate_your_track
@@ -797,7 +810,7 @@
             const selector = document.getElementById('view-selector');
             if (selector) {
                 currentView = selector.value;
-                console.log('Vue changée vers:', currentView);
+
                 
                 // Mettre à jour l'affichage des portions selon la vue sélectionnée
                 if (showRatings) {
@@ -809,7 +822,7 @@
         function handleMapClick(e) {
             if (!isTracingMode) return;
             
-            console.log('Clic en mode tracé:', e.latlng);
+
             
             // Ajouter le point au tracé
             routePoints.push([e.latlng.lng, e.latlng.lat]);
@@ -918,7 +931,7 @@
         }
 
         function clearCurrentRoute() {
-            console.log('Effacement du tracé en cours...');
+
             
             // Nettoyer les points et marqueurs (seulement du tracé en cours)
             routePoints = [];
@@ -931,11 +944,11 @@
                 routeLayer = null;
             }
             
-            console.log('Tracé effacé');
+
         }
 
         function rateCurrentRoute() {
-            console.log('rateCurrentRoute appelée, routePoints:', routePoints.length);
+
             
             if (routePoints.length < 1) {
                 alert('Placez au moins 1 point pour noter une zone !');
@@ -953,7 +966,7 @@
             // Stocker les portions trouvées pour la sauvegarde
             window.currentNearbyPortions = nearbyPortions;
             
-            console.log('Ouverture du panneau de notation...');
+
             
             // Ouvrir le panneau de notation
             currentSegment = 'route';
@@ -980,7 +993,7 @@
             // Afficher le panneau
             const panelEl = document.getElementById('rating-panel');
             if (panelEl) {
-                console.log('Affichage du panneau de notation');
+
                 panelEl.classList.add('show');
             } else {
                 console.error('Panneau rating-panel non trouvé !');
@@ -990,7 +1003,7 @@
         // Fonction de test simple
         function testFunction() {
             alert('Les fonctions JavaScript marchent !');
-            console.log('Test réussi');
+
         }
         
         // === NOUVEAU SYSTÈME RATE_YOUR_TRACK ===
@@ -1080,11 +1093,12 @@
                     average = ratings[currentView] || 0;
                 }
                 
-                // Couleur selon la note
-                if (average >= 4) color = '#00c851'; // Vert
-                else if (average >= 3) color = '#ffcc02'; // Jaune
-                else if (average >= 2) color = '#ff8800'; // Orange
-                else color = '#ff4444'; // Rouge
+                // Couleur selon la note (5 niveaux progressifs)
+                if (average >= 4.5) color = '#22c55e'; // Vert foncé (5)
+                else if (average >= 3.5) color = '#84cc16'; // Vert clair (4)
+                else if (average >= 2.5) color = '#eab308'; // Jaune (3)
+                else if (average >= 1.5) color = '#f97316'; // Orange (2)
+                else color = '#ef4444'; // Rouge (1)
                 
                 // Créer une ligne colorée pour la piste entière
                 const trackLayer = L.geoJSON(track.feature, {
@@ -1096,15 +1110,20 @@
                 }).addTo(mapExistantes);
                 
                 // Tooltip avec détails
-                trackLayer.bindTooltip(`
-                    <strong>${track.trackName}</strong><br>
+                let tooltipContent = `
                     Note moyenne: ${average.toFixed(1)}/5<br>
                     🛡️ Sécurité: ${ratings.security}/5<br>
                     🔊 Bruit: ${ratings.noise}/5<br>
                     🌬️ Air: ${ratings.air}/5<br>
                     ⚡ Fluidité: ${ratings.flow}/5<br>
-                    👥 Inclusion: ${ratings.inclusion}/5
-                `, { permanent: false, direction: 'top' });
+                    👥 Inclusion: ${ratings.inclusion}/5`;
+                
+                // Ajouter le commentaire s'il existe
+                if (ratings.comment && ratings.comment.trim()) {
+                    tooltipContent += `<br><br>💬 <em>"${ratings.comment}"</em>`;
+                }
+                
+                trackLayer.bindTooltip(tooltipContent, { permanent: false, direction: 'top' });
                 
                 portionLayers.push(trackLayer);
             });
@@ -1123,7 +1142,7 @@
         
         // Nouvelle fonction de sauvegarde pour le système rate_your_track
         function savePortionRatings() {
-            console.log('=== DEBUT savePortionRatings ===');
+
             
             if (routePoints.length === 0) {
                 console.log('Erreur: Aucun point tracé');
@@ -1131,7 +1150,7 @@
                 return;
             }
             
-            console.log('Points tracés:', routePoints.length);
+
             
             // Vérifier que les éléments existent
             const securityEl = document.getElementById('security-slider');
@@ -1141,14 +1160,7 @@
             const inclusionEl = document.getElementById('inclusion-slider');
             const commentEl = document.getElementById('rating-comment');
             
-            console.log('Éléments trouvés:', {
-                security: !!securityEl,
-                noise: !!noiseEl,
-                air: !!airEl,
-                flow: !!flowEl,
-                inclusion: !!inclusionEl,
-                comment: !!commentEl
-            });
+
             
             if (!securityEl || !noiseEl || !airEl || !flowEl || !inclusionEl) {
                 console.error('Erreur: Éléments de notation manquants');
@@ -1164,7 +1176,7 @@
             const comment = commentEl ? commentEl.value : '';
             
             const ratings = { security, noise, air, flow, inclusion, comment };
-            console.log('Ratings à sauvegarder:', ratings);
+
             
             // Trouver les pistes proches du tracé actuel
             const nearbyTracks = findNearbyTrackPortions();
@@ -1178,7 +1190,7 @@
             
             let savedCount = 0;
             nearbyTracks.forEach((track, index) => {
-                console.log(`Sauvegarde piste ${index + 1}:`, track.trackName);
+
                 savePortionRating(track, ratings);
                 savedCount++;
             });
@@ -1208,7 +1220,41 @@
 
         // SYSTÈME DE PORTIONS PRÉCISES (inspiré de rate_your_track)
         
+        function updateRatingValue(criterion, value) {
+            const valueSpan = document.getElementById(`${criterion}-value`);
+            if (valueSpan) {
+                valueSpan.textContent = value;
+            }
+        }
 
+        function toggleFullscreen() {
+            const mapContainer = document.getElementById('map-existantes');
+            const btn = document.getElementById('fullscreen-btn');
+            
+            if (!document.fullscreenElement) {
+                // Entrer en plein écran
+                if (mapContainer.requestFullscreen) {
+                    mapContainer.requestFullscreen();
+                } else if (mapContainer.webkitRequestFullscreen) {
+                    mapContainer.webkitRequestFullscreen();
+                } else if (mapContainer.msRequestFullscreen) {
+                    mapContainer.msRequestFullscreen();
+                }
+                btn.textContent = '🔲';
+                btn.title = 'Quitter le plein écran';
+            } else {
+                // Quitter le plein écran
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                btn.textContent = '⛶';
+                btn.title = 'Plein écran';
+            }
+        }
 
         // Initialiser la carte après le chargement de la page si Leaflet est disponible
         document.addEventListener('DOMContentLoaded', function() {
@@ -1219,6 +1265,48 @@
             } else {
                 console.log('Leaflet chargé avec succès !');
             }
+            
+            // Initialiser le bouton et le sélecteur selon l'état showRatings
+            const toggleBtn = document.getElementById('toggle-ratings-display');
+            const viewSelector = document.getElementById('view-selector');
+            if (toggleBtn) {
+                if (showRatings) {
+                    toggleBtn.textContent = '🙈 Cacher les avis';
+                    toggleBtn.style.background = '#16a34a';
+                    if (viewSelector) viewSelector.style.display = 'inline-block';
+                } else {
+                    toggleBtn.textContent = '👁️ Afficher les avis';
+                    toggleBtn.style.background = '#6b7280';
+                    if (viewSelector) viewSelector.style.display = 'none';
+                }
+            }
+            
+            // Event listener pour les changements de fullscreen
+            document.addEventListener('fullscreenchange', function() {
+                const btn = document.getElementById('fullscreen-btn');
+                if (btn) {
+                    if (document.fullscreenElement) {
+                        btn.textContent = '🔲';
+                        btn.title = 'Quitter le plein écran';
+                    } else {
+                        btn.textContent = '⛶';
+                        btn.title = 'Plein écran';
+                    }
+                }
+            });
+
+            // Event listener pour fermer le panel en cliquant en dehors
+            document.addEventListener('click', function(e) {
+                const ratingPanel = document.getElementById('rating-panel');
+                if (ratingPanel && ratingPanel.classList.contains('show')) {
+                    // Si le clic n'est pas dans le panel, ses enfants, le bouton tracé ou la carte
+                    if (!ratingPanel.contains(e.target) && 
+                        !e.target.closest('#toggle-tracing') && 
+                        !e.target.closest('#map-existantes')) {
+                        closeRatingPanel();
+                    }
+                }
+            });
             
             // Initialiser les event listeners pour les sliders de notation
             ['security', 'noise', 'air', 'flow', 'inclusion'].forEach(criterion => {

@@ -42,10 +42,22 @@ En tant que développeur débutant avec peu de temps libre, j'ai adopté une mé
 - Supprimer code/fichiers devenus inutiles
 - S'assurer qu'aucune régression
 
-**⏱️ 25-30min : DOCUMENTATION & SAUVEGARDE**
-- Mettre à jour NOTES.md (état actuel + prochaine session)
-- Git commit + push avec message descriptif
-- Noter la prochaine tâche prioritaire
+**⏱️ 25-30min : PROCÉDURE DE FIN DE SESSION**
+
+Quand je dis **"fin"**, suivre cette procédure en 7 étapes :
+
+1. **🔍 J'identifie les prochaines corrections** → Je teste le site et je dis les petits soucis à corriger pour la prochaine session (l'assistant peut m'aider à repérer)
+2. **📋 Je sauvegarde le code actuel** → Cliquer sur le bouton "Keep" pour sauvegarder l'état
+3. **🧹 Tu nettoies tout** → L'assistant supprime le code inutile, fichiers obsolètes, commentaires debug, logs console, etc.
+4. **🧪 Je teste après nettoyage** → Vérifier que tout fonctionne encore
+5. **📋 Je resauvegarde** → Recliquer sur "Keep" après nettoyage
+6. **📝 Tu mets à jour NOTES.md** → Documenter l'état actuel + prochaines corrections que j'ai identifiées
+7. **💾 Git workflow final** →
+   ```bash
+   git add .
+   git commit -m "✨ Session [date]: [résumé des améliorations]"
+   git push
+   ```
 
 **💫 PRINCIPE FONDAMENTAL :**
 > "Je ne quitte jamais une session avec un truc en route ou cassé. Chaque session doit apporter un progrès concret et terminé."
@@ -70,8 +82,9 @@ Si tu m'aides sur ce projet, garde en tête :
 2. **Sessions de 30min max** → Propose des tâches réalisables rapidement
 3. **Résultat concret obligatoire** → Chaque session doit apporter une amélioration visible
 4. **Guide-moi étape par étape** → Dis-moi quand tester, sauvegarder, passer à l'étape suivante
-5. **Interface simple** → Pas de complexité inutile, design minimaliste
-6. **Une tâche à la fois** → Ne jamais laisser quelque chose d'inachevé
+5. **Procédure "fin" structurée** → Suivre les 7 étapes : Analyse → Keep → Nettoyage → Test → Keep → Notes → Git
+6. **Interface simple** → Pas de complexité inutile, design minimaliste
+7. **Une tâche à la fois** → Ne jamais laisser quelque chose d'inachevé
 
 ## 🌍 Objectif général
 
