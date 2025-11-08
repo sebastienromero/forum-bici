@@ -16,6 +16,12 @@
     <script src="./data/pistes-data.js"></script>
     
     <style>
+        /* ===== CONFIGURATION MODIFIABLE ===== */
+        /* Hauteur de la carte (en px) */
+        :root {
+            --map-height: 600px;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -257,9 +263,9 @@
     <header>
         <div class="logo">🚴‍♀️ Rate Your Track Bogotá</div>
         <nav>
-            <button class="nav-btn active" data-section="accueil">Accueil</button>
+            <button class="nav-btn" data-section="accueil">Accueil</button>
             <button class="nav-btn" data-section="forum">Forum</button>
-            <button class="nav-btn" data-section="carte-existantes">Pistes existantes</button>
+            <button class="nav-btn active" data-section="carte-existantes">Pistes existantes</button>
             <button class="nav-btn" data-section="carte-souhaitees">Pistes souhaitées</button>
             <button class="nav-btn" data-section="apropos">À propos</button>
         </nav>
@@ -267,7 +273,7 @@
 
     <main>
         <!-- Section Accueil -->
-        <section class="section active" id="accueil">
+        <section class="section" id="accueil">
             <h2>🌍 Bienvenue sur Rate Your Track Bogotá</h2>
             <p>Un site collaboratif pour améliorer les pistes cyclables de Bogotá !</p>
             
@@ -298,7 +304,7 @@
         </section>
 
         <!-- Section Carte Existantes -->
-        <section class="section" id="carte-existantes">
+        <section class="section active" id="carte-existantes">
             <h2>🗺️ Pistes cyclables existantes</h2>
             <p>Évaluez les pistes selon 5 critères : Sécurité, Bruit, Qualité de l'air, Fluidité, Accessibilité</p>
             
@@ -324,16 +330,12 @@
                     <option value="inclusion">👥 Inclusion</option>
                 </select>
                 
-                <button id="fullscreen-btn" onclick="toggleFullscreen()" style="padding: 0.5rem; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; margin-left: 0.5rem;" title="Plein écran">
-                    ⛶
-                </button>
-                
                 <span id="tracing-status" style="color: #6b7280; font-size: 0.9rem;"></span>
             </div>
             
             <!-- Carte interactive avec panneau de notation -->
             <div style="position: relative;">
-                <div id="map-existantes" style="height: 500px; margin-top: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;"></div>
+                <div id="map-existantes" style="height: var(--map-height); margin-top: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;"></div>
                 
                 <!-- Panneau de notation -->
                 <div id="rating-panel" class="rating-panel">
@@ -461,7 +463,7 @@
                 // Créer la carte centrée sur Bogotá avec zoom optimal
                 mapExistantes = L.map('map-existantes', {
                     maxZoom: 18  // Limiter le zoom max pour éviter le flou
-                }).setView([4.6097, -74.0817], 13);  // Zoom initial un peu plus proche
+                }).setView([4.6097, -74.0817], 12);  // Zoom initial augmenté (13 -> 15 -> 19 -> 12 -> 11 -> 12)
                 
                 // Couches de base avec zoom optimisé
                 const baseNeutre = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -515,9 +517,9 @@
                     console.log('🗺️ Pistes ajoutées à la carte !');
                     
                     // Ajuster la vue sur les pistes
-                    if (pistesCyclablesBogota.features.length > 0) {
-                        mapExistantes.fitBounds(pistesLayer.getBounds(), {padding: [20, 20]});
-                    }
+                    // if (pistesCyclablesBogota.features.length > 0) {
+                    //     mapExistantes.fitBounds(pistesLayer.getBounds(), {padding: [20, 20], maxZoom: 18});
+                    // }
                     
                 } catch (error) {
                     console.error('❌ Erreur:', error);
@@ -1317,6 +1319,11 @@
                     });
                 }
             });
+            
+            // Initialiser automatiquement la carte des pistes existantes puisque c'est la section par défaut
+            if (!mapExistantes && document.getElementById('carte-existantes').classList.contains('active')) {
+                initMapExistantes();
+            }
         });
     </script>
 </body>
