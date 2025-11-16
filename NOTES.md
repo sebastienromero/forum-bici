@@ -3,11 +3,12 @@
 ## 🎯 État actuel du projet (3 novembre 2025)
 
 ### 💬 MÉTHODOLOGIE DÉVELOPPEMENT
-**Sessions de 30 minutes maximum** - Approche "une fonctionnalité complète par session"
-- ✅ Résultat concret obligatoire à chaque session
+**Une amélioration par jour** - Approche "routine quotidienne productive"
+- ✅ Résultat concret obligatoire chaque jour
 - ✅ Jamais quitter avec quelque chose d'inachevé  
 - ✅ Développeur débutant → explications étape par étape
 - ✅ Nettoyage code + sauvegarde Git systématiques
+- ✅ Motivation par l'habitude : petit progrès quotidien vaut mieux que grosse session épisodique
 
 ### ✅ ACCOMPLI - Ce qui fonctionne parfaitement
 - **Dépôt Git** : Initialisé et connecté à GitHub (sebastienromero/forum-bici)
@@ -58,46 +59,34 @@ forum-bici-bogota/
 🔍 **Avantages** : Précision géographique, portions spécifiques notables  
 🔍 **Implémentation** : Code prêt mais non activé (utilisateur a annulé)
 
-### 🔧 TODO LISTE - PROCHAINES SESSIONS 30MIN
+### 🔧 TODO LISTE - PROCHAINES AMÉLIORATIONS QUOTIDIENNES
 
-#### ✅ **AMÉLIORATIONS UX TERMINÉES (Session 3 nov 2025)**
-1. ✅ **Notes par défaut à 3** - Sliders commencent à 3 au lieu de 1 (plus intuitif)
-2. ✅ **Couleur neutre pistes** - Changé vert #22c55e vers gris neutre #9ca3af
-3. ✅ **Corriger texte bouton** - Réparé émojis mal encodés "Noter les portions"
-4. ✅ **Affichage commentaires** - Commentaires apparaissent dans les tooltips
-5. ✅ **Supprimer contours bleus** - Interactions visuelles éliminées sur les pistes
-6. ✅ **Supprimer numéros pistes** - IDs au survol retirés
-7. ✅ **Couleurs progressives** - 5 niveaux: Rouge(1) → Orange(2) → Jaune(3) → Vert clair(4) → Vert foncé(5)
-8. ✅ **Bouton par défaut optimisé** - "Cacher les avis" par défaut, sélecteur synchro
-9. ✅ **Mode tracé intelligent** - Se ferme sur Annuler/clic extérieur
-10. ✅ **Sliders dynamiques** - Valeurs se mettent à jour en temps réel
-11. ✅ **Bouton plein écran** - Fonctionnalité ⛶ ajoutée
-12. ✅ **Code nettoyé** - Console.log debug supprimés, 3 fichiers obsolètes effacés
+#### 🎯 **AMÉLIORATION DU JOUR (16 novembre 2025)**
+- **Panneau de notation compact** → Tous les boutons doivent être visibles
 
-#### 🔧 **CORRECTIONS À FAIRE PROCHAINE SESSION (Session 5-20min)**
-1. **🔲 Bouton plein écran à compléter** - Fonctionnalité manquante ou bugs
-2. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise  
-3. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement de la page
-4. **🗑️ Vider le tracé lors désactivation mode** - Effacer tracé quand on clique en dehors/Annuler/bouton OFF
+#### 🔧 **PROCHAINES AMÉLIORATIONS (Une par jour)**
+1. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
+2. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
+3. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
+4. **🐛 Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a (Session ~25min)
+5. **⛶ Améliorer plein écran** - Vérifier fonctionnalité complète (Session ~10min)
 
-#### 🐛 **CORRECTIONS TECHNIQUES (Sessions 15-25min)**
-5. **Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a
+#### 🚀 **FONCTIONNALITÉS FUTURES (Sessions plus longues)**
+6. **Section Forum** - Créer la page de discussions
+7. **Authentification simple** - Système de pseudo/email basique
+8. **Export des données** - Bouton pour télécharger ses notes
 
-#### 🚀 **NOUVELLES FONCTIONNALITÉS (Sessions 25-30min)**
-8. **Section Forum** - Créer la page de discussions
-9. **Authentification simple** - Système de pseudo/email basique
-10. **Export des données** - Bouton pour télécharger ses notes
+### 📋 AMÉLIORATION RECOMMANDÉE POUR DEMAIN
 
-### 📋 PROCHAINE SESSION RECOMMANDÉE
+**Option 1 : Zoom initial de la carte** ⏱️ ~15min
+- Amélioration UX immédiate
+- Utilisateur voit mieux les pistes au chargement
+- Résultat : Meilleure première impression
 
-**Option 1 : Compléter bouton plein écran** ⏱️ ~10min
-- Problème : Fonctionnalité possiblement incomplète
-- Action : Tester et corriger les bugs éventuels  
-- Résultat : Plein écran 100% fonctionnel
-
-**Option 2 : Zoom initial + portions petites** ⏱️ ~20min
-- Double amélioration UX + précision notation
-- Rend l'expérience utilisateur optimale
+**Option 2 : Vider tracé lors désactivation** ⏱️ ~10min
+- Quick win, amélioration comportement
+- Plus intuitif pour l'utilisateur
+- Résultat : Interaction plus fluide
 
 #### Après le système de notation :
 - Phase 2 : Forum de discussion  
@@ -121,10 +110,11 @@ code .
 - ✅ Pistes cyclables s'affichent correctement
 - ✅ Système de notation opérationnel
 
-### 📝 Historique des sessions
+### 📝 Historique des améliorations
 - **Session 1 (25 oct 2024)** : Initialisation → Interface → Carte → Extraction pistes → Nettoyage ✅
 - **Session 2 (28 oct 2024)** : Plan simple → Système notation sliders → Exploration portions géolocalisées ✅
 - **Session 3 (3 nov 2025)** : UX améliorations massives → Couleurs progressives → Boutons optimisés → Code nettoyé ✅
+- **16 nov 2025** : Panneau de notation compact → Tous les boutons visibles ✅
 
 ### 🎨 Décisions techniques prises
 - **Sliders 1-5** au lieu de 1-10 (plus simple et intuitif)
@@ -194,5 +184,5 @@ code .
 - Outils tracé pistes souhaitées (priorité 3)
 
 ---
-*Dernière mise à jour : 3 novembre 2025 - Fin session 3*  
-*Prochaine session : Compléter plein écran + zoom initial + portions plus petites*
+*Dernière mise à jour : 16 novembre 2025 - Amélioration du jour : Panneau compact*  
+*Prochaine amélioration : Zoom initial de la carte ou vider tracé lors désactivation*

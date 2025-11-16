@@ -20,29 +20,29 @@ Ne jamais supposer que tout est évident.
 
 ## ⏱️ Méthodologie de développement
 
-### 🎯 **SESSIONS DE TRAVAIL DE 30 MINUTES**
+### 🎯 **UNE AMÉLIORATION PAR JOUR**
 
-En tant que développeur débutant avec peu de temps libre, j'ai adopté une méthodologie de **sessions courtes et productives** :
+En tant que développeur débutant avec peu de temps libre, j'ai adopté une méthodologie de **progression quotidienne régulière** :
 
-**📋 OBJECTIFS DE CHAQUE SESSION :**
-- ✅ **Une amélioration concrète** → Ajouter/corriger UNE fonctionnalité précise
+**📋 OBJECTIF QUOTIDIEN :**
+- ✅ **Une amélioration concrète par jour** → Ajouter/corriger UNE fonctionnalité précise
 - ✅ **Résultat visible** → Changement immédiatement perceptible sur le site
 - ✅ **Fonctionnalité complète** → Ce qui est fait marche parfaitement
-- ✅ **Progression claire** → Sentiment d'avancement vers l'objectif final
+- ✅ **Progression claire** → Sentiment d'avancement quotidien vers l'objectif final
 
-**🔄 WORKFLOW TYPE D'UNE SESSION 30MIN :**
+**🔄 WORKFLOW TYPE D'UNE SESSION QUOTIDIENNE :**
 
-**⏱️ 0-20min : DÉVELOPPEMENT**
-- Choisir 1 point précis de la TODO liste (NOTES.md)
+**⏱️ PHASE 1 : DÉVELOPPEMENT**
+- Ouvrir NOTES.md et choisir 1 point précis de la TODO liste
 - Implémenter la fonctionnalité de A à Z
 - Tester que ça marche correctement
 
-**⏱️ 20-25min : VALIDATION & NETTOYAGE**
+**⏱️ PHASE 2 : VALIDATION & NETTOYAGE**
 - Vérifier que le site fonctionne globalement
 - Supprimer code/fichiers devenus inutiles
 - S'assurer qu'aucune régression
 
-**⏱️ 25-30min : PROCÉDURE DE FIN DE SESSION**
+**⏱️ PHASE 3 : PROCÉDURE DE FIN DE SESSION**
 
 Quand je dis **"fin"**, suivre cette procédure en 7 étapes :
 
@@ -51,26 +51,27 @@ Quand je dis **"fin"**, suivre cette procédure en 7 étapes :
 3. **🧹 Tu nettoies tout** → L'assistant supprime le code inutile, fichiers obsolètes, commentaires debug, logs console, etc.
 4. **🧪 Je teste après nettoyage** → Vérifier que tout fonctionne encore
 5. **📋 Je resauvegarde** → Recliquer sur "Keep" après nettoyage
-6. **📝 Tu mets à jour NOTES.md** → Documenter l'état actuel + prochaines corrections que j'ai identifiées
+6. **📝 Tu mets à jour NOTES.md** → Documenter l'état actuel + prochaine amélioration identifiée pour demain
 7. **💾 Git workflow final** →
    ```bash
    git add .
-   git commit -m "✨ Session [date]: [résumé des améliorations]"
+   git commit -m "✨ [Date]: [résumé de l'amélioration du jour]"
    git push
    ```
 
 **💫 PRINCIPE FONDAMENTAL :**
-> "Je ne quitte jamais une session avec un truc en route ou cassé. Chaque session doit apporter un progrès concret et terminé."
+> "Un petit progrès chaque jour vaut mieux qu'une grosse session épisodique. Je ne quitte jamais une session avec quelque chose d'inachevé."
 
 **🎯 EXEMPLE DE RÉSULTAT ATTENDU :**
-> "✅ Session réussie ! Le bouton de notation s'affiche maintenant correctement, les couleurs des pistes sont neutres par défaut, et les sliders commencent à 3. Le site est plus user-friendly et la TODO liste a été mise à jour."
+> "✅ Amélioration du 16 nov 2025 terminée ! Le panneau de notation est maintenant compact et tous les boutons sont visibles. Le site est plus user-friendly. Demain : améliorer le zoom initial de la carte."
 
 **📝 AVANTAGES DE CETTE APPROCHE :**
-- ✅ **Motivation maintenue** : Progrès visible à chaque fois
-- ✅ **Pas de frustration** : Sessions courtes et productives  
-- ✅ **Continuité assurée** : NOTES.md permet de reprendre facilement
+- ✅ **Motivation maintenue** : Routine quotidienne, habitude positive
+- ✅ **Progrès constant** : 365 améliorations par an !
+- ✅ **Pas de frustration** : Objectif raisonnable et atteignable chaque jour
+- ✅ **Continuité assurée** : NOTES.md permet de reprendre facilement le lendemain
 - ✅ **Code propre** : Nettoyage systématique
-- ✅ **Historique clair** : Chaque commit = une amélioration
+- ✅ **Historique clair** : Chaque commit = une amélioration datée
 
 ---
 
@@ -79,12 +80,13 @@ Quand je dis **"fin"**, suivre cette procédure en 7 étapes :
 Si tu m'aides sur ce projet, garde en tête :
 
 1. **Je suis débutant** → Explique chaque étape clairement
-2. **Sessions de 30min max** → Propose des tâches réalisables rapidement
-3. **Résultat concret obligatoire** → Chaque session doit apporter une amélioration visible
+2. **Une amélioration par jour** → Propose une tâche réalisable en une session quotidienne
+3. **Résultat concret obligatoire** → Chaque jour doit apporter une amélioration visible
 4. **Guide-moi étape par étape** → Dis-moi quand tester, sauvegarder, passer à l'étape suivante
 5. **Procédure "fin" structurée** → Suivre les 7 étapes : Analyse → Keep → Nettoyage → Test → Keep → Notes → Git
 6. **Interface simple** → Pas de complexité inutile, design minimaliste
 7. **Une tâche à la fois** → Ne jamais laisser quelque chose d'inachevé
+8. **Routine quotidienne** → M'encourager à maintenir le rythme d'une amélioration par jour
 
 ## 🌍 Objectif général
 

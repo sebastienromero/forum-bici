@@ -20,39 +20,6 @@
         /* Hauteur de la carte (en px) */
         :root {
             --map-height: 600px;
-            
-            /* Couleurs mode clair */
-            --bg-primary: #fafafa;
-            --bg-secondary: white;
-            --bg-tertiary: #f8fafc;
-            --text-primary: #333;
-            --text-secondary: #666;
-            --border-color: #e2e8f0;
-            --header-bg: white;
-            --header-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            --control-bg: rgba(255,255,255,0.97);
-            --control-border: #2563eb;
-            --panel-bg: rgba(255,255,255,0.98);
-            --input-bg: white;
-            --input-border: #2563eb;
-            --hover-bg: #f0f9ff;
-        }
-        
-        html.dark-mode {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-tertiary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --border-color: #334155;
-            --header-bg: #1e293b;
-            --header-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            --control-bg: rgba(30, 41, 59, 0.95);
-            --control-border: #3b82f6;
-            --panel-bg: rgba(30, 41, 59, 0.98);
-            --input-bg: #0f172a;
-            --input-border: #3b82f6;
-            --hover-bg: #1e3a8a;
         }
         
         * {
@@ -63,75 +30,50 @@
         
         body {
             font-family: 'DM Sans', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
+            background-color: #fafafa;
+            color: #333;
             line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
         }
         
         header {
-            background: var(--header-bg);
-            padding: 0.75rem 2rem;
-            box-shadow: var(--header-shadow);
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 100;
         }
         
         .logo {
-            font-size: 1.1rem;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: var(--control-border);
-            white-space: nowrap;
-            flex-shrink: 0;
+            color: #2563eb;
         }
         
         nav {
             display: flex;
-            gap: 1rem;
-            flex: 1;
+            gap: 2rem;
+            margin-top: 1rem;
         }
         
         nav button {
             background: none;
             border: 2px solid transparent;
-            padding: 0.4rem 0.9rem;
+            padding: 0.5rem 1rem;
             border-radius: 8px;
             font-family: inherit;
-            font-size: 0.9rem;
-            color: var(--text-primary);
+            font-size: 0.95rem;
             cursor: pointer;
             transition: all 0.2s;
-            white-space: nowrap;
         }
         
         nav button:hover {
-            background-color: var(--hover-bg);
+            background-color: #f1f5f9;
         }
         
         nav button.active {
-            background-color: var(--control-border);
+            background-color: #2563eb;
             color: white;
-        }
-        
-        .theme-toggle {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: all 0.3s;
-            margin-left: auto;
-            flex-shrink: 0;
-        }
-        
-        .theme-toggle:hover {
-            background-color: var(--hover-bg);
         }
         
         main {
@@ -142,64 +84,29 @@
         
         .section {
             display: none;
-            background: var(--bg-secondary);
+            background: white;
             border-radius: 12px;
             padding: 2rem;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: background-color 0.3s;
         }
         
         .section.active {
             display: block;
         }
         
-        /* Section carte-existantes en plein écran */
-        #carte-existantes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            width: 100vw;
-            height: 100vh;
-            padding: 0;
-            margin: 0;
-            border-radius: 0;
-            box-shadow: none;
-            z-index: 1;
-            background: transparent;
-        }
-        
-        #carte-existantes.active {
-            display: block;
-        }
-        
-        /* Carte remplit tout l'espace après le header */
-        #carte-existantes #map-existantes {
-            width: 100vw !important;
-            height: calc(100vh - 60px) !important;
-            position: fixed !important;
-            top: 60px !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            margin: 0 !important;
-            padding: 0 !important;
-        }
-        
         .section h2 {
-            color: var(--control-border);
+            color: #1e40af;
             margin-bottom: 1rem;
             font-size: 1.8rem;
         }
         
         .placeholder {
-            background: var(--bg-tertiary);
-            border: 2px dashed var(--border-color);
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
             border-radius: 8px;
             padding: 3rem 2rem;
             text-align: center;
-            color: var(--text-secondary);
+            color: #64748b;
             margin-top: 1rem;
         }
         
@@ -229,7 +136,7 @@
         
         .rating-panel h4 {
             margin: 0 0 15px 0;
-            color: var(--text-primary);
+            color: #1e40af;
             font-size: 1.1rem;
             font-weight: 600;
         }
@@ -243,7 +150,7 @@
             margin-bottom: 5px;
             font-size: 0.9rem;
             font-weight: 500;
-            color: var(--text-primary);
+            color: #374151;
         }
         
         .rating-slider {
@@ -251,7 +158,7 @@
             -webkit-appearance: none;
             height: 6px;
             border-radius: 3px;
-            background: var(--border-color);
+            background: #e5e7eb;
             outline: none;
             margin-bottom: 5px;
         }
@@ -299,7 +206,7 @@
         
         .rating-value {
             display: inline-block;
-            background: var(--bg-tertiary);
+            background: #f3f4f6;
             padding: 2px 8px;
             border-radius: 4px;
             font-size: 0.8rem;
@@ -334,411 +241,21 @@
         }
         
         .btn.secondary {
-            background: var(--text-secondary);
-            color: var(--text-primary);
+            background: #6b7280;
+            color: white;
         }
         
         .btn.secondary:hover {
-            background: var(--hover-bg);
+            background: #4b5563;
         }
         
         .rating-info {
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: #6b7280;
             margin-top: 10px;
             padding: 8px;
-            background: var(--bg-tertiary);
+            background: #f9fafb;
             border-radius: 6px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        /* Styles pour les boîtes d'info dans les sections */
-        .info-box {
-            background: var(--bg-tertiary);
-            padding: 1.5rem;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-        }
-
-        /* Styles pour le panneau flottant hamburger (Rate Your Track style) */
-        .leaflet-control-floating-panel {
-            position: absolute;
-            top: 80px;
-            left: 20px;
-            z-index: 1000;
-        }
-
-        .floating-panel-btn {
-            width: 50px;
-            height: 50px;
-            background: white;
-            border: 2px solid #2563eb;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.2s;
-        }
-
-        .floating-panel-btn:hover {
-            background: var(--hover-bg);
-            transform: scale(1.05);
-        }
-
-        .floating-panel-btn span {
-            width: 24px;
-            height: 3px;
-            background: var(--control-border);
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .floating-panel-label {
-            position: absolute;
-            left: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--control-bg);
-            padding: 8px 12px;
-            border: 2px solid var(--control-border);
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--control-border);
-            white-space: nowrap;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .floating-panel-btn:hover + .floating-panel-label {
-            opacity: 1;
-        }
-
-        .floating-panel-content {
-            position: absolute;
-            top: 0;
-            left: 70px;
-            background: var(--panel-bg);
-            border: 2px solid var(--control-border);
-            border-radius: 12px;
-            padding: 20px;
-            width: 320px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            display: none;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .floating-panel-content.show {
-            display: block;
-        }
-
-        .floating-panel-content h4 {
-            margin: 0 0 20px 0;
-            color: var(--text-primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        /* Bouton croix de fermeture du panneau */
-        #close-floating-panel:hover {
-            background: var(--hover-bg) !important;
-            transform: scale(1.05);
-        }
-
-        #close-floating-panel span {
-            transition: all 0.2s;
-        }
-
-        .view-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: linear-gradient(135deg, var(--control-bg) 0%, var(--control-bg) 100%);
-            border: 2px solid var(--control-border);
-            border-radius: 10px;
-            padding: 12px 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .view-selector label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-size: 0.9rem;
-        }
-
-        .view-selector select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--control-border);
-            border-radius: 6px;
-            background: var(--input-bg);
-            color: var(--text-primary);
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .view-selector select:hover {
-            border-color: var(--control-border);
-            background: var(--bg-tertiary);
-        }
-
-        .view-selector select:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Curseur pour le mode dessin */
-        .leaflet-container.drawing-mode {
-            cursor: crosshair !important;
-        }
-
-        /* Marker personnalisé pour les points de l'itinéraire */
-        .route-marker {
-            background: white;
-            border: 3px solid #2563eb;
-            border-radius: 50%;
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
-
-        .route-marker:hover {
-            background: #fee2e2;
-            border-color: #dc2626;
-            transform: scale(1.2);
-        }
-
-        /* Styles pour les contrôles Leaflet (zoom + layers) */
-        .leaflet-top.leaflet-right {
-            top: 175px !important; /* Positionner sous le sélecteur de vue */
-        }
-
-        .leaflet-control-zoom,
-        .leaflet-control-layers {
-            border: 2px solid var(--control-border) !important;
-            border-radius: 8px !important;
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12) !important;
-            margin-bottom: 8px !important;
-            background: var(--control-bg) !important;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        .leaflet-control-layers-toggle:hover {
-            background: var(--hover-bg) !important;
-        }
-
-        .leaflet-control-zoom a {
-            border: none !important;
-            border-radius: 0px !important;
-            background: transparent !important;
-            color: var(--control-border) !important;
-        }
-
-        .leaflet-control-zoom a:hover {
-            background: transparent !important;
-        }
-
-        .leaflet-control-layers-toggle:hover {
-            background: var(--hover-bg) !important;
-        }
-
-        .leaflet-control-layers-expanded {
-            border: 2px solid var(--control-border) !important;
-            border-radius: 8px !important;
-            padding: 12px !important;
-            background: var(--bg-tertiary) !important;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2) !important;
-            min-width: 200px !important;
-        }
-        
-        .leaflet-control-layers-base {
-            padding-bottom: 8px !important;
-            border-bottom: 1px solid var(--border-color) !important;
-            margin-bottom: 8px !important;
-        }
-        
-        .leaflet-control-layers-overlays {
-            padding-top: 2px !important;
-        }
-        
-        .leaflet-control-layers-base::before {
-            content: "🗺️ Fonds de carte" !important;
-            display: block !important;
-            font-weight: 600 !important;
-            color: var(--text-primary) !important;
-            font-size: 12px !important;
-            margin-bottom: 6px !important;
-            text-transform: uppercase !important;
-            letter-spacing: 0.5px !important;
-            font-family: 'DM Sans', sans-serif !important;
-        }
-
-        /* Appliquer DM Sans à tous les éléments de la carte */
-        #map-existantes,
-        #map-existantes * ,
-        .leaflet-container,
-        .leaflet-control,
-        .leaflet-control-zoom,
-        .leaflet-control-layers,
-        .leaflet-control-layers-expanded,
-        .leaflet-popup,
-        .leaflet-tooltip,
-        #view-controls,
-        #view-controls *,
-        #floating-rating-panel,
-        #floating-rating-panel *,
-        #floating-panel-btn,
-        #floating-panel-label {
-            font-family: 'DM Sans', sans-serif !important;
-            color: var(--text-primary) !important;
-        }
-
-        /* Taille de police normale pour les contrôles */
-        .leaflet-control-zoom a,
-        .leaflet-control-layers {
-            font-size: 14px !important;
-        }
-
-        /* Harmoniser les labels et inputs du panneau */
-        #floating-rating-panel label {
-            font-weight: 500;
-            color: var(--text-primary) !important;
-            font-size: 14px !important;
-        }
-
-        #floating-rating-panel h4 {
-            color: var(--text-primary) !important;
-            font-size: 16px !important;
-        }
-
-        #floating-rating-panel .rating-value {
-            background: var(--bg-tertiary);
-            color: var(--text-primary) !important;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 13px !important;
-        }
-
-        #floating-rating-panel input[type="range"] {
-            margin-top: 4px;
-        }
-
-        #floating-rating-panel div {
-            color: var(--text-primary) !important;
-            font-size: 13px !important;
-        }
-
-        #segment-info {
-            font-weight: 500;
-            color: var(--text-primary) !important;
-            font-size: 13px !important;
-        }
-
-        /* Style du sélecteur de vue */
-        #view-controls {
-            color: var(--text-primary) !important;
-            font-size: 15px !important;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #view-controls select {
-            font-family: 'DM Sans', sans-serif !important;
-            color: var(--text-primary) !important;
-            background-color: var(--input-bg) !important;
-            font-size: 14px !important;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        #view-controls div {
-            color: var(--text-primary) !important;
-        }
-
-        /* Style des contrôles Leaflet */
-        .leaflet-control-layers label {
-            font-family: 'DM Sans', sans-serif !important;
-            font-weight: 500;
-            color: var(--text-primary) !important;
-            font-size: 13px !important;
-            margin-bottom: 6px !important;
-            display: flex !important;
-            align-items: center !important;
-        }
-        
-        .leaflet-control-layers input {
-            margin-right: 8px !important;
-            margin-bottom: 2px !important;
-            accent-color: #2563eb !important;
-        }
-        
-        .leaflet-control-layers-list {
-            padding: 0 !important;
-        }
-
-        /* Effets hover sur les boutons du panneau */
-        #floating-rating-panel .btn.primary:hover {
-            background: #1d4ed8 !important;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
-            transition: all 0.2s;
-        }
-
-        #floating-rating-panel .btn.warn:hover {
-            background: #e67e22 !important;
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(243, 156, 18, 0.3);
-            transition: all 0.2s;
-        }
-
-        #segment-info strong {
-            color: var(--text-primary) !important;
-        }
-
-        /* Style du titre du panneau */
-        #floating-rating-panel h4 {
-            font-weight: 600;
-            letter-spacing: -0.01em;
-        }
-
-        /* Harmoniser les tooltips et popups */
-        .leaflet-popup-content,
-        .leaflet-tooltip {
-            font-family: 'DM Sans', sans-serif !important;
-            font-size: 15px !important;
-            color: var(--text-primary) !important;
-            background-color: var(--control-bg) !important;
-            border: 2px solid var(--control-border) !important;
-            border-radius: 8px !important;
-            padding: 14px 16px !important;
-            box-shadow: 0 2px 12px rgba(37, 99, 235, 0.2) !important;
-            max-width: 340px !important;
-            width: 340px !important;
-            line-height: 1.6 !important;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        
-        .leaflet-tooltip-right::before {
-            border-right-color: var(--control-border) !important;
-        }
-
-        /* Boutons avec texte noir lorsque nécessaire */
-        #floating-rating-panel .btn {
-            font-size: 14px !important;
-            font-weight: 500 !important;
         }
     </style>
 </head>
@@ -752,7 +269,6 @@
             <button class="nav-btn" data-section="carte-souhaitees">Pistes souhaitées</button>
             <button class="nav-btn" data-section="apropos">À propos</button>
         </nav>
-        <button id="theme-toggle" class="theme-toggle" title="Basculer mode nuit">🌙</button>
     </header>
 
     <main>
@@ -762,15 +278,15 @@
             <p>Un site collaboratif pour améliorer les pistes cyclables de Bogotá !</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                <div class="info-box">
+                <div style="background: #f0f9ff; padding: 1.5rem; border-radius: 8px;">
                     <h3>🗣️ Forum</h3>
                     <p>Discutez avec la communauté cycliste</p>
                 </div>
-                <div class="info-box">
+                <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px;">
                     <h3>🗺️ Évaluez les pistes</h3>
-                    <p>Notez la sécurité, le calme, la qualité de l'air...</p>
+                    <p>Notez la sécurité, le bruit, la qualité de l'air...</p>
                 </div>
-                <div class="info-box">
+                <div style="background: #fef3f2; padding: 1.5rem; border-radius: 8px;">
                     <h3>✨ Proposez des améliorations</h3>
                     <p>Tracez de nouvelles pistes sur la carte</p>
                 </div>
@@ -787,76 +303,83 @@
             </div>
         </section>
 
-        <!-- Section Carte Existantes - Style Rate Your Track -->
+        <!-- Section Carte Existantes -->
         <section class="section active" id="carte-existantes">
-            <!-- Carte plein écran -->
-            <div id="map-existantes"></div>
+            <h2>🗺️ Pistes cyclables existantes</h2>
+            <p>Évaluez les pistes selon 5 critères : Sécurité, Bruit, Qualité de l'air, Fluidité, Accessibilité</p>
             
-            <!-- Sélecteur de vue (coin supérieur droit) -->
-            <div id="view-controls" style="position: fixed; right: 20px; top: 80px; background: var(--control-bg); border: 2px solid var(--control-border); padding: 12px 14px; border-radius: 8px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12); z-index: 1100; width: 260px; font-size: 13px; font-weight: 600; color: var(--text-primary);">
-                <div style="font-weight:600; font-size:12px; margin-bottom:8px; letter-spacing:0px; color:var(--control-border); text-transform:uppercase;">Voir par critère</div>
-                <select id="view-selector" onchange="changeView()" style="width: 100%; font-size:13px; font-weight:500; border:1px solid var(--control-border); border-radius:6px; padding:6px 10px; background:var(--input-bg); color:var(--text-primary); cursor: pointer;">
-                    <option value="security" selected>Sécurité</option>
-                    <option value="noise">Calme</option>
-                    <option value="air">Qualité de l'air</option>
-                    <option value="flow">Fluidité</option>
-                    <option value="inclusion">Accessibilité</option>
-                    <option value="global">Vue globale</option>
-                    <option value="neutre">Vue neutre</option>
+            <!-- Contrôles interactifs -->
+            <div style="display: flex; gap: 1rem; margin: 1rem 0; flex-wrap: wrap; align-items: center; padding: 1rem; background: white; border-radius: 8px; border: 1px solid #e5e7eb;">
+                <button id="toggle-tracing" onclick="toggleTracingMode()" style="padding: 0.5rem 1rem; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                    🛣️ Mode tracé OFF
+                </button>
+
+                <button id="clear-route-btn" onclick="clearCurrentRoute(); updateTracingStatus();" style="padding: 0.5rem 1rem; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: none;">
+                    🗑️ Effacer tracé
+                </button>
+
+                <button id="toggle-ratings-display" onclick="toggleRatingsDisplay()" style="padding: 0.5rem 1rem; background: #6b7280; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 0.9rem;">
+                    � Cacher les avis
+                </button>
+                <select id="view-selector" onchange="changeView()" style="padding: 0.5rem; border-radius: 6px; border: 1px solid #d1d5db; font-size: 0.9rem;">
+                    <option value="global">🗺️ Vue globale</option>
+                    <option value="security">🛡️ Sécurité</option>
+                    <option value="noise">🔊 Bruit</option>
+                    <option value="air">🌬️ Qualité air</option>
+                    <option value="flow">⚡ Fluidité</option>
+                    <option value="inclusion">👥 Inclusion</option>
                 </select>
+                
+                <span id="tracing-status" style="color: #6b7280; font-size: 0.9rem;"></span>
             </div>
             
-            <!-- Bouton flottant pour rouvrir le panneau -->
-            <button id="floating-panel-btn" style="display:none; position:fixed; top:80px; left:20px; z-index:1300; background:var(--control-border); border:none; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px rgba(37,99,235,0.18); cursor:pointer; align-items:center; justify-content:center;">
-                <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#fff"/><rect y="14" width="32" height="4" rx="2" fill="#fff"/><rect y="22" width="32" height="4" rx="2" fill="#fff"/></svg>
-            </button>
-            <div id="floating-panel-label" style="display:none; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
-            
-            <!-- Panneau de notation flottant (Hamburger) -->
-            <div id="floating-rating-panel" style="display:none; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:0; transform:translateX(-60px); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:none;">
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                    <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
-                    <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
-                        <svg viewBox="0 0 32 32" width="20" height="20"><rect y="6" width="32" height="4" rx="2" fill="#2563eb"/><rect y="14" width="32" height="4" rx="2" fill="#2563eb"/><rect y="22" width="32" height="4" rx="2" fill="#2563eb"/></svg>
-                    </button>
-                </div>
+            <!-- Carte interactive avec panneau de notation -->
+            <div style="position: relative;">
+                <div id="map-existantes" style="height: var(--map-height); margin-top: 1rem; border-radius: 8px; border: 1px solid #e2e8f0;"></div>
                 
-                <div style="font-size:11px; margin-bottom:8px;">📍 <span id="route-distance">0 km</span></div>
-                
-                <div style="font-size:10px; color:#666; margin-bottom:6px; padding:6px; background:#f8fafc; border-radius:4px;">
-                    Notez cette piste sur 5 critères (1 = très mauvais, 5 = excellent)
-                </div>
-                
-                <!-- Critères de notation -->
-                <div style="margin-top:4px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Sécurité <span id="security-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider security" id="security-slider" style="width:100%; height:4px;">
-                </div>
-                
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Calme <span id="noise-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider noise" id="noise-slider" style="width:100%; height:4px;">
-                </div>
-                
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Qualité de l'air <span id="air-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider air" id="air-slider" style="width:100%; height:4px;">
-                </div>
-                
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Fluidité <span id="flow-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider flow" id="flow-slider" style="width:100%; height:4px;">
-                </div>
-                
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Accessibilité <span id="inclusion-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider inclusion" id="inclusion-slider" style="width:100%; height:4px;">
-                </div>
-                
-                <!-- Boutons d'action -->
-                <div style="display:flex; gap:4px; margin-top:6px;">
-                    <button onclick="saveRouteRating()" class="btn primary" style="flex:1; padding:5px 6px; border-radius:5px; border:none; cursor:pointer; font-size:11px; background:#2563eb; color:white; font-weight:600;">Enregistrer</button>
-                    <button onclick="resetCurrentRoute()" class="btn warn" style="padding:5px 6px; border-radius:5px; border:none; cursor:pointer; font-size:11px; background:#f39c12; color:white; font-weight:600;">Reset</button>
+                <!-- Panneau de notation -->
+                <div id="rating-panel" class="rating-panel">
+                    <h4 id="segment-name">Noter ce segment</h4>
+                    
+                    <div class="rating-criteria">
+                        <label>🛡️ Sécurité <span class="rating-value" id="security-value">3</span></label>
+                        <input type="range" class="rating-slider security" id="security-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="rating-criteria">
+                        <label>🔊 Bruit <span class="rating-value" id="noise-value">3</span></label>
+                        <input type="range" class="rating-slider noise" id="noise-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="rating-criteria">
+                        <label>🌬️ Qualité de l'air <span class="rating-value" id="air-value">3</span></label>
+                        <input type="range" class="rating-slider air" id="air-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="rating-criteria">
+                        <label>⚡ Fluidité <span class="rating-value" id="flow-value">3</span></label>
+                        <input type="range" class="rating-slider flow" id="flow-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="rating-criteria">
+                        <label>👥 Inclusion <span class="rating-value" id="inclusion-value">3</span></label>
+                        <input type="range" class="rating-slider inclusion" id="inclusion-slider" min="1" max="5" value="3">
+                    </div>
+                    
+                    <div class="rating-criteria">
+                        <label>💬 Commentaire (optionnel)</label>
+                        <textarea id="rating-comment" placeholder="Décrivez votre expérience sur cet itinéraire..." style="width: 100%; height: 60px; margin-top: 6px; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; resize: vertical; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;"></textarea>
+                    </div>
+                    
+                    <div class="rating-buttons">
+                        <button class="btn primary" onclick="savePortionRatings()">🚴‍♀️ Noter les portions</button>
+                        <button class="btn secondary" onclick="closeRatingPanel()">❌ Annuler</button>
+                    </div>
+                    
+                    <div class="rating-info">
+                        <strong>Guide :</strong><br>
+                        1 = Très mauvais | 2 = Mauvais | 3 = Moyen | 4 = Bon | 5 = Excellent
+                    </div>
                 </div>
             </div>
         </section>
@@ -874,7 +397,7 @@
         <!-- Section À propos -->
         <section class="section" id="apropos">
             <h2>📋 À propos du projet</h2>
-            <p><strong>Objectif :</strong> Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo encore plus attractif.</p>
+            <p><strong>Objectif :</strong> Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo plus attractif.</p>
             
             <div style="margin-top: 2rem;">
                 <h3>🎯 Mission</h3>
@@ -904,10 +427,9 @@
         let routePoints = [];
         let routeLayer = null;
         let routeMarkers = [];
-        let isTracingMode = true; // Mode tracé activé seulement quand le panneau est ouvert
-        let isPanelOpen = false; // Le panneau est fermé au démarrage
+        let isTracingMode = false;
         let showRatings = true;
-        let currentView = 'security';
+        let currentView = 'global';
 
         // Navigation simple
         const navButtons = document.querySelectorAll('.nav-btn');
@@ -940,14 +462,8 @@
                 
                 // Créer la carte centrée sur Bogotá avec zoom optimal
                 mapExistantes = L.map('map-existantes', {
-                    maxZoom: 18,  // Limiter le zoom max pour éviter le flou
-                    zoomControl: false  // Désactiver le contrôle de zoom par défaut
+                    maxZoom: 18  // Limiter le zoom max pour éviter le flou
                 }).setView([4.6097, -74.0817], 12);  // Zoom initial augmenté (13 -> 15 -> 19 -> 12 -> 11 -> 12)
-                
-                // Ajouter le contrôle de zoom à droite en haut (à côté du sélecteur de fond de carte)
-                L.control.zoom({
-                    position: 'topright'
-                }).addTo(mapExistantes);
                 
                 // Couches de base avec zoom optimisé
                 const baseNeutre = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -960,24 +476,16 @@
                     maxZoom: 18  // Zoom cohérent
                 });
                 
-                const baseVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                    attribution: '© OpenStreetMap contributors | © CARTO',
-                    maxZoom: 18  // Zoom cohérent
-                });
+                // Ajouter la couche de base par défaut
+                baseNeutre.addTo(mapExistantes);
                 
-                // Ajouter la couche de base par défaut (Voyager)
-                baseVoyager.addTo(mapExistantes);
-                
-                // Contrôle des couches (seulement les fonds de carte) - positionné en haut à droite
+                // Contrôle des couches (seulement les fonds de carte)
                 const baseMaps = {
-                    "🗺️ Voyager": baseVoyager,
                     "🎨 Carte neutre": baseNeutre,
                     "📍 Carte standard": baseStandard
                 };
                 
-                L.control.layers(baseMaps, null, {
-                    position: 'topright'
-                }).addTo(mapExistantes);
+                L.control.layers(baseMaps).addTo(mapExistantes);
                 
                 // Utiliser les données intégrées directement (évite les problèmes CORS)
                 console.log('🔍 Chargement des pistes cyclables...');
@@ -995,7 +503,7 @@
                             // Style uniforme pour toutes les pistes (sans notation directe)
                             return {
                                 color: '#9ca3af',
-                                weight: 4,
+                                weight: 3,
                                 opacity: 0.8,
                                 interactive: false // Désactiver complètement les interactions
                             };
@@ -1133,7 +641,7 @@
                 if (routeLayer) {
                     routeLayer.setStyle({
                         color: getColorFromRating(average),
-                        weight: 4,
+                        weight: 5,
                         opacity: 0.9
                     });
                     
@@ -1144,7 +652,7 @@
                             <strong>📍 Zone notée</strong><br>
                             <strong>📊 Note: ${average.toFixed(1)}/5</strong><br>
                             🛡️ Sécurité: ${ratings.security}/5<br>
-                            � Calme: ${ratings.noise}/5<br>
+                            🔊 Bruit: ${ratings.noise}/5<br>
                             🌬️ Air: ${ratings.air}/5<br>
                             ⚡ Fluidité: ${ratings.flow}/5<br>
                             👥 Inclusion: ${ratings.inclusion}/5<br>
@@ -1155,7 +663,7 @@
                             <strong>🛣️ Itinéraire noté</strong><br>
                             <strong>📊 Note: ${average.toFixed(1)}/5</strong><br>
                             🛡️ Sécurité: ${ratings.security}/5<br>
-                            � Calme: ${ratings.noise}/5<br>
+                            🔊 Bruit: ${ratings.noise}/5<br>
                             🌬️ Air: ${ratings.air}/5<br>
                             ⚡ Fluidité: ${ratings.flow}/5<br>
                             👥 Inclusion: ${ratings.inclusion}/5
@@ -1314,10 +822,9 @@
         }
 
         function handleMapClick(e) {
-            // Tracer seulement si le panneau est ouvert
-            if (!isPanelOpen) {
-                return;
-            }
+            if (!isTracingMode) return;
+            
+
             
             // Ajouter le point au tracé
             routePoints.push([e.latlng.lng, e.latlng.lat]);
@@ -1346,9 +853,8 @@
             // Redessiner la ligne
             redrawRouteLine();
             
-            // Mettre à jour le statut et la distance dans le panneau
+            // Mettre à jour le statut
             updateTracingStatus();
-            updateRouteDistance();
         }
 
         function removeRoutePoint(index) {
@@ -1366,7 +872,6 @@
             // Redessiner
             redrawRouteLine();
             updateTracingStatus();
-            updateRouteDistance();
         }
 
         function redrawRouteLine() {
@@ -1425,32 +930,6 @@
                 status.textContent = `${pointCount} points - Continuez à tracer ou sauvegardez`;
                 if (clearBtn) clearBtn.style.display = 'inline-block';
             }
-        }
-        
-        // Mettre à jour la distance dans le panneau flottant
-        function updateRouteDistance() {
-            const distanceElem = document.getElementById('route-distance');
-            if (!distanceElem) return;
-            
-            if (routePoints.length < 2) {
-                distanceElem.textContent = '0 km';
-                return;
-            }
-            
-            // Calculer la distance totale de l'itinéraire
-            let totalDistance = 0;
-            for (let i = 1; i < routePoints.length; i++) {
-                const p1 = routePoints[i - 1];
-                const p2 = routePoints[i];
-                const d = Math.sqrt(
-                    Math.pow(p2[0] - p1[0], 2) + 
-                    Math.pow(p2[1] - p1[1], 2)
-                );
-                // Approximation: 1 degré ≈ 111 km à l'équateur
-                totalDistance += d * 111;
-            }
-            
-            distanceElem.textContent = `${totalDistance.toFixed(2)} km`;
         }
 
         function clearCurrentRoute() {
@@ -1607,63 +1086,46 @@
                 
                 const ratings = track.ratings;
                 let average = 0;
-                let color = '#9ca3af'; // Gris par défaut pour neutre
+                let color = '#666666';
                 
                 // Calculer la moyenne selon la vue active
                 if (currentView === 'global') {
                     average = (ratings.security + ratings.noise + ratings.air + ratings.flow + ratings.inclusion) / 5;
-                    // Appliquer les couleurs pour vue globale
-                    if (average >= 4.5) color = '#22c55e'; // Vert foncé (5)
-                    else if (average >= 3.5) color = '#84cc16'; // Vert clair (4)
-                    else if (average >= 2.5) color = '#eab308'; // Jaune (3)
-                    else if (average >= 1.5) color = '#f97316'; // Orange (2)
-                    else color = '#ef4444'; // Rouge (1)
-                } else if (currentView === 'neutre') {
-                    // Vue neutre : afficher TOUTES les pistes en gris (pas de couleur)
-                    average = (ratings.security + ratings.noise + ratings.air + ratings.flow + ratings.inclusion) / 5;
-                    color = '#9ca3af'; // Gris neutre
                 } else {
-                    // Autres critères : afficher en couleur selon le critère spécifique
                     average = ratings[currentView] || 0;
-                    // Couleur selon la note (5 niveaux progressifs)
-                    if (average >= 4.5) color = '#22c55e'; // Vert foncé (5)
-                    else if (average >= 3.5) color = '#84cc16'; // Vert clair (4)
-                    else if (average >= 2.5) color = '#eab308'; // Jaune (3)
-                    else if (average >= 1.5) color = '#f97316'; // Orange (2)
-                    else color = '#ef4444'; // Rouge (1)
                 }
+                
+                // Couleur selon la note (5 niveaux progressifs)
+                if (average >= 4.5) color = '#22c55e'; // Vert foncé (5)
+                else if (average >= 3.5) color = '#84cc16'; // Vert clair (4)
+                else if (average >= 2.5) color = '#eab308'; // Jaune (3)
+                else if (average >= 1.5) color = '#f97316'; // Orange (2)
+                else color = '#ef4444'; // Rouge (1)
                 
                 // Créer une ligne colorée pour la piste entière
                 const trackLayer = L.geoJSON(track.feature, {
                     style: {
                         color: color,
-                        weight: 4,
+                        weight: 6,
                         opacity: 0.8
                     }
                 }).addTo(mapExistantes);
                 
-                // Tooltip avec détails (désactivé si on trace un itinéraire)
+                // Tooltip avec détails
                 let tooltipContent = `
-                    <strong style="font-size: 16px; color: #1e40af;">Note moyenne: ${average.toFixed(1)}/5</strong><br><br>
-                    <strong>Sécurité:</strong> ${ratings.security}/5<br>
-                    <strong>Calme:</strong> ${ratings.noise}/5<br>
-                    <strong>Air:</strong> ${ratings.air}/5<br>
-                    <strong>Fluidité:</strong> ${ratings.flow}/5<br>
-                    <strong>Inclusion:</strong> ${ratings.inclusion}/5`;
+                    Note moyenne: ${average.toFixed(1)}/5<br>
+                    🛡️ Sécurité: ${ratings.security}/5<br>
+                    🔊 Bruit: ${ratings.noise}/5<br>
+                    🌬️ Air: ${ratings.air}/5<br>
+                    ⚡ Fluidité: ${ratings.flow}/5<br>
+                    👥 Inclusion: ${ratings.inclusion}/5`;
                 
                 // Ajouter le commentaire s'il existe
                 if (ratings.comment && ratings.comment.trim()) {
-                    tooltipContent += `<br><br><strong style="color: #1e40af;">💬 Avis des utilisateurs:</strong><br><em style="color: #555;">"${ratings.comment}"</em>`;
+                    tooltipContent += `<br><br>💬 <em>"${ratings.comment}"</em>`;
                 }
                 
-                trackLayer.bindTooltip(tooltipContent, { permanent: false, direction: 'right', sticky: true });
-                
-                // Désactiver le tooltip quand on trace un itinéraire
-                trackLayer.on('mouseover', function(e) {
-                    if (isPanelOpen) {
-                        trackLayer.closeTooltip();
-                    }
-                });
+                trackLayer.bindTooltip(tooltipContent, { permanent: false, direction: 'top' });
                 
                 portionLayers.push(trackLayer);
             });
@@ -1861,182 +1323,6 @@
             // Initialiser automatiquement la carte des pistes existantes puisque c'est la section par défaut
             if (!mapExistantes && document.getElementById('carte-existantes').classList.contains('active')) {
                 initMapExistantes();
-            }
-            
-            // Initialiser le panneau flottant hamburger
-            initFloatingPanel();
-        });
-        
-        // Gestion du panneau flottant hamburger
-        function initFloatingPanel() {
-            const floatingPanel = document.getElementById('floating-rating-panel');
-            const floatingBtn = document.getElementById('floating-panel-btn');
-            const floatingLabel = document.getElementById('floating-panel-label');
-            const closePanelBtn = document.getElementById('close-floating-panel');
-            
-            // Le panneau est fermé au démarrage
-            if (floatingPanel) {
-                floatingPanel.style.display = 'none';
-                floatingPanel.style.opacity = '0';
-                floatingPanel.style.transform = 'translateX(-60px)';
-                floatingPanel.style.pointerEvents = 'none';
-            }
-            
-            // Afficher le bouton hamburger bleu au démarrage
-            if (floatingBtn) {
-                floatingBtn.style.display = 'flex';
-            }
-            if (floatingLabel) {
-                floatingLabel.style.display = 'block';
-            }
-            
-            isPanelOpen = false; // Le panneau est fermé
-            
-            // Gestion du bouton hamburger pour rouvrir
-            if (floatingBtn) {
-                floatingBtn.addEventListener('click', function() {
-                    if (floatingPanel) {
-                        floatingPanel.style.display = 'block';
-                        setTimeout(() => {
-                            floatingPanel.style.opacity = '1';
-                            floatingPanel.style.transform = 'translateX(0)';
-                            floatingPanel.style.pointerEvents = 'auto';
-                        }, 50);
-                        floatingBtn.style.display = 'none';
-                        if (floatingLabel) floatingLabel.style.display = 'none';
-                        isPanelOpen = true; // Le panneau est ouvert
-                    }
-                });
-            }
-            
-            // Gestion du bouton de fermeture (hamburger dans le panneau)
-            if (closePanelBtn) {
-                closePanelBtn.addEventListener('click', function() {
-                    if (floatingPanel) {
-                        floatingPanel.style.opacity = '0';
-                        floatingPanel.style.transform = 'translateX(-60px)';
-                        floatingPanel.style.pointerEvents = 'none';
-                        setTimeout(() => {
-                            floatingPanel.style.display = 'none';
-                        }, 230); // Durée de la transition
-                        if (floatingBtn) floatingBtn.style.display = 'flex';
-                        if (floatingLabel) floatingLabel.style.display = 'block';
-                        isPanelOpen = false; // Le panneau est fermé
-                    }
-                });
-            }
-        }
-        
-        // Fonction pour sauvegarder la notation de l'itinéraire
-        function saveRouteRating() {
-            if (routePoints.length === 0) {
-                alert('⚠️ Tracez un itinéraire en cliquant sur la carte avant de noter !');
-                return;
-            }
-            
-            // Collecter les valeurs des sliders
-            const ratings = {
-                security: parseInt(document.getElementById('security-slider').value),
-                noise: parseInt(document.getElementById('noise-slider').value),
-                air: parseInt(document.getElementById('air-slider').value),
-                flow: parseInt(document.getElementById('flow-slider').value),
-                inclusion: parseInt(document.getElementById('inclusion-slider').value)
-            };
-            
-            // Calculer la moyenne pour cette notation
-            const avgRating = (ratings.security + ratings.noise + ratings.air + ratings.flow + ratings.inclusion) / 5;
-            
-            // Trouver toutes les portions de pistes proches du tracé
-            const nearbyPortions = findNearbyTrackPortions();
-            
-            console.log(`💾 Sauvegarde de ${nearbyPortions.length} portions notées`);
-            
-            // Sauvegarder la note pour chaque portion
-            let totalDistance = 0;
-            nearbyPortions.forEach(portion => {
-                portionRatings[portion.id] = {
-                    ...ratings,
-                    average: avgRating,
-                    timestamp: Date.now()
-                };
-                totalDistance += portion.distance || 0;
-            });
-            
-            // Sauvegarder dans localStorage
-            localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-            
-            console.log(`✅ ${nearbyPortions.length} portions sauvegardées (${totalDistance.toFixed(2)} km)`);
-            alert(`✅ Notation enregistrée !\n${nearbyPortions.length} portions notées sur ${totalDistance.toFixed(2)} km`);
-            
-            // Réinitialiser l'itinéraire et rafraîchir l'affichage
-            resetCurrentRoute();
-            displayPortionRatings();
-        }
-        
-        // Fonction pour réinitialiser l'itinéraire actuel
-        function resetCurrentRoute() {
-            // Effacer le tracé sur la carte
-            if (routeLayer) {
-                mapExistantes.removeLayer(routeLayer);
-                routeLayer = null;
-            }
-            
-            // Effacer les marqueurs
-            routeMarkers.forEach(marker => mapExistantes.removeLayer(marker));
-            routeMarkers = [];
-            
-            // Réinitialiser les données de l'itinéraire
-            routePoints = [];
-            
-            // Réinitialiser les sliders à 1
-            ['security', 'noise', 'air', 'flow', 'inclusion'].forEach(criterion => {
-                const slider = document.getElementById(`${criterion}-slider`);
-                if (slider) {
-                    slider.value = 1;
-                    updateRatingValue(criterion, 1);
-                }
-            });
-            
-            // Mettre à jour l'affichage de la distance
-            const distanceElem = document.getElementById('route-distance');
-            if (distanceElem) {
-                distanceElem.textContent = '0 km';
-            }
-            
-            console.log('🔄 Itinéraire réinitialisé');
-        }
-
-        // ===== MODE NUIT =====
-        // Initialiser le mode nuit au chargement de la page
-        function initThemeMode() {
-            const savedTheme = localStorage.getItem('theme-mode') || 'light';
-            
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('dark-mode');
-                updateThemeToggleButton();
-            }
-        }
-
-        // Fonction pour basculer le mode nuit
-        function toggleTheme() {
-            const isDarkMode = document.documentElement.classList.toggle('dark-mode');
-            localStorage.setItem('theme-mode', isDarkMode ? 'dark' : 'light');
-            updateThemeToggleButton();
-        }
-
-        // Mettre à jour l'affichage du bouton toggle
-        function updateThemeToggleButton() {
-            const themeToggle = document.getElementById('theme-toggle');
-            const isDarkMode = document.documentElement.classList.contains('dark-mode');
-            themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
-        }
-
-        // Ajouter un event listener au bouton de toggle
-        document.addEventListener('DOMContentLoaded', function() {
-            initThemeMode();
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', toggleTheme);
             }
         });
     </script>
