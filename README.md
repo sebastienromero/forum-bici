@@ -88,6 +88,11 @@ Si tu m'aides sur ce projet, garde en tête :
 7. **Une tâche à la fois** → Ne jamais laisser quelque chose d'inachevé
 8. **Routine quotidienne** → M'encourager à maintenir le rythme d'une amélioration par jour
 
+### 🎯 **DÉCLENCHEUR DE FIN DE SESSION**
+**Quand je dis : "fin" ou "protocole de fin de session"**
+→ Tu commences immédiatement la procédure 7 étapes sans attendre confirmation
+→ Référence : PHASE 3 ci-dessus
+
 ## 🌍 Objectif général
 
 Créer un **site collaboratif** pour les cyclistes de Bogotá, combinant :
