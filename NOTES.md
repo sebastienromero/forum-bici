@@ -61,8 +61,9 @@ forum-bici-bogota/
 
 ### 🔧 TODO LISTE - PROCHAINES AMÉLIORATIONS QUOTIDIENNES
 
-#### 🎯 **AMÉLIORATION DU JOUR (16 novembre 2025)**
-- **Panneau de notation compact** → Tous les boutons doivent être visibles
+#### ✅ **AMÉLIORATION DU JOUR (16 novembre 2025) - TERMINÉE**
+- ✅ **Mode nuit complet** → Dark mode system avec CSS variables, toggle button, localStorage persistence
+- ✅ **Nettoyage complet** → Suppression fichiers inutiles (backend/, integration-notes, backups, data vides)
 
 #### 🔧 **PROCHAINES AMÉLIORATIONS (Une par jour)**
 1. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
@@ -114,7 +115,7 @@ code .
 - **Session 1 (25 oct 2024)** : Initialisation → Interface → Carte → Extraction pistes → Nettoyage ✅
 - **Session 2 (28 oct 2024)** : Plan simple → Système notation sliders → Exploration portions géolocalisées ✅
 - **Session 3 (3 nov 2025)** : UX améliorations massives → Couleurs progressives → Boutons optimisés → Code nettoyé ✅
-- **16 nov 2025** : Panneau de notation compact → Tous les boutons visibles ✅
+- **16 nov 2025** : Mode nuit complet + Dark mode system + Nettoyage fichiers inutiles ✅
 
 ### 🎨 Décisions techniques prises
 - **Sliders 1-5** au lieu de 1-10 (plus simple et intuitif)
@@ -184,5 +185,5 @@ code .
 - Outils tracé pistes souhaitées (priorité 3)
 
 ---
-*Dernière mise à jour : 16 novembre 2025 - Amélioration du jour : Panneau compact*  
+*Dernière mise à jour : 16 novembre 2025 - Session terminée : Dark mode + Nettoyage*  
 *Prochaine amélioration : Zoom initial de la carte ou vider tracé lors désactivation*
