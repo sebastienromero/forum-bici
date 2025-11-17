@@ -92,9 +92,9 @@ Si tu m'aides sur ce projet, garde en tête :
 
 **🚀 DÉMARRAGE DE SESSION**
 **Quand je dis : "allez une amélioration"**
-→ Tu lis NOTES.md pour voir la prochaine amélioration
-→ Tu proposes un plan d'action rapide (~15min)
-→ Tu m'aides à implémenter une amélioration concrète
+→ Tu dis "Session démarrée ! En attente de vos instructions"
+→ Tu attends que je dise QUELLE amélioration faire
+→ Puis tu m'aides à l'implémenter
 
 **✅ FIN DE SESSION**
 **Quand je dis : "fin" ou "protocole de fin de session"**
