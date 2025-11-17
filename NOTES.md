@@ -1,6 +1,6 @@
 # 📋 Notes de développement - Rate Your Track Bogotá
 
-## 🎯 État actuel du projet (3 novembre 2025)
+## 🎯 État actuel du projet (17 novembre 2025)
 
 ### 💬 MÉTHODOLOGIE DÉVELOPPEMENT
 **Une amélioration par jour** - Approche "routine quotidienne productive"
@@ -21,6 +21,8 @@
 - **✅ SAUVEGARDE & VISUALISATION** : localStorage + affichage pistes colorées selon notes
 - **✅ CODE NETTOYÉ** : Suppression ~100 lignes obsolètes, structure optimisée
 - **✅ UX AMÉLIORÉE (Session 3 nov 2025)** : Sliders par défaut à 3, couleurs progressives, boutons optimisés
+- **✅ DARK MODE (16 nov 2025)** : Mode nuit complet avec CSS variables, toggle button, localStorage
+- **✅ SYSTÈME MULTI-AVIS (17 nov 2025)** : Accumulation avis, moyennes, commentaires multiples, tooltips enrichis
 
 ### 📁 Structure finale du projet
 ```
@@ -61,16 +63,21 @@ forum-bici-bogota/
 
 ### 🔧 TODO LISTE - PROCHAINES AMÉLIORATIONS QUOTIDIENNES
 
-#### ✅ **AMÉLIORATION DU JOUR (16 novembre 2025) - TERMINÉE**
-- ✅ **Mode nuit complet** → Dark mode system avec CSS variables, toggle button, localStorage persistence
-- ✅ **Nettoyage complet** → Suppression fichiers inutiles (backend/, integration-notes, backups, data vides)
+#### ✅ **AMÉLIORATION DU JOUR (17 novembre 2025) - PARTIELLEMENT COMPLÉTÉE**
+- ✅ **Système multi-avis** → Accumulation avis par portion (array au lieu d'objet unique)
+- ✅ **Migration auto ancien format** → Détection + conversion données localStorage anciennes
+- ✅ **Tooltips enrichis** → "basé sur X avis", moyennes calculées, tous commentaires affichés
+- ✅ **Champ commentaire** → Restauré dans floating panel avec sauvegarde
+- ✅ **Tooltips intelligents** → Désactivés pendant tracé (unbindTooltip), réactivés après reset
+- ❌ **BUG BLOQUANT** → Impossible placer 2e+ points après modification tooltips (cause inconnue)
 
 #### 🔧 **PROCHAINES AMÉLIORATIONS (Une par jour)**
-1. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
-2. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
-3. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
-4. **🐛 Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a (Session ~25min)
-5. **⛶ Améliorer plein écran** - Vérifier fonctionnalité complète (Session ~10min)
+1. **🐛 DEBUG URGENT** - Débloquer tracé multi-points (Session ~30-45min) - PRIORITÉ ABSOLUE
+2. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
+3. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
+4. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
+5. **🐛 Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a (Session ~25min)
+6. **⛶ Améliorer plein écran** - Vérifier fonctionnalité complète (Session ~10min)
 
 #### 🚀 **FONCTIONNALITÉS FUTURES (Sessions plus longues)**
 6. **Section Forum** - Créer la page de discussions
@@ -79,21 +86,24 @@ forum-bici-bogota/
 
 ### 📋 AMÉLIORATION RECOMMANDÉE POUR DEMAIN
 
-**Option 1 : Zoom initial de la carte** ⏱️ ~15min
-- Amélioration UX immédiate
-- Utilisateur voit mieux les pistes au chargement
-- Résultat : Meilleure première impression
+**🚨 PRIORITÉ ABSOLUE : Debug tracé multi-points** ⏱️ ~30-45min
+- Bug critique bloquant fonctionnalité principale
+- Utilisateur ne peut plus placer plus d'un point après modifs tooltips
+- Action : Inspecter console, identifier erreur JavaScript, corriger logique displayPortionRatings()
+- Résultat : Traçage d'itinéraires redevient fonctionnel
 
-**Option 2 : Vider tracé lors désactivation** ⏱️ ~10min
-- Quick win, amélioration comportement
-- Plus intuitif pour l'utilisateur
-- Résultat : Interaction plus fluide
+**Ensuite : Tester système multi-avis end-to-end**
+- Vérifier accumulation avis fonctionne
+- Tester migration ancien format localStorage
+- Valider affichage moyennes et commentaires
 
-#### Après le système de notation :
-- Phase 2 : Forum de discussion  
-- Phase 3 : Carte des pistes souhaitées
-- Phase 4 : Backend Flask + base de données
-- Phase 5 : Déploiement
+#### Après résolution bug tracé :
+- Phase 2 : Optimiser zoom initial de la carte
+- Phase 3 : Vider tracé lors désactivation bouton
+- Phase 4 : Forum de discussion  
+- Phase 5 : Carte des pistes souhaitées
+- Phase 6 : Backend Flask + base de données
+- Phase 7 : Déploiement
 
 ### � Commandes pour reprendre la session
 ```bash
@@ -116,6 +126,14 @@ code .
 - **Session 2 (28 oct 2024)** : Plan simple → Système notation sliders → Exploration portions géolocalisées ✅
 - **Session 3 (3 nov 2025)** : UX améliorations massives → Couleurs progressives → Boutons optimisés → Code nettoyé ✅
 - **16 nov 2025** : Mode nuit complet + Dark mode system + Nettoyage fichiers inutiles ✅
+- **17 nov 2025** : Système multi-avis + Migration auto données + Tooltips enrichis + ❌ Bug tracé multi-points ⚠️
+
+### 🐛 BUGS CONNUS (17 nov 2025)
+- ❌ **CRITIQUE** : Impossible de placer 2e+ points après modifications tooltips
+  - Symptôme : Premier point OK, clic suivants ne créent pas de nouveaux points
+  - Cause probable : Interaction entre displayPortionRatings() et handleMapClick()
+  - Solution : À investiguer via console browser (F12)
+  - Impact : Fonctionnalité principale bloquée
 
 ### 🎨 Décisions techniques prises
 - **Sliders 1-5** au lieu de 1-10 (plus simple et intuitif)
@@ -185,5 +203,5 @@ code .
 - Outils tracé pistes souhaitées (priorité 3)
 
 ---
-*Dernière mise à jour : 16 novembre 2025 - Session terminée : Dark mode + Nettoyage*  
-*Prochaine amélioration : Zoom initial de la carte ou vider tracé lors désactivation*
+*Dernière mise à jour : 17 novembre 2025 - Session incomplète : Système multi-avis + BUG CRITIQUE tracé*  
+*Prochaine amélioration : DEBUG URGENT - Débloquer tracé multi-points*
