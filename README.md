@@ -44,20 +44,41 @@ En tant que développeur débutant avec peu de temps libre, j'ai adopté une mé
 
 **⏱️ PHASE 3 : PROCÉDURE DE FIN DE SESSION**
 
-Quand je dis **"fin"**, suivre cette procédure en 7 étapes :
+Quand je dis **"protocole de fin de session"**, **"fin de session"** ou **"fin"**, suivre cette procédure en 5 étapes :
 
-1. **🔍 J'identifie les prochaines corrections** → Je teste le site et je dis les petits soucis à corriger pour la prochaine session (l'assistant peut m'aider à repérer)
-2. **📋 Je sauvegarde le code actuel** → Cliquer sur le bouton "Keep" pour sauvegarder l'état
-3. **🧹 Tu nettoies tout** → L'assistant supprime le code inutile, fichiers obsolètes, commentaires debug, logs console, etc.
-4. **🧪 Je teste après nettoyage** → Vérifier que tout fonctionne encore
-5. **📋 Je resauvegarde** → Recliquer sur "Keep" après nettoyage
-6. **📝 Tu mets à jour NOTES.md** → Documenter l'état actuel + prochaine amélioration identifiée pour demain
-7. **💾 Git workflow final** →
+**⚠️ IMPORTANT : L'assistant doit ATTENDRE VALIDATION entre CHAQUE étape**
+
+1. **📝 Mise à jour NOTES.md**
+   - L'assistant documente l'avancée de la session du jour
+   - Détaille ce qui a été fait, ce qui reste à faire
+   - Permet de reprendre facilement la prochaine session
+   - 👤 **→ J'attends que tu me dises "Étape 1 terminée, passe à l'étape 2"**
+
+2. **🧪 Je teste le site + Sauvegarde**
+   - Je vérifie que tout fonctionne correctement
+   - J'appuie sur **"Keep"** pour sauvegarder l'état actuel
+   - 👤 **→ Je te dis "OK étape 2, continue"**
+
+3. **🧹 Nettoyage du code par l'assistant**
+   - Supprimer fichiers inutiles (non utilisés)
+   - Supprimer code inutile (fonctions/variables non utilisées)
+   - Supprimer commentaires de debug/logs console inutiles
+   - Rendre le code propre et lisible
+   - 👤 **→ J'attends que tu me dises "Étape 3 terminée, passe à l'étape 4"**
+
+4. **🧪 Je reteste le site + Re-sauvegarde**
+   - Je vérifie que rien n'est cassé après nettoyage
+   - Je ré-appuie sur **"Keep"** pour sauvegarder le nettoyage
+   - 👤 **→ Je te dis "OK étape 4, continue"**
+
+5. **💾 Sauvegarde GitHub finale**
+   - L'assistant exécute :
    ```bash
    git add .
    git commit -m "✨ [Date]: [résumé de l'amélioration du jour]"
    git push
    ```
+   - 👤 **→ Session terminée ! 🎉**
 
 **💫 PRINCIPE FONDAMENTAL :**
 > "Un petit progrès chaque jour vaut mieux qu'une grosse session épisodique. Je ne quitte jamais une session avec quelque chose d'inachevé."
