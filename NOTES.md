@@ -63,20 +63,28 @@ forum-bici-bogota/
 
 ### 🔧 TODO LISTE - PROCHAINES AMÉLIORATIONS QUOTIDIENNES
 
-#### ✅ **AMÉLIORATION DU JOUR (17 novembre 2025) - PARTIELLEMENT COMPLÉTÉE**
+#### ✅ **AMÉLIORATION DU JOUR (17 novembre 2025) - COMPLÉTÉE**
 - ✅ **Système multi-avis** → Accumulation avis par portion (array au lieu d'objet unique)
 - ✅ **Migration auto ancien format** → Détection + conversion données localStorage anciennes
 - ✅ **Tooltips enrichis** → "basé sur X avis", moyennes calculées, tous commentaires affichés
 - ✅ **Champ commentaire** → Restauré dans floating panel avec sauvegarde
 - ✅ **Tooltips intelligents** → Désactivés pendant tracé (unbindTooltip), réactivés après reset
-- ❌ **BUG BLOQUANT** → Impossible placer 2e+ points après modification tooltips (cause inconnue)
+
+#### ✅ **AMÉLIORATION DU JOUR (18 novembre 2025) - COMPLÉTÉE**
+- ✅ **Cleanup fichiers inutiles** → .gitignore créé, fichiers temporaires supprimés
+- ✅ **Protocole de fin de session amélioré** → README mis à jour avec `git rm` pour suppressions
+- ✅ **Panel ouvert par défaut** → isPanelOpen=true, display:flex au démarrage
+- ✅ **Boutons texte blanc** → CSS `color: white !important` pour meilleure visibilité
+- ✅ **Tooltips adaptatifs** → CSS variable --tooltip-width, max-width passant de 280px → 400px
+- ✅ **Terminologie** → "Vue globale" changé en "Note globale" dans dropdown
+- ✅ **BUG TRACÉ MULTI-POINTS RÉSOLU** ✅ → Traçage multi-points fonctionne parfaitement
 
 #### 🔧 **PROCHAINES AMÉLIORATIONS (Une par jour)**
-1. **🐛 DEBUG URGENT** - Débloquer tracé multi-points (Session ~30-45min) - PRIORITÉ ABSOLUE
-2. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
-3. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
-4. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
-5. **🐛 Bug détection buffer** - Parfois ne trouve aucune piste alors qu'il y en a (Session ~25min)
+1. **🧹 Nettoyer tous console.log** - ~20+ logs de debug à supprimer (Session ~15min) - PRIORITÉ
+2. **📊 Dashboard statistiques simples** - Top pistes, meilleures notes (Session ~30min)
+3. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
+4. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
+5. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
 6. **⛶ Améliorer plein écran** - Vérifier fonctionnalité complète (Session ~10min)
 
 #### 🚀 **FONCTIONNALITÉS FUTURES (Sessions plus longues)**
@@ -126,14 +134,11 @@ code .
 - **Session 2 (28 oct 2024)** : Plan simple → Système notation sliders → Exploration portions géolocalisées ✅
 - **Session 3 (3 nov 2025)** : UX améliorations massives → Couleurs progressives → Boutons optimisés → Code nettoyé ✅
 - **16 nov 2025** : Mode nuit complet + Dark mode system + Nettoyage fichiers inutiles ✅
-- **17 nov 2025** : Système multi-avis + Migration auto données + Tooltips enrichis + ❌ Bug tracé multi-points ⚠️
+- **17 nov 2025** : Système multi-avis + Migration auto données + Tooltips enrichis ✅
+- **18 nov 2025** : UX improvements (panel par défaut, tooltips 400px, boutons blancs, terminology) + .gitignore + Résolution bug tracé ✅
 
-### 🐛 BUGS CONNUS (17 nov 2025)
-- ❌ **CRITIQUE** : Impossible de placer 2e+ points après modifications tooltips
-  - Symptôme : Premier point OK, clic suivants ne créent pas de nouveaux points
-  - Cause probable : Interaction entre displayPortionRatings() et handleMapClick()
-  - Solution : À investiguer via console browser (F12)
-  - Impact : Fonctionnalité principale bloquée
+### 🐛 BUGS CONNUS (18 nov 2025)
+- ✅ **RÉSOLU** : Tracé multi-points fonctionne parfaitement
 
 ### 🎨 Décisions techniques prises
 - **Sliders 1-5** au lieu de 1-10 (plus simple et intuitif)
@@ -203,5 +208,6 @@ code .
 - Outils tracé pistes souhaitées (priorité 3)
 
 ---
-*Dernière mise à jour : 17 novembre 2025 - Session incomplète : Système multi-avis + BUG CRITIQUE tracé*  
-*Prochaine amélioration : DEBUG URGENT - Débloquer tracé multi-points*
+*Dernière mise à jour : 18 novembre 2025 - Session complète*  
+*État : 🟢 Système fonctionnel, stable et prêt à être montré*  
+*Prochaine amélioration : Nettoyer console.log + ajouter dashboard statistiques*

@@ -20,6 +20,7 @@
         /* Hauteur de la carte (en px) */
         :root {
             --map-height: 600px;
+            --tooltip-width: 400px;
             
             /* Couleurs mode clair */
             --bg-primary: #fafafa;
@@ -725,8 +726,8 @@
             border-radius: 8px !important;
             padding: 14px 16px !important;
             box-shadow: 0 2px 12px rgba(37, 99, 235, 0.2) !important;
-            max-width: 340px !important;
-            width: 340px !important;
+            max-width: var(--tooltip-width) !important;
+            width: var(--tooltip-width) !important;
             line-height: 1.6 !important;
             transition: background-color 0.3s, color 0.3s;
         }
@@ -735,10 +736,44 @@
             border-right-color: var(--control-border) !important;
         }
 
-        /* Boutons avec texte noir lorsque nécessaire */
+        /* Boutons avec texte blanc obligatoire */
         #floating-rating-panel .btn {
             font-size: 14px !important;
             font-weight: 500 !important;
+            color: white !important;
+        }
+
+        #floating-rating-panel .btn.primary {
+            background: #2563eb !important;
+            color: white !important;
+        }
+
+        #floating-rating-panel .btn.warn {
+            background: #f39c12 !important;
+            color: white !important;
+        }
+
+        /* ===== TOOLTIPS ADAPTATIFS ===== */
+        /* Largeur des bulles d'informations */
+        .leaflet-tooltip {
+            max-width: var(--tooltip-width) !important;
+            word-wrap: break-word !important;
+            white-space: normal !important;
+            padding: 8px !important;
+            line-height: 1.5 !important;
+        }
+
+        /* Style des commentaires dans les tooltips */
+        .leaflet-tooltip em {
+            font-style: italic;
+            color: #555;
+            display: block;
+            margin-top: 4px;
+            word-break: break-word;
+        }
+
+        html.dark-mode .leaflet-tooltip em {
+            color: #aaa;
         }
     </style>
 </head>
@@ -801,7 +836,7 @@
                     <option value="air">Qualité de l'air</option>
                     <option value="flow">Fluidité</option>
                     <option value="inclusion">Accessibilité</option>
-                    <option value="global">Vue globale</option>
+                    <option value="global">Note globale</option>
                     <option value="neutre">Vue neutre</option>
                 </select>
             </div>
@@ -813,7 +848,7 @@
             <div id="floating-panel-label" style="display:none; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
             
             <!-- Panneau de notation flottant (Hamburger) -->
-            <div id="floating-rating-panel" style="display:none; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:0; transform:translateX(-60px); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:none;">
+            <div id="floating-rating-panel" style="display:flex; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:1; transform:translateX(0); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:auto; flex-direction:column;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
                     <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
                     <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
@@ -911,7 +946,7 @@
         let routeLayer = null;
         let routeMarkers = [];
         let isTracingMode = true; // Mode tracé activé seulement quand le panneau est ouvert
-        let isPanelOpen = false; // Le panneau est fermé au démarrage
+        let isPanelOpen = true; // Le panneau est ouvert au démarrage
         let showRatings = true;
         let currentView = 'security';
 
@@ -2013,29 +2048,19 @@
             const floatingLabel = document.getElementById('floating-panel-label');
             const closePanelBtn = document.getElementById('close-floating-panel');
             
-            // Le panneau est fermé au démarrage
-            if (floatingPanel) {
-                floatingPanel.style.display = 'none';
-                floatingPanel.style.opacity = '0';
-                floatingPanel.style.transform = 'translateX(-60px)';
-                floatingPanel.style.pointerEvents = 'none';
-            }
-            
             // Afficher le bouton hamburger bleu au démarrage
             if (floatingBtn) {
-                floatingBtn.style.display = 'flex';
+                floatingBtn.style.display = 'none'; // Caché puisque le panel est déjà ouvert
             }
             if (floatingLabel) {
-                floatingLabel.style.display = 'block';
+                floatingLabel.style.display = 'none'; // Caché puisque le panel est déjà ouvert
             }
-            
-            isPanelOpen = false; // Le panneau est fermé
             
             // Gestion du bouton hamburger pour rouvrir
             if (floatingBtn) {
                 floatingBtn.addEventListener('click', function() {
                     if (floatingPanel) {
-                        floatingPanel.style.display = 'block';
+                        floatingPanel.style.display = 'flex';
                         setTimeout(() => {
                             floatingPanel.style.opacity = '1';
                             floatingPanel.style.transform = 'translateX(0)';
