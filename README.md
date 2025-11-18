@@ -60,10 +60,12 @@ Quand je dis **"protocole de fin de session"**, **"fin de session"** ou **"fin"*
    - 👤 **→ Je te dis "OK étape 2, continue"**
 
 3. **🧹 Nettoyage du code par l'assistant**
-   - Supprimer fichiers inutiles (non utilisés)
-   - Supprimer code inutile (fonctions/variables non utilisées)
-   - Supprimer commentaires de debug/logs console inutiles
+   - Supprimer **fichiers inutiles** avec `git rm` (pas juste `rm`)
+   - Supprimer **code inutile** (fonctions/variables non utilisées)
+   - Supprimer **commentaires de debug/logs console** inutiles
    - Rendre le code propre et lisible
+   - **⚠️ IMPORTANT** : Utiliser `git rm` pour que Git enregistre la suppression
+   - **Exemple** : `git rm data/fichier-inutile.js` au lieu de `rm data/fichier-inutile.js`
    - 👤 **→ J'attends que tu me dises "Étape 3 terminée, passe à l'étape 4"**
 
 4. **🧪 Je reteste le site + Re-sauvegarde**
@@ -79,6 +81,11 @@ Quand je dis **"protocole de fin de session"**, **"fin de session"** ou **"fin"*
    git push
    ```
    - 👤 **→ Session terminée ! 🎉**
+
+**🛡️ PROTECTION CONTRE RETOUR DE FICHIERS SUPPRIMÉS :**
+- Si des fichiers reviennent après suppression → Les ajouter au `.gitignore`
+- Le `.gitignore` empêche Git de tracker ces fichiers définitivement
+- Exemples : scripts temporaires, fichiers de build, données intermédiaires
 
 **💫 PRINCIPE FONDAMENTAL :**
 > "Un petit progrès chaque jour vaut mieux qu'une grosse session épisodique. Je ne quitte jamais une session avec quelque chose d'inachevé."
