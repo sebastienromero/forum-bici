@@ -1,0 +1,28 @@
+# Fichiers de développement temporaires
+data/convertir-geojson.js
+data/convertir-geojson.py
+data/extraire-pistes.html
+data/filtrer-pistes.py
+data/pistes-cyclables-bogota.geojson
+INTEGRATION-NOTES.md
+
+# Environnement Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
