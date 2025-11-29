@@ -21,6 +21,7 @@
         :root {
             --map-height: 600px;
             --tooltip-width: 400px;
+            --header-height: 50px;
             
             /* Couleurs mode clair */
             --bg-primary: #fafafa;
@@ -72,7 +73,8 @@
         
         header {
             background: var(--header-bg);
-            padding: 0.75rem 2rem;
+            height: 50px;
+            padding: 0 2rem;
             box-shadow: var(--header-shadow);
             position: sticky;
             top: 0;
@@ -178,9 +180,9 @@
         /* Carte remplit tout l'espace après le header */
         #carte-existantes #map-existantes {
             width: 100vw !important;
-            height: calc(100vh - 60px) !important;
+            height: calc(100vh - var(--header-height)) !important;
             position: fixed !important;
-            top: 60px !important;
+            top: var(--header-height) !important;
             left: 0 !important;
             right: 0 !important;
             bottom: 0 !important;
@@ -250,11 +252,13 @@
         .rating-slider {
             width: 100%;
             -webkit-appearance: none;
+            appearance: none;
             height: 6px;
             border-radius: 3px;
-            background: var(--border-color);
+            background: #d1d5db;
             outline: none;
-            margin-bottom: 5px;
+            margin: 4px 0;
+            cursor: pointer;
         }
         
         /* Supprimer les contours bleus d'interaction Leaflet */
@@ -264,23 +268,39 @@
         .leaflet-control:focus {
             outline: none !important;
         }
+
+        /* Désactiver le contour bleu au survol sur les éléments Leaflet */
+        .leaflet-interactive {
+            outline: none !important;
+        }
+        
+        /* Très important : enlever la bordure au survol */
+        .leaflet-path:hover {
+            stroke: inherit !important;
+            stroke-width: inherit !important;
+        }
         
         .rating-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
-            background: #2563eb;
+            background: #1976d2;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
         }
-        
-        .rating-slider.security::-webkit-slider-thumb { background: #dc2626; }
-        .rating-slider.noise::-webkit-slider-thumb { background: #ca8a04; }
-        .rating-slider.air::-webkit-slider-thumb { background: #16a34a; }
-        .rating-slider.flow::-webkit-slider-thumb { background: #2563eb; }
-        .rating-slider.inclusion::-webkit-slider-thumb { background: #7c3aed; }
+
+        .rating-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #1976d2;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
 
         /* Styles pour les tooltips personnalisés */
         .custom-tooltip {
@@ -852,7 +872,7 @@
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
                     <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
                     <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
-                        <svg viewBox="0 0 32 32" width="20" height="20"><rect y="6" width="32" height="4" rx="2" fill="#2563eb"/><rect y="14" width="32" height="4" rx="2" fill="#2563eb"/><rect y="22" width="32" height="4" rx="2" fill="#2563eb"/></svg>
+                        <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#2563eb"/><rect y="14" width="32" height="4" rx="2" fill="#2563eb"/><rect y="22" width="32" height="4" rx="2" fill="#2563eb"/></svg>
                     </button>
                 </div>
                 
@@ -1813,6 +1833,20 @@
                     }
                 }).addTo(mapExistantes);
                 
+                // Désactiver le contour bleu épais au survol
+                trackLayer.on('mouseover', function() {
+                    this.setStyle({
+                        weight: 4,  // Garder le même poids
+                        opacity: 0.9  // Légèrement plus visible
+                    });
+                });
+                trackLayer.on('mouseout', function() {
+                    this.setStyle({
+                        weight: 4,
+                        opacity: 0.8
+                    });
+                });
+                
                 // Tooltip avec détails
                 let tooltipContent = `
                     <strong style="font-size: 16px; color: #1e40af;">Note moyenne: ${average.toFixed(1)}/5</strong><br>
@@ -2259,6 +2293,28 @@
                 themeToggle.addEventListener('click', toggleTheme);
             }
         });
+
+        // 🔄 LIVE RELOAD - Recharger la page si le fichier est modifié
+        (function() {
+            let lastCheck = new Date();
+            setInterval(async () => {
+                try {
+                    const response = await fetch(window.location.href, {
+                        method: 'HEAD',
+                        cache: 'no-store'
+                    });
+                    const lastModified = new Date(response.headers.get('last-modified'));
+                    
+                    if (lastModified > lastCheck) {
+                        console.log('🔄 Changements détectés, rechargement...');
+                        lastCheck = lastModified;
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    // Erreur réseau, ignorer
+                }
+            }, 500); // Vérifier toutes les 500ms
+        })();
     </script>
 </body>
 </html>

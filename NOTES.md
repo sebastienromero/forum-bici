@@ -79,13 +79,50 @@ forum-bici-bogota/
 - ✅ **Terminologie** → "Vue globale" changé en "Note globale" dans dropdown
 - ✅ **BUG TRACÉ MULTI-POINTS RÉSOLU** ✅ → Traçage multi-points fonctionne parfaitement
 
+#### ✅ **AMÉLIORATION DU JOUR (29 novembre 2025) - COMPLÉTÉE**
+- ✅ **Header height 50px** → Hauteur fixe 50px (avec CSS variable --header-height)
+- ✅ **Carte adaptive** → height: calc(100vh - var(--header-height)) pour s'adapter automatiquement
+- ✅ **Sliders uniformes** → Style rate_your_track : thumb 16px bleu #1976d2, sans couleurs par critère
+- ✅ **Hamburger uniforme** → Icône fermeture 28x28 identique au bouton caché
+- ✅ **Contours survol réduits** → Opacité légère au lieu de contour bleu épais (weight:6, opacity 0.9→1.0)
+- ✅ **Live reload** → Script auto-reload ajouté pour développement (à supprimer en production)
+- ⚠️ **Granularité segments 100m** → Implémentation commencée puis annulée (à reprendre plus tard)
+
 #### 🔧 **PROCHAINES AMÉLIORATIONS (Une par jour)**
-1. **🧹 Nettoyer tous console.log** - ~20+ logs de debug à supprimer (Session ~15min) - PRIORITÉ
-2. **📊 Dashboard statistiques simples** - Top pistes, meilleures notes (Session ~30min)
-3. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
-4. **🔍 Portions de pistes plus petites** - Segmentation plus fine pour notation précise (Session ~20min)
+1. **🔪 Granularité segments 100m** - Découper pistes en segments pour notation précise (Session ~45min) - PRIORITÉ
+2. **🧹 Nettoyer tous console.log** - ~20+ logs de debug à supprimer (Session ~15min)
+3. **📊 Dashboard statistiques simples** - Top pistes, meilleures notes (Session ~30min)
+4. **🗺️ Zoom initial de la carte** - Meilleur niveau de zoom au chargement (Session ~15min)
 5. **🗑️ Vider le tracé lors désactivation** - Effacer tracé quand on clique Annuler/bouton OFF (Session ~10min)
 6. **⛶ Améliorer plein écran** - Vérifier fonctionnalité complète (Session ~10min)
+
+#### 🎯 **RECOMMENDATIONS TECHNIQUES (Analyse 18 nov)**
+
+**🔴 Critiques (Bugs/Blocages) :**
+- Confusion `saveRouteRating()` vs `savePortionRatings()` → À consolider en une seule fonction
+- LocalStorage pas validé au chargement → Risque crash si avis malformé
+
+**🟠 Très important (UX/Performance) :**
+- ~30+ `console.log()` partout → À nettoyer pour production
+- 2597 pistes chargées entièrement → Pas de clustering/pagination → Ralentit carte
+- Pas de validation des inputs → Si localStorage hackée = crash
+
+**🟡 Important (Fonctionnalités) :**
+- Pas de suppression d'avis → Ajouter bouton "Supprimer notation"
+- Pas de statistiques → Dashboard simple manquant
+- Portions jamais "clean" → Ajouter "Réinitialiser tous les avis"
+
+**🟢 Optimisations (Nice to have) :**
+- Pas de responsive mobile → Panel trop large sur petit écran
+- Pas d'export données → CSV/JSON pour analyse externe
+- Pas d'historique chronologique → "Qui a noté quand"
+
+**✅ TOP 3 À FAIRE EN PRIORITÉ :**
+1. Nettoyer console.log (~15min) → Code propre
+2. Consolider saveRouteRating() et savePortionRatings() (~20min) → Pas de bugs
+3. Ajouter validation localStorage (~25min) → Code robuste
+
+*Note : Après ces 3 points, le système sera stable et montrable ! 🚀*
 
 #### 🚀 **FONCTIONNALITÉS FUTURES (Sessions plus longues)**
 6. **Section Forum** - Créer la page de discussions
@@ -136,9 +173,11 @@ code .
 - **16 nov 2025** : Mode nuit complet + Dark mode system + Nettoyage fichiers inutiles ✅
 - **17 nov 2025** : Système multi-avis + Migration auto données + Tooltips enrichis ✅
 - **18 nov 2025** : UX improvements (panel par défaut, tooltips 400px, boutons blancs, terminology) + .gitignore + Résolution bug tracé ✅
+- **29 nov 2025** : UI polish (header 50px, sliders uniformes, hamburger cohérent, contours survol) ✅
 
-### 🐛 BUGS CONNUS (18 nov 2025)
+### 🐛 BUGS CONNUS (29 nov 2025)
 - ✅ **RÉSOLU** : Tracé multi-points fonctionne parfaitement
+- ⚠️ **Live reload script** : À supprimer avant déploiement production
 
 ### 🎨 Décisions techniques prises
 - **Sliders 1-5** au lieu de 1-10 (plus simple et intuitif)
@@ -208,6 +247,6 @@ code .
 - Outils tracé pistes souhaitées (priorité 3)
 
 ---
-*Dernière mise à jour : 18 novembre 2025 - Session complète*  
-*État : 🟢 Système fonctionnel, stable et prêt à être montré*  
-*Prochaine amélioration : Nettoyer console.log + ajouter dashboard statistiques*
+*Dernière mise à jour : 29 novembre 2025 - Session UI polish complète*  
+*État : 🟢 Interface harmonisée avec rate_your_track*  
+*Prochaine amélioration : Granularité segments 100m pour notation précise*
