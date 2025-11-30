@@ -14,6 +14,10 @@
     
     <!-- Données des pistes cyclables intégrées -->
     <script src="./data/pistes-data.js"></script>
+    <!-- Données des segments de 100m pré-calculés -->
+    <!-- <script src="./data/pistes-segmentees.js"></script> -->
+    <!-- Données des pistes converties en LineStrings (rate-your-track) -->
+    <script src="./data/pistes-linestrings.js"></script>
     
     <style>
         /* ===== CONFIGURATION MODIFIABLE ===== */
@@ -55,6 +59,21 @@
             --input-bg: #0f172a;
             --input-border: #3b82f6;
             --hover-bg: #1e3a8a;
+        }
+        
+        /* Styles spécifiques pour le mode nuit */
+        html.dark-mode .rating-instruction {
+            background: var(--bg-secondary) !important;
+            color: var(--text-primary) !important;
+        }
+        
+        html.dark-mode .rating-value {
+            background: #1e3a8a !important;
+            color: #e0f2fe !important;
+        }
+        
+        html.dark-mode .rating-comment::placeholder {
+            color: #ffffff !important;
         }
         
         * {
@@ -795,6 +814,38 @@
         html.dark-mode .leaflet-tooltip em {
             color: #aaa;
         }
+
+        /* Style pour les tooltips de segments (rate-your-track) */
+        .segment-tooltip {
+            width: 400px;
+            max-width: 400px;
+            font-size: 15px;
+            padding: 10px 14px;
+            line-height: 1.5;
+            background: #fff;
+            color: #222;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            border: 1px solid #1976d2;
+            z-index: 1200;
+        }
+        
+        .segment-tooltip ul {
+            margin: 2px 0 2px 12px;
+            padding: 0;
+            list-style: disc inside;
+            word-break: break-word;
+            white-space: normal;
+            width: 380px;
+            max-width: 380px;
+        }
+        
+        .segment-tooltip li {
+            word-break: break-word;
+            white-space: normal;
+            width: 380px;
+            max-width: 380px;
+        }
     </style>
 </head>
 <body>
@@ -836,9 +887,113 @@
         <section class="section" id="forum">
             <h2>🗣️ Forum de discussion</h2>
             <p>Espace de discussion pour la communauté cycliste de Bogotá</p>
-            <div class="placeholder">
-                Interface du forum à venir...
-                <br>Style inspiré des forums classiques
+            
+            <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
+                <!-- Bouton créer un nouveau sujet -->
+                <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: #2563eb; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-bottom: 20px; font-size: 14px;">
+                    ➕ Nouveau sujet
+                </button>
+                
+                <!-- Liste des catégories -->
+                <div style="display: grid; gap: 16px;">
+                    <!-- Catégorie Sécurité -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span style="font-size: 24px;">🛡️</span>
+                            <h3 style="margin: 0; color: var(--text-primary);">Sécurité</h3>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Discussions sur la sécurité des pistes cyclables</p>
+                        
+                        <!-- Sujets récents -->
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Carrera 7 : Nids de poule dangereux</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Juan • 12 réponses • Aujourd'hui à 14:23</div>
+                                </div>
+                                <span style="background: #2563eb; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Actif</span>
+                            </div>
+                            
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Éclairage insuffisant sur Calle 26</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par María • 7 réponses • Hier à 18:45</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Catégorie Infrastructures -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span style="font-size: 24px;">🏗️</span>
+                            <h3 style="margin: 0; color: var(--text-primary);">Infrastructures</h3>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Propositions d'amélioration des infrastructures</p>
+                        
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Plus de parkings vélo nécessaires</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Carlos • 23 réponses • Il y a 2 jours</div>
+                                </div>
+                                <span style="background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Populaire</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Catégorie Événements -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span style="font-size: 24px;">🎉</span>
+                            <h3 style="margin: 0; color: var(--text-primary);">Événements</h3>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Sorties et événements cyclistes</p>
+                        
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Ciclovía du dimanche - qui vient ?</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Ana • 15 réponses • Il y a 3 heures</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Catégorie Général -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                            <span style="font-size: 24px;">💬</span>
+                            <h3 style="margin: 0; color: var(--text-primary);">Discussions générales</h3>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Tout ce qui concerne le vélo à Bogotá</p>
+                        
+                        <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
+                                <div>
+                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Conseils pour cyclistes débutants</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Pedro • 8 réponses • Il y a 1 jour</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Stats du forum -->
+                <div style="margin-top: 24px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; display: flex; justify-content: space-around; text-align: center;">
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: #2563eb;">127</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Sujets</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: #22c55e;">842</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Messages</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: #f59e0b;">234</div>
+                        <div style="font-size: 12px; color: var(--text-secondary);">Membres</div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -878,33 +1033,33 @@
                 
                 <div style="font-size:11px; margin-bottom:8px;">📍 <span id="route-distance">0 km</span></div>
                 
-                <div style="font-size:10px; color:#666; margin-bottom:6px; padding:6px; background:#f8fafc; border-radius:4px;">
+                <div class="rating-instruction" style="font-size:10px; margin-bottom:6px; padding:6px; background:#f8fafc; border-radius:4px;">
                     Notez cette piste sur 5 critères (1 = très mauvais, 5 = excellent)
                 </div>
                 
                 <!-- Critères de notation -->
                 <div style="margin-top:4px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Sécurité <span id="security-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
+                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Sécurité <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
                     <input type="range" min="1" max="5" value="3" class="rating-slider security" id="security-slider" style="width:100%; height:4px;">
                 </div>
                 
                 <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Calme <span id="noise-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
+                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Calme <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
                     <input type="range" min="1" max="5" value="3" class="rating-slider noise" id="noise-slider" style="width:100%; height:4px;">
                 </div>
                 
                 <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Qualité de l'air <span id="air-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
+                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Qualité de l'air <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
                     <input type="range" min="1" max="5" value="3" class="rating-slider air" id="air-slider" style="width:100%; height:4px;">
                 </div>
                 
                 <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Fluidité <span id="flow-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
+                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Fluidité <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
                     <input type="range" min="1" max="5" value="3" class="rating-slider flow" id="flow-slider" style="width:100%; height:4px;">
                 </div>
                 
                 <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Accessibilité <span id="inclusion-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px;">3</span></label>
+                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Accessibilité <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
                     <input type="range" min="1" max="5" value="3" class="rating-slider inclusion" id="inclusion-slider" style="width:100%; height:4px;">
                 </div>
                 
@@ -916,7 +1071,7 @@
                 
                 <!-- Boutons d'action -->
                 <div style="display:flex; gap:4px; margin-top:6px;">
-                    <button onclick="saveRouteRating()" class="btn primary" style="flex:1; padding:5px 6px; border-radius:5px; border:none; cursor:pointer; font-size:11px; background:#2563eb; color:white; font-weight:600;">Enregistrer</button>
+                    <button onclick="savePortionRatings()" class="btn primary" style="flex:1; padding:5px 6px; border-radius:5px; border:none; cursor:pointer; font-size:11px; background:#2563eb; color:white; font-weight:600;">Enregistrer</button>
                     <button onclick="resetCurrentRoute()" class="btn warn" style="padding:5px 6px; border-radius:5px; border:none; cursor:pointer; font-size:11px; background:#f39c12; color:white; font-weight:600;">Reset</button>
                 </div>
             </div>
@@ -926,9 +1081,137 @@
         <section class="section" id="carte-souhaitees">
             <h2>✨ Pistes cyclables souhaitées</h2>
             <p>Proposez de nouveaux tracés pour améliorer le réseau cyclable</p>
-            <div class="placeholder">
-                Carte avec outils de dessin à venir...
-                <br>Tracez vos pistes idéales !
+            
+            <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+                <!-- Carte de démonstration -->
+                <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 24px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color);">
+                    <div style="text-align: center; color: var(--text-secondary);">
+                        <div style="font-size: 48px; margin-bottom: 12px;">🗺️</div>
+                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Carte interactive à venir</div>
+                        <div style="font-size: 14px;">Vous pourrez tracer vos pistes idéales directement sur la carte</div>
+                    </div>
+                </div>
+                
+                <!-- Instructions -->
+                <div style="background: #dbeafe; border-left: 4px solid #2563eb; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
+                    <div style="font-weight: 600; color: #1e40af; margin-bottom: 8px;">📝 Comment ça marche ?</div>
+                    <ol style="margin: 0; padding-left: 20px; color: #1e40af;">
+                        <li>Cliquez sur la carte pour tracer votre piste idéale</li>
+                        <li>Ajoutez une description et une justification</li>
+                        <li>Votez pour les propositions des autres cyclistes</li>
+                        <li>Les pistes les plus votées seront transmises à la municipalité</li>
+                    </ol>
+                </div>
+                
+                <!-- Liste des propositions -->
+                <h3 style="color: var(--text-primary); margin-bottom: 16px;">🎯 Propositions populaires</h3>
+                
+                <div style="display: grid; gap: 16px;">
+                    <!-- Proposition 1 -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; transition: box-shadow 0.2s;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Extension de la Ciclorruta de la Carrera 7</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>María G.</strong> • Il y a 2 jours</div>
+                            </div>
+                            <div style="text-align: center; background: #22c55e; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
+                                <div style="font-size: 24px; font-weight: 700;">156</div>
+                                <div style="font-size: 11px;">votes</div>
+                            </div>
+                        </div>
+                        
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                            Prolonger la piste de la Carrera 7 jusqu'à la Calle 170. Cette zone est très fréquentée par les cyclistes mais manque d'infrastructure sécurisée.
+                        </p>
+                        
+                        <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 3.5 km</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Usaquén</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">⭐ Prioritaire</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="alert('Vote enregistré ! 👍')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">
+                                👍 Voter pour cette piste
+                            </button>
+                            <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
+                                💬 12 commentaires
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Proposition 2 -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Connexion Unicentro - Parque de la 93</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>Carlos M.</strong> • Il y a 5 jours</div>
+                            </div>
+                            <div style="text-align: center; background: #3b82f6; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
+                                <div style="font-size: 24px; font-weight: 700;">89</div>
+                                <div style="font-size: 11px;">votes</div>
+                            </div>
+                        </div>
+                        
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                            Créer une piste sécurisée entre Unicentro et le Parque de la 93. Actuellement, il faut emprunter des rues dangereuses avec beaucoup de trafic.
+                        </p>
+                        
+                        <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 2.1 km</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Chapinero</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="alert('Vote enregistré ! 👍')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">
+                                👍 Voter pour cette piste
+                            </button>
+                            <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
+                                💬 7 commentaires
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Proposition 3 -->
+                    <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                            <div style="flex: 1;">
+                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Piste protégée sur Avenida Boyacá</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>Ana R.</strong> • Il y a 1 semaine</div>
+                            </div>
+                            <div style="text-align: center; background: #8b5cf6; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
+                                <div style="font-size: 24px; font-weight: 700;">67</div>
+                                <div style="font-size: 11px;">votes</div>
+                            </div>
+                        </div>
+                        
+                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                            Installer une piste séparée physiquement sur l'Avenida Boyacá entre la Calle 80 et la Calle 127. Cette avenue est très dangereuse pour les cyclistes.
+                        </p>
+                        
+                        <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 4.7 km</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Engativá</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🛡️ Sécurité</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px;">
+                            <button onclick="alert('Vote enregistré ! 👍')" style="flex: 1; background: #2563eb; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;">
+                                👍 Voter pour cette piste
+                            </button>
+                            <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
+                                💬 5 commentaires
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bouton pour ajouter une proposition -->
+                <div style="text-align: center; margin-top: 32px;">
+                    <button onclick="alert('Fonctionnalité en cours de développement 🚧\n\nBientôt vous pourrez :\n- Tracer votre piste sur la carte\n- Ajouter une description\n- Justifier votre proposition')" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; padding: 16px 32px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        ✏️ Proposer une nouvelle piste
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -957,9 +1240,54 @@
         // Variables globales
         let mapExistantes = null;
         
+        // === VÉRIFICATION CHARGEMENT DES FICHIERS ===
+        console.log('🔍 Vérification des fichiers chargés...');
+        console.log('pistesCyclablesBogota:', typeof pistesCyclablesBogota !== 'undefined' ? `✅ ${pistesCyclablesBogota.features.length} pistes` : '❌ NON CHARGÉ');
+        console.log('pistesLineStrings:', typeof pistesLineStrings !== 'undefined' ? `✅ ${pistesLineStrings.features.length} segments (rate-your-track)` : '❌ NON CHARGÉ');
+        
         // Système rate_your_track : portions de pistes notées par proximité
         let portionRatings = JSON.parse(localStorage.getItem('portionRatings') || '{}');
         let portionLayers = []; // Couches visuelles des portions colorées
+        
+        // === MIGRATION: Nettoyer les anciennes données incompatibles ===
+        (function migrateOldData() {
+            /* DÉSACTIVÉ: nettoyage forcé du localStorage
+            console.warn('🧹 NETTOYAGE FORCÉ du localStorage pour résoudre les bugs...');
+            portionRatings = {};
+        // === MIGRATION: Nettoyer les anciennes données incompatibles ===
+        (function migrateOldData() {
+            /* DÉSACTIVÉ: nettoyage forcé du localStorage
+            console.warn('🧹 NETTOYAGE FORCÉ du localStorage pour résoudre les bugs...');
+            portionRatings = {};
+            localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
+            console.log('✅ localStorage complètement nettoyé');
+            */
+            
+            // VERSION NORMALE: vérifier si migration nécessaire
+            let needsMigration = false;
+            
+            // Vérifier si les données ont l'ancien format (avec 'feature' au lieu de 'segment')
+            Object.keys(portionRatings).forEach(key => {
+                const data = portionRatings[key];
+                // Vérifier si c'est l'ancien format OU si segment n'est pas un objet GeoJSON valide
+                if (data.feature || 
+                    !data.segment || 
+                    !data.segment.geometry ||
+                    !data.segment.properties ||
+                    !Array.isArray(data.ratings)) {
+                    needsMigration = true;
+                }
+            });
+            
+            if (needsMigration) {
+                console.warn('⚠️ Migration requise: ancien format détecté, réinitialisation localStorage...');
+                portionRatings = {};
+                localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
+                console.log('✅ Migration complétée: localStorage nettoyé');
+            } else {
+                console.log('✅ Format de données correct, aucune migration nécessaire');
+            }
+        })();
         
         // Variables pour le tracé interactif
         let routePoints = [];
@@ -1044,30 +1372,82 @@
                 console.log('🔍 Chargement des pistes cyclables...');
                 
                 try {
-                    if (typeof pistesCyclablesBogota === 'undefined') {
-                        throw new Error('Données des pistes non disponibles');
+                    if (typeof pistesLineStrings === 'undefined') {
+                        throw new Error('Données pistesLineStrings non disponibles');
                     }
                     
-                    console.log('✅ Données chargées:', pistesCyclablesBogota.features.length, 'pistes principales');
+                    console.log('✅ Données chargées:', pistesLineStrings.features.length, 'segments de pistes');
                     
-                    // Ajouter les pistes cyclables à la carte
-                    const pistesLayer = L.geoJSON(pistesCyclablesBogota, {
+                    // Ajouter les pistes LineStrings à la carte (séparées par rue)
+                    const pistesLayer = L.geoJSON(pistesLineStrings, {
                         style: function(feature) {
-                            // Style uniforme pour toutes les pistes (sans notation directe)
+                            // Style identique à rate-your-track (gris foncé #757575)
                             return {
-                                color: '#9ca3af',
+                                color: '#757575',
                                 weight: 4,
-                                opacity: 0.8,
-                                interactive: false // Désactiver complètement les interactions
+                                opacity: 0.95,
+                                interactive: true // Activer les interactions pour le survol
                             };
                         },
                         onEachFeature: function(feature, layer) {
-                            // Pistes complètement non-interactives
-                            // Pas de popup, pas de clic, pas d'interaction, pas de tooltip
+                            // Afficher un tooltip au survol si des avis existent pour ce segment
+                            layer.on('mouseover', function(e) {
+                                // Ne pas afficher si on est en train de tracer
+                                if (routePoints && routePoints.length > 0) return;
+                                
+                                const id = feature.id || (feature.properties && feature.properties.parentId) || null;
+                                let text = '';
+                                
+                                if (id && portionRatings[id]) {
+                                    const p = portionRatings[id];
+                                    const ratings = p.ratings || [];
+                                    
+                                    if (ratings.length > 0) {
+                                        // Afficher les commentaires EN PREMIER
+                                        const comments = ratings.map(r => r.comment).filter(c => c && c.trim());
+                                        if (comments.length > 0) {
+                                            text += `<b>💬 Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                                            comments.forEach(c => {
+                                                text += `<li style='margin-bottom:4px;'>${c}</li>`;
+                                            });
+                                            text += `</ul>`;
+                                        }
+                                        
+                                        // Calculer les moyennes
+                                        const avgSecurity = ratings.reduce((sum, r) => sum + r.security, 0) / ratings.length;
+                                        const avgNoise = ratings.reduce((sum, r) => sum + r.noise, 0) / ratings.length;
+                                        const avgAir = ratings.reduce((sum, r) => sum + r.air, 0) / ratings.length;
+                                        const avgFlow = ratings.reduce((sum, r) => sum + r.flow, 0) / ratings.length;
+                                        const avgInclusion = ratings.reduce((sum, r) => sum + r.inclusion, 0) / ratings.length;
+                                        const avgGlobal = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
+                                        
+                                        text += `<b>Note globale</b> : ${Math.round(avgGlobal * 10) / 10} / 5<br>`;
+                                        text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${ratings.length} avis</span><br><br>`;
+                                        text += `<b>Sécurité</b> : ${Math.round(avgSecurity * 10) / 10} / 5<br>`;
+                                        text += `<b>Bruit</b> : ${Math.round(avgNoise * 10) / 10} / 5<br>`;
+                                        text += `<b>Qualité de l'air</b> : ${Math.round(avgAir * 10) / 10} / 5<br>`;
+                                        text += `<b>Fluidité</b> : ${Math.round(avgFlow * 10) / 10} / 5<br>`;
+                                        text += `<b>Inclusion</b> : ${Math.round(avgInclusion * 10) / 10} / 5<br>`;
+                                    }
+                                } else {
+                                    text = 'Aucun avis pour cette portion';
+                                }
+                                
+                                layer.bindTooltip(text, {sticky: true, direction: 'right', className: 'segment-tooltip'}).openTooltip(e.latlng);
+                            });
+                            
+                            layer.on('mouseout', function() {
+                                layer.closeTooltip();
+                            });
                         }
                     }).addTo(mapExistantes);
                     
-                    console.log('🗺️ Pistes ajoutées à la carte !');
+                    console.log("🗺️ Pistes LineStrings ajoutées (séparées par rue) !");
+                    
+                    // === UTILISER CES SEGMENTS POUR LA NOTATION ===
+                    window.trackSegments = pistesLineStrings.features;
+                    console.log(`✅ ${window.trackSegments.length} segments prêts pour la notation`);
+                    
                     
                     // Ajuster la vue sur les pistes
                     // if (pistesCyclablesBogota.features.length > 0) {
@@ -1637,31 +2017,35 @@
             return point.distanceTo(closestPoint);
         }
         
-        // Trouve les pistes entières proches de l'itinéraire tracé
+        // Trouve les segments de 100m proches de l'itinéraire tracé (NOUVELLE VERSION)
         function findNearbyTrackPortions() {
             if (routePoints.length === 0) return [];
+            if (!window.trackSegments || window.trackSegments.length === 0) {
+                console.warn('⚠️ Segments non initialisés');
+                return [];
+            }
             
-            const nearbyTracks = [];
-            const foundTrackIds = new Set(); // Éviter les doublons
-            const bufferRadius = 80; // 80 mètres (standard rate_your_track)
+            const nearbySegments = [];
+            const foundSegmentIds = new Set(); // Éviter les doublons
             
-            // Créer des points intermédiaires tous les 100m pour meilleure détection
+            // Buffer de 50m pour détecter les segments proches
+            const bufferRadius = 50; // 50 mètres
+            
+            // Créer des points intermédiaires tous les 50m pour meilleure détection
             const interpolatedPoints = [];
             
             if (routePoints.length === 1) {
-                // Un seul point : juste l'ajouter
                 interpolatedPoints.push(routePoints[0]);
             } else {
-                // Plusieurs points : ajouter des points intermédiaires
                 for (let i = 0; i < routePoints.length - 1; i++) {
                     const p1 = L.latLng(routePoints[i][1], routePoints[i][0]);
                     const p2 = L.latLng(routePoints[i+1][1], routePoints[i+1][0]);
-                    const distance = p1.distanceTo(p2); // distance en mètres
+                    const distance = p1.distanceTo(p2);
                     
                     interpolatedPoints.push(routePoints[i]);
                     
-                    // Ajouter des points intermédiaires tous les 100m
-                    const numIntermediatePoints = Math.floor(distance / 100);
+                    // Ajouter des points intermédiaires tous les 50m
+                    const numIntermediatePoints = Math.floor(distance / 50);
                     for (let j = 1; j <= numIntermediatePoints; j++) {
                         const ratio = j / (numIntermediatePoints + 1);
                         const lat = p1.lat + (p2.lat - p1.lat) * ratio;
@@ -1669,111 +2053,122 @@
                         interpolatedPoints.push([lng, lat]);
                     }
                 }
-                // Ajouter le dernier point
                 interpolatedPoints.push(routePoints[routePoints.length - 1]);
             }
             
             console.log(`📍 ${routePoints.length} points originaux → ${interpolatedPoints.length} points avec interpolation`);
             
-            // Pour chaque point (y compris les points interpolés)
-            interpolatedPoints.forEach((point, index) => {
-                const pointLatLng = L.latLng(point[1], point[0]); // Inverser lng,lat vers lat,lng
+            // Parcourir chaque segment de 100m (structure GeoJSON)
+            window.trackSegments.forEach(segment => {
+                if (foundSegmentIds.has(segment.id)) return;
                 
-                let foundForThisPoint = 0;
+                const coords = segment.geometry.coordinates;
                 
-                // Parcourir toutes les pistes
-                pistesCyclablesBogota.features.forEach(feature => {
-                    if (feature.geometry.type === 'LineString' && !foundTrackIds.has(feature.id)) {
-                        const coords = feature.geometry.coordinates;
-                        
-                        // Vérifier si au moins un segment de la piste est dans le buffer
-                        let isNearby = false;
-                        
-                        // Méthode 1: Vérifier la distance aux points de la piste
-                        for (let i = 0; i < coords.length && !isNearby; i++) {
-                            const coordLatLng = L.latLng(coords[i][1], coords[i][0]);
-                            if (pointLatLng.distanceTo(coordLatLng) <= bufferRadius) {
+                // Vérifier si ce segment est proche de l'itinéraire
+                let isNearby = false;
+                
+                // Tester chaque point interpolé de l'itinéraire
+                for (let i = 0; i < interpolatedPoints.length && !isNearby; i++) {
+                    const pointLatLng = L.latLng(interpolatedPoints[i][1], interpolatedPoints[i][0]);
+                    
+                    // Vérifier la distance aux points du segment
+                    for (let j = 0; j < coords.length && !isNearby; j++) {
+                        const coordLatLng = L.latLng(coords[j][1], coords[j][0]);
+                        if (pointLatLng.distanceTo(coordLatLng) <= bufferRadius) {
+                            isNearby = true;
+                        }
+                    }
+                    
+                    // Vérifier la distance aux lignes du segment
+                    if (!isNearby) {
+                        for (let j = 1; j < coords.length && !isNearby; j++) {
+                            const p1 = L.latLng(coords[j-1][1], coords[j-1][0]);
+                            const p2 = L.latLng(coords[j][1], coords[j][0]);
+                            const distanceToSegment = distanceToLineSegment(pointLatLng, p1, p2);
+                            if (distanceToSegment <= bufferRadius) {
                                 isNearby = true;
                             }
                         }
-                        
-                        // Méthode 2: Vérifier la distance aux segments (lignes entre points)
-                        if (!isNearby) {
-                            for (let i = 1; i < coords.length && !isNearby; i++) {
-                                const p1 = L.latLng(coords[i-1][1], coords[i-1][0]);
-                                const p2 = L.latLng(coords[i][1], coords[i][0]);
-                                
-                                // Calculer la distance du point au segment
-                                const distanceToSegment = distanceToLineSegment(pointLatLng, p1, p2);
-                                if (distanceToSegment <= bufferRadius) {
-                                    isNearby = true;
-                                }
-                            }
-                        }
-                        
-                        if (isNearby) {
-                            foundTrackIds.add(feature.id);
-                            foundForThisPoint++;
-                            
-                            // Calculer la longueur de la piste (approximation)
-                            let trackLength = 0;
-                            for (let i = 1; i < coords.length; i++) {
-                                const p1 = L.latLng(coords[i-1][1], coords[i-1][0]);
-                                const p2 = L.latLng(coords[i][1], coords[i][0]);
-                                trackLength += p1.distanceTo(p2); // distance en mètres
-                            }
-                            
-                            nearbyTracks.push({
-                                id: feature.id,
-                                trackName: feature.properties.name || 'Piste cyclable',
-                                feature: feature,
-                                distance: trackLength / 1000, // convertir en km
-                                routePointIndex: index
-                            });
-                        }
                     }
-                });
+                }
+                
+                if (isNearby) {
+                    foundSegmentIds.add(segment.id);
+                    nearbySegments.push({
+                        id: segment.id,
+                        trackName: `${segment.properties.parentName} (segment ${segment.properties.segmentIndex})`,
+                        segment: segment,
+                        distance: segment.properties.length / 1000, // en km
+                        parentId: segment.properties.parentId
+                    });
+                }
             });
             
-            console.log(`Trouvé ${nearbyTracks.length} pistes à proximité de l'itinéraire`);
-            return nearbyTracks;
+            console.log(`✅ Trouvé ${nearbySegments.length} segments de 100m à proximité de l'itinéraire`);
+            return nearbySegments;
         }
         
-        // Sauvegarde la notation d'une piste entière
-        function savePortionRating(trackData, ratings) {
-            const trackRating = {
-                id: trackData.id,
-                trackName: trackData.trackName,
-                feature: trackData.feature,
+        // Sauvegarde la notation d'un segment de 100m (NOUVELLE VERSION)
+        function savePortionRating(segmentData, ratings) {
+            const segmentRating = {
+                id: segmentData.id,
+                trackName: segmentData.trackName,
+                segment: segmentData.segment,
+                parentId: segmentData.parentId,
                 ratings: ratings,
-                timestamp: new Date().toISOString(),
-                routePointIndex: trackData.routePointIndex
+                timestamp: new Date().toISOString()
             };
             
-            portionRatings[trackData.id] = trackRating;
+            portionRatings[segmentData.id] = segmentRating;
             localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-            console.log('Piste notée et sauvegardée:', trackData.id, trackData.trackName);
+            console.log('✅ Segment noté et sauvegardé:', segmentData.id, segmentData.trackName);
         }
         
-        // Affiche visuellement les pistes notées sur la carte
+        // Affiche visuellement les segments notés sur la carte (NOUVELLE VERSION)
         function displayPortionRatings() {
+            console.log('🎨 displayPortionRatings() appelé');
+            console.log('📊 Nombre total de segments notés:', Object.keys(portionRatings).length);
+            console.log('📊 showRatings:', showRatings);
+            console.log('🗺️ mapExistantes exists:', !!mapExistantes);
+            
+            if (!mapExistantes) {
+                console.error('❌ mapExistantes n\'existe pas encore!');
+                return;
+            }
+            
             // Effacer les anciennes couches
             portionLayers.forEach(layer => mapExistantes.removeLayer(layer));
             portionLayers = [];
             
-            if (!showRatings) return;
+            if (!showRatings) {
+                console.log('⚠️ showRatings=false, affichage désactivé');
+                return;
+            }
             
-            Object.values(portionRatings).forEach(track => {
-                // Vérifier que la piste et ses données sont valides
-                if (!track || !track.ratings || !Array.isArray(track.ratings) || track.ratings.length === 0 || !track.feature) {
-                    console.warn('Piste invalide ignorée:', track);
+            let displayedCount = 0;
+            let skippedCount = 0;
+            
+            Object.values(portionRatings).forEach(segmentData => {
+                // Vérifier que le segment et ses données sont valides (structure GeoJSON)
+                if (!segmentData || 
+                    !segmentData.ratings || 
+                    !Array.isArray(segmentData.ratings) || 
+                    segmentData.ratings.length === 0 || 
+                    !segmentData.segment ||
+                    !segmentData.segment.geometry ||
+                    !segmentData.segment.geometry.coordinates) {
+                    console.warn('❌ Segment invalide ignoré:', segmentData);
+                    skippedCount++;
                     return;
                 }
                 
+                console.log('✅ Traitement segment:', segmentData.id, 'avec', segmentData.ratings.length, 'avis');
+                
                 // Calculer les moyennes à partir de tous les avis
-                const allRatings = track.ratings;
+                const allRatings = segmentData.ratings;
                 const numAvis = allRatings.length;
                 
+                // Calculer les moyennes
                 let avgSecurity = 0, avgNoise = 0, avgAir = 0, avgFlow = 0, avgInclusion = 0;
                 allRatings.forEach(rating => {
                     avgSecurity += rating.security;
@@ -1810,7 +2205,7 @@
                     else if (average >= 1.5) color = '#f97316'; // Orange (2)
                     else color = '#ef4444'; // Rouge (1)
                 } else if (currentView === 'neutre') {
-                    // Vue neutre : afficher TOUTES les pistes en gris (pas de couleur)
+                    // Vue neutre : afficher TOUS les segments en gris (pas de couleur)
                     average = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
                     color = '#9ca3af'; // Gris neutre
                 } else {
@@ -1824,59 +2219,68 @@
                     else color = '#ef4444'; // Rouge (1)
                 }
                 
-                // Créer une ligne colorée pour la piste entière
-                const trackLayer = L.geoJSON(track.feature, {
+                // Créer une ligne colorée pour le segment (utiliser L.geoJSON pour la nouvelle structure)
+                const segmentLayer = L.geoJSON(segmentData.segment, {
                     style: {
                         color: color,
-                        weight: 4,
-                        opacity: 0.8
+                        weight: 6,  // Plus épais pour les segments (plus visibles)
+                        opacity: 0.9
                     }
                 }).addTo(mapExistantes);
                 
-                // Désactiver le contour bleu épais au survol
-                trackLayer.on('mouseover', function() {
-                    this.setStyle({
-                        weight: 4,  // Garder le même poids
-                        opacity: 0.9  // Légèrement plus visible
-                    });
-                });
-                trackLayer.on('mouseout', function() {
-                    this.setStyle({
-                        weight: 4,
-                        opacity: 0.8
-                    });
-                });
+                // Créer le tooltip avec les détails des avis
+                let text = '';
                 
-                // Tooltip avec détails
-                let tooltipContent = `
-                    <strong style="font-size: 16px; color: #1e40af;">Note moyenne: ${average.toFixed(1)}/5</strong><br>
-                    <em style="font-size: 12px; color: #666;">basé sur ${numAvis} avis</em><br><br>
-                    <strong>Sécurité:</strong> ${avgSecurity.toFixed(1)}/5<br>
-                    <strong>Calme:</strong> ${avgNoise.toFixed(1)}/5<br>
-                    <strong>Air:</strong> ${avgAir.toFixed(1)}/5<br>
-                    <strong>Fluidité:</strong> ${avgFlow.toFixed(1)}/5<br>
-                    <strong>Inclusion:</strong> ${avgInclusion.toFixed(1)}/5`;
-                
-                // Ajouter les commentaires s'il y en a
-                const comments = allRatings.filter(r => r.comment && r.comment.trim());
+                // Afficher les commentaires EN PREMIER
+                const comments = allRatings.map(r => r.comment).filter(c => c && c.trim());
                 if (comments.length > 0) {
-                    tooltipContent += `<br><br><strong style="color: #1e40af;">💬 Avis (${comments.length}):</strong><br>`;
-                    comments.forEach(r => {
-                        tooltipContent += `<em style="color: #555; display:block; margin-top:2px;">"${r.comment}"</em>`;
+                    text += `<b>💬 Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                    comments.forEach(c => {
+                        text += `<li style='margin-bottom:4px;'>${c}</li>`;
                     });
+                    text += `</ul>`;
                 }
                 
-                trackLayer.bindTooltip(tooltipContent, { permanent: false, direction: 'right', sticky: true });
+                // Afficher la note globale et le nombre d'avis
+                const globalAvg = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
+                text += `<b>Note globale</b> : ${Math.round(globalAvg * 10) / 10} / 5<br>`;
+                text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${numAvis} avis</span><br><br>`;
                 
-                // Si on est en train de tracer, unbind le tooltip pour l'empêcher de s'afficher
-                if (routePoints.length > 0) {
-                    trackLayer.unbindTooltip();
-                }
+                // Afficher tous les critères
+                text += `<b>Sécurité</b> : ${Math.round(avgSecurity * 10) / 10} / 5<br>`;
+                text += `<b>Bruit</b> : ${Math.round(avgNoise * 10) / 10} / 5<br>`;
+                text += `<b>Qualité de l'air</b> : ${Math.round(avgAir * 10) / 10} / 5<br>`;
+                text += `<b>Fluidité</b> : ${Math.round(avgFlow * 10) / 10} / 5<br>`;
+                text += `<b>Inclusion</b> : ${Math.round(avgInclusion * 10) / 10} / 5<br>`;
+                                
+                // Ajouter le tooltip au segment coloré
+                segmentLayer.on('mouseover', function(e) {
+                    // Ne pas afficher si on est en train de tracer
+                    if (routePoints && routePoints.length > 0) return;
+                    
+                    this.setStyle({
+                        weight: 6,  // Garder le même poids
+                        opacity: 1.0  // Légèrement plus visible
+                    });
+                    
+                    // Afficher le tooltip
+                    this.bindTooltip(text, {sticky: true, direction: 'right', className: 'segment-tooltip'}).openTooltip(e.latlng);
+                });
                 
-                portionLayers.push(trackLayer);
+                segmentLayer.on('mouseout', function() {
+                    this.setStyle({
+                        weight: 6,
+                        opacity: 0.9
+                    });
+                    this.closeTooltip();
+                });
+                
+                portionLayers.push(segmentLayer);
+                displayedCount++;
             });
             
-            console.log(`Affiché ${portionLayers.length} pistes notées`);
+            console.log(`✅ Affiché ${displayedCount} segments notés sur la carte (${skippedCount} ignorés)`);
+            console.log('📊 portionLayers.length:', portionLayers.length);
         }
         
         // Rendre les fonctions globales pour les onclick
@@ -1888,17 +2292,14 @@
         window.savePortionRatings = savePortionRatings;
         window.closeRatingPanel = closeRatingPanel;
         
-        // Nouvelle fonction de sauvegarde pour le système rate_your_track
+        // Nouvelle fonction de sauvegarde pour le système rate_your_track (SEGMENTS 100m)
         function savePortionRatings() {
-
             
             if (routePoints.length === 0) {
                 console.log('Erreur: Aucun point tracé');
                 alert('Placez au moins un point sur la carte pour noter des pistes !');
                 return;
             }
-            
-
             
             // Vérifier que les éléments existent
             const securityEl = document.getElementById('security-slider');
@@ -1907,8 +2308,6 @@
             const flowEl = document.getElementById('flow-slider');
             const inclusionEl = document.getElementById('inclusion-slider');
             const commentEl = document.getElementById('rating-comment');
-            
-
             
             if (!securityEl || !noiseEl || !airEl || !flowEl || !inclusionEl) {
                 console.error('Erreur: Éléments de notation manquants');
@@ -1923,33 +2322,60 @@
             const inclusion = parseInt(inclusionEl.value);
             const comment = commentEl ? commentEl.value : '';
             
-            const ratings = { security, noise, air, flow, inclusion, comment };
-
+            const newRating = { security, noise, air, flow, inclusion, comment };
             
-            // Trouver les pistes proches du tracé actuel
-            const nearbyTracks = findNearbyTrackPortions();
-            console.log('Pistes trouvées:', nearbyTracks.length);
+            // Trouver les SEGMENTS proches du tracé actuel (nouvelle version)
+            const nearbySegments = findNearbyTrackPortions();
+            console.log('🔍 Segments trouvés:', nearbySegments.length);
             
-            if (nearbyTracks.length === 0) {
-                console.log('Aucune piste trouvée à proximité');
+            if (nearbySegments.length === 0) {
+                console.log('Aucun segment trouvé à proximité');
                 alert('Aucune piste cyclable détectée à proximité de votre tracé (rayon 80m)');
                 return;
             }
             
+            // DEBUG: Vérifier la structure du premier segment
+            if (nearbySegments.length > 0) {
+                console.log('🔍 Structure premier segment:', nearbySegments[0]);
+            }
+            
             let savedCount = 0;
-            nearbyTracks.forEach((track, index) => {
-
-                savePortionRating(track, ratings);
+            nearbySegments.forEach((segmentData) => {
+                // Système multi-avis: ajouter le nouvel avis au tableau existant
+                if (!portionRatings[segmentData.id]) {
+                    // Première notation de ce segment: créer la structure
+                    portionRatings[segmentData.id] = {
+                        id: segmentData.id,
+                        trackName: segmentData.trackName,
+                        segment: segmentData.segment,
+                        parentId: segmentData.parentId,
+                        ratings: []
+                    };
+                }
+                
+                // Ajouter le nouvel avis avec timestamp
+                portionRatings[segmentData.id].ratings.push({
+                    ...newRating,
+                    timestamp: new Date().toISOString()
+                });
+                
                 savedCount++;
             });
             
-            console.log(`${savedCount} pistes notées et sauvegardées`);
+            // Sauvegarder dans localStorage
+            localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
+            console.log(`✅ ${savedCount} segments notés et sauvegardés`);
+            console.log('📊 portionRatings après sauvegarde:', Object.keys(portionRatings).length, 'segments');
             
-            // Actualiser l'affichage
-            displayPortionRatings();
+            // MESSAGE DE CONFIRMATION
+            alert(`✅ Enregistré !\n\n${savedCount} segment${savedCount > 1 ? 's' : ''} de piste noté${savedCount > 1 ? 's' : ''}.`);
             
-            // Effacer le tracé après l'enregistrement
+            // Effacer le tracé AVANT l'affichage
             clearCurrentRoute();
+            
+            // Actualiser l'affichage IMMÉDIATEMENT
+            console.log('🎨 Appel de displayPortionRatings()...');
+            displayPortionRatings();
             
             // Réinitialiser les sliders à la valeur par défaut (3)
             document.getElementById('security-slider').value = 3;
@@ -1959,8 +2385,13 @@
             document.getElementById('inclusion-slider').value = 3;
             document.getElementById('rating-comment').value = '';
             
-            // Message de confirmation
-            alert(`✅ ${savedCount} pistes cyclables notées avec succès !`);
+            // Mettre à jour les valeurs affichées
+            updateRatingValue('security', 3);
+            updateRatingValue('noise', 3);
+            updateRatingValue('air', 3);
+            updateRatingValue('flow', 3);
+            updateRatingValue('inclusion', 3);
+            
             console.log('=== FIN savePortionRatings ===');
         }
 
@@ -2293,28 +2724,6 @@
                 themeToggle.addEventListener('click', toggleTheme);
             }
         });
-
-        // 🔄 LIVE RELOAD - Recharger la page si le fichier est modifié
-        (function() {
-            let lastCheck = new Date();
-            setInterval(async () => {
-                try {
-                    const response = await fetch(window.location.href, {
-                        method: 'HEAD',
-                        cache: 'no-store'
-                    });
-                    const lastModified = new Date(response.headers.get('last-modified'));
-                    
-                    if (lastModified > lastCheck) {
-                        console.log('🔄 Changements détectés, rechargement...');
-                        lastCheck = lastModified;
-                        window.location.reload();
-                    }
-                } catch (error) {
-                    // Erreur réseau, ignorer
-                }
-            }, 500); // Vérifier toutes les 500ms
-        })();
     </script>
 </body>
 </html>
