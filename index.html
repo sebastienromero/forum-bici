@@ -1378,11 +1378,32 @@
                     console.log('✅ Données chargées:', pistesLineStrings.features.length, 'LineStrings (contours rate-your-track)');
                     
                     // Ajouter les LineStrings à la carte
-                    const pistesLayer = L.geoJSON(pistesLineStrings, {
+                    window.pistesLayer = L.geoJSON(pistesLineStrings, {
                         style: function(feature) {
-                            // Style identique à rate-your-track (gris foncé #757575)
+                            // Vérifier si ce segment a des avis
+                            const id = feature.id || (feature.properties && feature.properties.parentId) || null;
+                            let color = '#757575'; // Gris foncé par défaut
+                            
+                            if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
+                                // Calculer la note globale moyenne
+                                const ratings = portionRatings[id].ratings;
+                                const avgGlobal = ratings.reduce((sum, r) => 
+                                    sum + (r.security + r.noise + r.air + r.flow + r.inclusion) / 5, 0) / ratings.length;
+                                
+                                // Appliquer la couleur selon la note
+                                if (avgGlobal >= 4) {
+                                    color = '#22c55e'; // Vert (excellent)
+                                } else if (avgGlobal >= 3) {
+                                    color = '#eab308'; // Jaune (bon)
+                                } else if (avgGlobal >= 2) {
+                                    color = '#f97316'; // Orange (moyen)
+                                } else {
+                                    color = '#ef4444'; // Rouge (mauvais)
+                                }
+                            }
+                            
                             return {
-                                color: '#757575',
+                                color: color,
                                 weight: 4,
                                 opacity: 0.95,
                                 interactive: true
@@ -2400,6 +2421,9 @@
             // Effacer le tracé AVANT l'affichage
             clearCurrentRoute();
             
+            // Mettre à jour les styles des segments (CHANGE LES COULEURS!)
+            updateSegmentStyles();
+            
             // Actualiser l'affichage IMMÉDIATEMENT
             console.log('🎨 Appel de displayPortionRatings()...');
             displayPortionRatings();
@@ -2727,6 +2751,84 @@
                 document.documentElement.classList.add('dark-mode');
                 updateThemeToggleButton();
             }
+        }
+
+        // Réinitialiser tous les avis enregistrés
+        function resetAllRatings() {
+            if (confirm('⚠️ Êtes-vous sûr ? Cela supprimera TOUS les avis enregistrés. Cette action est irréversible.')) {
+                // Vider le localStorage
+                localStorage.removeItem('portionRatings');
+                console.log('🧹 Tous les avis ont été supprimés du localStorage');
+                
+                // Réinitialiser la variable portionRatings
+                portionRatings = {};
+                
+                // Redémarrer le style des features
+                if (window.pistesLayer) {
+                    window.pistesLayer.eachLayer(function(layer) {
+                        layer.setStyle({
+                            color: '#757575',
+                            weight: 4,
+                            opacity: 0.95,
+                            interactive: true
+                        });
+                    });
+                    console.log('🔄 Styles des pistes réinitialisés');
+                }
+                
+                // Cacher les couches colorées
+                showRatings = false;
+                console.log('🔄 showRatings défini à false');
+                
+                // Mettre à jour l'affichage
+                if (typeof displayPortionRatings === 'function') {
+                    displayPortionRatings();
+                    console.log('🔄 Affichage des avis réinitialisé');
+                }
+                
+                alert('✅ Tous les avis ont été réinitialisés !');
+            }
+        }
+
+        // Mettre à jour les styles des segments sur la carte
+        function updateSegmentStyles() {
+            if (!window.pistesLayer) {
+                console.warn('⚠️ pistesLayer non disponible');
+                return;
+            }
+            
+            window.pistesLayer.eachLayer(function(layer) {
+                const feature = layer.feature;
+                const id = feature.id || (feature.properties && feature.properties.parentId) || null;
+                let color = '#757575'; // Gris foncé par défaut
+                
+                if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
+                    // Calculer la note globale moyenne
+                    const ratings = portionRatings[id].ratings;
+                    const avgGlobal = ratings.reduce((sum, r) => 
+                        sum + (r.security + r.noise + r.air + r.flow + r.inclusion) / 5, 0) / ratings.length;
+                    
+                    // Appliquer la couleur selon la note
+                    if (avgGlobal >= 4) {
+                        color = '#22c55e'; // Vert (excellent)
+                    } else if (avgGlobal >= 3) {
+                        color = '#eab308'; // Jaune (bon)
+                    } else if (avgGlobal >= 2) {
+                        color = '#f97316'; // Orange (moyen)
+                    } else {
+                        color = '#ef4444'; // Rouge (mauvais)
+                    }
+                }
+                
+                layer.setStyle({
+                    color: color,
+                    weight: 4,
+                    opacity: 0.95,
+                    interactive: true
+                });
+            });
+            
+            console.log('🎨 Styles des segments mis à jour');
         }
 
         // Fonction pour basculer le mode nuit
