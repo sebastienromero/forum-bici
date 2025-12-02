@@ -849,7 +849,7 @@
 </head>
 <body>
     <header>
-        <div class="logo">🚴‍♀️ Califica tu Cicloruta Bogotá</div>
+        <div class="logo">Califica Tu Cicloruta 🚴‍♀️ </div>
         <nav>
             <button class="nav-btn" data-section="accueil">Inicio</button>
             <button class="nav-btn" data-section="forum">Foro</button>
@@ -1671,7 +1671,7 @@
             closeRatingPanel();
             
             // Feedback utilisateur
-            alert(`✅ ¡Calificación guardada! Promedio : ${average.toFixed(1)}/5`);
+            alert(`✅ ¡Calificación guardada! Promedio: ${average.toFixed(1)}/5`);
         }
         
         function updateSegmentColor(segmentId, average) {
@@ -2803,21 +2803,25 @@
                 let color = '#757575'; // Gris foncé par défaut
                 
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
-                    // Utiliser la meilleure note (max) plutôt que la moyenne
+                    // Utiliser le MAXIMUM INDIVIDUEL parmi tous les critères de tous les avis
                     const ratings = portionRatings[id].ratings;
-                    let maxScore = 0;
+                    let maxIndividualScore = 0;
                     
                     ratings.forEach(r => {
-                        const score = (r.security + r.noise + r.air + r.flow + r.inclusion) / 5;
-                        if (score > maxScore) maxScore = score;
+                        // Vérifier chaque critère individuellement
+                        const scores = [r.security, r.noise, r.air, r.flow, r.inclusion];
+                        const maxInThisRating = Math.max(...scores);
+                        if (maxInThisRating > maxIndividualScore) {
+                            maxIndividualScore = maxInThisRating;
+                        }
                     });
                     
-                    // Appliquer la couleur selon le meilleur score
-                    if (maxScore >= 4) {
+                    // Appliquer la couleur selon le meilleur score individuel
+                    if (maxIndividualScore >= 4) {
                         color = '#22c55e'; // Vert (excellent)
-                    } else if (maxScore >= 3) {
+                    } else if (maxIndividualScore >= 3) {
                         color = '#eab308'; // Jaune (bon)
-                    } else if (maxScore >= 2) {
+                    } else if (maxIndividualScore >= 2) {
                         color = '#f97316'; // Orange (moyen)
                     } else {
                         color = '#ef4444'; // Rouge (mauvais)
