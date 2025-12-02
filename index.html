@@ -14,8 +14,8 @@
     
     <!-- Données des pistes cyclables intégrées -->
     <script src="./data/pistes-data.js"></script>
-    <!-- Données rate-your-track (MultiPolygons) -->
-    <script src="./data/pistes-rate-your-track.js"></script>
+    <!-- Données des pistes converties en LineStrings (contours rate-your-track) -->
+    <script src="./data/pistes-linestrings.js"></script>
 </script>
     
     <style>
@@ -1371,22 +1371,20 @@
                 console.log('🔍 Chargement des pistes cyclables...');
                 
                 try {
-                    if (typeof pistesRateYourTrack === 'undefined') {
-                        throw new Error('Données pistesRateYourTrack non disponibles');
+                    if (typeof pistesLineStrings === 'undefined') {
+                        throw new Error('Données pistesLineStrings non disponibles');
                     }
                     
-                    console.log('✅ Données chargées:', pistesRateYourTrack.features.length, 'polygones de pistes (rate-your-track)');
+                    console.log('✅ Données chargées:', pistesLineStrings.features.length, 'LineStrings (contours rate-your-track)');
                     
-                    // Ajouter les polygones à la carte (affichage identique à rate-your-track)
-                    const pistesLayer = L.geoJSON(pistesRateYourTrack, {
+                    // Ajouter les LineStrings à la carte
+                    const pistesLayer = L.geoJSON(pistesLineStrings, {
                         style: function(feature) {
                             // Style identique à rate-your-track (gris foncé #757575)
                             return {
                                 color: '#757575',
                                 weight: 4,
                                 opacity: 0.95,
-                                fillColor: '#757575',
-                                fillOpacity: 0.3,
                                 interactive: true
                             };
                         },
@@ -1443,10 +1441,10 @@
                         }
                     }).addTo(mapExistantes);
                     
-                    console.log("🗺️ Polygones de pistes rate-your-track ajoutés !");
+                    console.log("🗺️ LineStrings de pistes rate-your-track ajoutés !");
                     
-                    // === UTILISER CES POLYGONES POUR LA NOTATION ===
-                    window.trackSegments = pistesRateYourTrack.features;
+                    // === UTILISER CES LINESTRINGS POUR LA NOTATION ===
+                    window.trackSegments = pistesLineStrings.features;
                     console.log(`✅ ${window.trackSegments.length} segments prêts pour la notation`);
                     
                     
@@ -2018,7 +2016,7 @@
             return point.distanceTo(closestPoint);
         }
         
-        // Trouve les segments de 100m proches de l'itinéraire tracé (NOUVELLE VERSION)
+        // Trouve les segments proches de l'itinéraire tracé
         function findNearbyTrackPortions() {
             if (routePoints.length === 0) return [];
             if (!window.trackSegments || window.trackSegments.length === 0) {
@@ -2027,10 +2025,10 @@
             }
             
             const nearbySegments = [];
-            const foundSegmentIds = new Set(); // Éviter les doublons
+            const foundSegmentIds = new Set();
             
-            // Buffer de 50m pour détecter les segments proches
-            const bufferRadius = 50; // 50 mètres
+            // Buffer de 80m pour détecter les segments proches
+            const bufferRadius = 80; // 80 mètres de tolérance
             
             // Créer des points intermédiaires tous les 50m pour meilleure détection
             const interpolatedPoints = [];
