@@ -2865,8 +2865,10 @@
                 themeToggle.addEventListener('click', toggleTheme);
             }
             
-            // Initialiser la carte des ciclorrutas deseadas
-            initMapSouhaitees();
+            // Initialiser la carte des ciclorrutas deseadas après un court délai
+            setTimeout(function() {
+                initMapSouhaitees();
+            }, 500);
         });
         
         // ===== CARTE DES CICLORRUTAS DESEADAS =====
@@ -2876,15 +2878,30 @@
         let tracesLayer = null;
         
         function initMapSouhaitees() {
+            // Vérifier que l'élément existe
+            const mapElement = document.getElementById('map-souhaitees');
+            if (!mapElement) {
+                console.warn('map-souhaitees element not found');
+                return;
+            }
+            
+            // Vérifier que Leaflet est disponible
+            if (typeof L === 'undefined') {
+                console.error('Leaflet is not loaded');
+                return;
+            }
+            
             // Initialiser la carte
             mapSouhaitees = L.map('map-souhaitees', {
                 center: [4.7110, -74.0059],
-                zoom: 12,
-                layers: [L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors',
-                    maxZoom: 19
-                })]
+                zoom: 12
             });
+            
+            // Ajouter la couche de tuiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(mapSouhaitees);
             
             // Ajouter un groupe pour les tracés
             tracesLayer = L.featureGroup();
@@ -2896,6 +2913,8 @@
                     addPointToTrace(e.latlng);
                 }
             });
+            
+            console.log('✅ Carte des ciclorrutas deseadas initialisée');
         }
         
         function toggleDrawModeSouhaitees() {
