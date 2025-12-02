@@ -1024,8 +1024,8 @@
             <!-- Panneau de notation flottant (Hamburger) -->
             <div id="floating-rating-panel" style="display:flex; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:1; transform:translateX(0); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:auto; flex-direction:column;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                    <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
-                    <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
+                    <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Calificar 🚴</h4>
+                    <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cerrar">
                         <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#2563eb"/><rect y="14" width="32" height="4" rx="2" fill="#2563eb"/><rect y="22" width="32" height="4" rx="2" fill="#2563eb"/></svg>
                     </button>
                 </div>
@@ -1752,11 +1752,11 @@
             const viewSelector = document.getElementById('view-selector');
             
             if (showRatings) {
-                btn.textContent = '🙈 Cacher les avis';
+                btn.textContent = '🙈 Ocultar opiniones';
                 btn.style.background = '#16a34a';
                 if (viewSelector) viewSelector.style.display = 'inline-block';
             } else {
-                btn.textContent = '👁️ Afficher les avis';
+                btn.textContent = '👁️ Mostrar opiniones';
                 btn.style.background = '#6b7280';
                 if (viewSelector) viewSelector.style.display = 'none';
             }
@@ -2505,11 +2505,11 @@
             const viewSelector = document.getElementById('view-selector');
             if (toggleBtn) {
                 if (showRatings) {
-                    toggleBtn.textContent = '🙈 Cacher les avis';
+                    toggleBtn.textContent = '🙈 Ocultar opiniones';
                     toggleBtn.style.background = '#16a34a';
                     if (viewSelector) viewSelector.style.display = 'inline-block';
                 } else {
-                    toggleBtn.textContent = '👁️ Afficher les avis';
+                    toggleBtn.textContent = '👁️ Mostrar opiniones';
                     toggleBtn.style.background = '#6b7280';
                     if (viewSelector) viewSelector.style.display = 'none';
                 }
