@@ -1083,13 +1083,15 @@
             
             <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
                 <!-- Carte interactive -->
-                <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 24px; background: var(--bg-secondary); border: 2px solid var(--border-color); position: relative;">
-                </div>
-                
-                <!-- Controles de la carte -->
-                <div id="map-controls-souhaitees" style="position: absolute; top: 20px; right: 20px; background: var(--control-bg); border: 2px solid var(--control-border); padding: 12px; border-radius: 8px; z-index: 1000;">
-                    <button id="toggle-draw-btn" onclick="toggleDrawModeSouhaitees()" style="background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; margin-bottom: 8px; width: 100%;">✏️ Iniciar trazo</button>
-                    <button onclick="clearCurrentTraceSouhaitees()" style="background: #f39c12; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; width: 100%;">🗑️ Limpiar</button>
+                <div style="position: relative; margin-bottom: 24px;">
+                    <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; background: var(--bg-secondary); border: 2px solid var(--border-color);">
+                    </div>
+                    
+                    <!-- Controles de la carte -->
+                    <div id="map-controls-souhaitees" style="position: absolute; top: 20px; right: 20px; background: var(--control-bg); border: 2px solid var(--control-border); padding: 12px; border-radius: 8px; z-index: 1000;">
+                        <button id="toggle-draw-btn" onclick="toggleDrawModeSouhaitees()" style="background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; margin-bottom: 8px; width: 100%;">✏️ Iniciar trazo</button>
+                        <button onclick="clearCurrentTraceSouhaitees()" style="background: #f39c12; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; width: 100%;">🗑️ Limpiar</button>
+                    </div>
                 </div>
                 
                 <!-- Instrucciones -->
@@ -1100,9 +1102,6 @@
                         <li>Haz clic en el mapa para trazar tu cicloruta ideal</li>
                         <li>Agrega una descripción y justificación</li>
                         <li>Vota por las propuestas de otros ciclistas</li>
-                        <li>Las ciclorrutas más votadas se transmitirán al municipio</li>
-                    </ol>
-                </div>
                         <li>Las ciclorrutas más votadas se transmitirán al municipio</li>
                     </ol>
                 </div>
@@ -2890,10 +2889,6 @@
             // Ajouter un groupe pour les tracés
             tracesLayer = L.featureGroup();
             mapSouhaitees.addLayer(tracesLayer);
-            
-            // Ajouter les controles
-            const controlsDiv = document.getElementById('map-controls-souhaitees');
-            mapSouhaitees._controlContainer.appendChild(controlsDiv);
             
             // Ajouter l'événement de clic pour le traçage
             mapSouhaitees.on('click', function(e) {
