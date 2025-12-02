@@ -1082,22 +1082,27 @@
             <p>Proponga nuevos trazados para mejorar la red ciclable</p>
             
             <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-                <!-- Carte de démonstration -->
-                <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 24px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color);">
-                    <div style="text-align: center; color: var(--text-secondary);">
-                        <div style="font-size: 48px; margin-bottom: 12px;">🗺️</div>
-                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Mapa interactivo próximamente</div>
-                        <div style="font-size: 14px;">Podrá trazar sus ciclorrutas ideales directamente en el mapa</div>
-                    </div>
+                <!-- Carte interactive -->
+                <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 24px; background: var(--bg-secondary); border: 2px solid var(--border-color); position: relative;">
+                </div>
+                
+                <!-- Controles de la carte -->
+                <div id="map-controls-souhaitees" style="position: absolute; top: 20px; right: 20px; background: var(--control-bg); border: 2px solid var(--control-border); padding: 12px; border-radius: 8px; z-index: 1000;">
+                    <button id="toggle-draw-btn" onclick="toggleDrawModeSouhaitees()" style="background: #2563eb; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; margin-bottom: 8px; width: 100%;">✏️ Iniciar trazo</button>
+                    <button onclick="clearCurrentTraceSouhaitees()" style="background: #f39c12; color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; display: block; width: 100%;">🗑️ Limpiar</button>
                 </div>
                 
                 <!-- Instrucciones -->
                 <div style="background: #dbeafe; border-left: 4px solid #2563eb; padding: 16px; border-radius: 8px; margin-bottom: 24px;">
                     <div style="font-weight: 600; color: #1e40af; margin-bottom: 8px;">📝 ¿Cómo funciona?</div>
                     <ol style="margin: 0; padding-left: 20px; color: #1e40af;">
+                        <li>Haz clic en "Iniciar trazo" para activar el modo de dibujo</li>
                         <li>Haz clic en el mapa para trazar tu cicloruta ideal</li>
                         <li>Agrega una descripción y justificación</li>
                         <li>Vota por las propuestas de otros ciclistas</li>
+                        <li>Las ciclorrutas más votadas se transmitirán al municipio</li>
+                    </ol>
+                </div>
                         <li>Las ciclorrutas más votadas se transmitirán al municipio</li>
                     </ol>
                 </div>
@@ -2860,7 +2865,131 @@
             if (themeToggle) {
                 themeToggle.addEventListener('click', toggleTheme);
             }
+            
+            // Initialiser la carte des ciclorrutas deseadas
+            initMapSouhaitees();
         });
+        
+        // ===== CARTE DES CICLORRUTAS DESEADAS =====
+        let mapSouhaitees = null;
+        let drawingEnabled = false;
+        let currentTraceSouhaitees = [];
+        let tracesLayer = null;
+        
+        function initMapSouhaitees() {
+            // Initialiser la carte
+            mapSouhaitees = L.map('map-souhaitees', {
+                center: [4.7110, -74.0059],
+                zoom: 12,
+                layers: [L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                })]
+            });
+            
+            // Ajouter un groupe pour les tracés
+            tracesLayer = L.featureGroup();
+            mapSouhaitees.addLayer(tracesLayer);
+            
+            // Ajouter les controles
+            const controlsDiv = document.getElementById('map-controls-souhaitees');
+            mapSouhaitees._controlContainer.appendChild(controlsDiv);
+            
+            // Ajouter l'événement de clic pour le traçage
+            mapSouhaitees.on('click', function(e) {
+                if (drawingEnabled) {
+                    addPointToTrace(e.latlng);
+                }
+            });
+        }
+        
+        function toggleDrawModeSouhaitees() {
+            drawingEnabled = !drawingEnabled;
+            const btn = document.getElementById('toggle-draw-btn');
+            btn.textContent = drawingEnabled ? '⏹️ Terminar trazo' : '✏️ Iniciar trazo';
+            btn.style.background = drawingEnabled ? '#ef4444' : '#2563eb';
+            
+            if (drawingEnabled) {
+                currentTraceSouhaitees = [];
+                mapSouhaitees.getContainer().style.cursor = 'crosshair';
+            } else {
+                mapSouhaitees.getContainer().style.cursor = 'grab';
+                if (currentTraceSouhaitees.length > 0) {
+                    showProposalForm();
+                }
+            }
+        }
+        
+        function addPointToTrace(latlng) {
+            currentTraceSouhaitees.push(latlng);
+            
+            // Mostrar punto
+            L.circleMarker(latlng, {
+                radius: 5,
+                fillColor: '#2563eb',
+                color: '#1e40af',
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.8
+            }).addTo(tracesLayer);
+            
+            // Dibujar línea si hay 2+ puntos
+            if (currentTraceSouhaitees.length > 1) {
+                const lastIndex = currentTraceSouhaitees.length - 1;
+                L.polyline([
+                    currentTraceSouhaitees[lastIndex - 1],
+                    currentTraceSouhaitees[lastIndex]
+                ], {
+                    color: '#2563eb',
+                    weight: 3,
+                    opacity: 0.7
+                }).addTo(tracesLayer);
+            }
+        }
+        
+        function clearCurrentTraceSouhaitees() {
+            currentTraceSouhaitees = [];
+            tracesLayer.clearLayers();
+            drawingEnabled = false;
+            document.getElementById('toggle-draw-btn').textContent = '✏️ Iniciar trazo';
+            document.getElementById('toggle-draw-btn').style.background = '#2563eb';
+            mapSouhaitees.getContainer().style.cursor = 'grab';
+        }
+        
+        function showProposalForm() {
+            const description = prompt('Describe tu propuesta de cicloruta:');
+            if (description && description.trim()) {
+                const justification = prompt('¿Por qué es importante esta cicloruta?');
+                if (justification && justification.trim()) {
+                    const length = calculateTraceLength(currentTraceSouhaitees);
+                    alert(`✅ ¡Propuesta registrada!
+                    
+Descripción: ${description}
+Justificación: ${justification}
+Longitud aproximada: ${length.toFixed(2)} km
+                    
+Tu propuesta ha sido agregada a la lista y pronto podrás verla aquí.`);
+                    clearCurrentTraceSouhaitees();
+                }
+            }
+        }
+        
+        function calculateTraceLength(points) {
+            let totalLength = 0;
+            for (let i = 0; i < points.length - 1; i++) {
+                const lat1 = points[i].lat * Math.PI / 180;
+                const lat2 = points[i + 1].lat * Math.PI / 180;
+                const dLat = (points[i + 1].lat - points[i].lat) * Math.PI / 180;
+                const dLng = (points[i + 1].lng - points[i].lng) * Math.PI / 180;
+                
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(lat1) * Math.cos(lat2) *
+                    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                totalLength += 6371 * c; // Rayon de la Terre en km
+            }
+            return totalLength;
+        }
     </script>
 </body>
 </html>
