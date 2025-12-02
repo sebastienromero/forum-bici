@@ -14,10 +14,9 @@
     
     <!-- Données des pistes cyclables intégrées -->
     <script src="./data/pistes-data.js"></script>
-    <!-- Données des segments de 100m pré-calculés -->
-    <!-- <script src="./data/pistes-segmentees.js"></script> -->
-    <!-- Données des pistes converties en LineStrings (rate-your-track) -->
-    <script src="./data/pistes-linestrings.js"></script>
+    <!-- Données rate-your-track (MultiPolygons) -->
+    <script src="./data/pistes-rate-your-track.js"></script>
+</script>
     
     <style>
         /* ===== CONFIGURATION MODIFIABLE ===== */
@@ -1372,21 +1371,23 @@
                 console.log('🔍 Chargement des pistes cyclables...');
                 
                 try {
-                    if (typeof pistesLineStrings === 'undefined') {
-                        throw new Error('Données pistesLineStrings non disponibles');
+                    if (typeof pistesRateYourTrack === 'undefined') {
+                        throw new Error('Données pistesRateYourTrack non disponibles');
                     }
                     
-                    console.log('✅ Données chargées:', pistesLineStrings.features.length, 'segments de pistes');
+                    console.log('✅ Données chargées:', pistesRateYourTrack.features.length, 'polygones de pistes (rate-your-track)');
                     
-                    // Ajouter les pistes LineStrings à la carte (séparées par rue)
-                    const pistesLayer = L.geoJSON(pistesLineStrings, {
+                    // Ajouter les polygones à la carte (affichage identique à rate-your-track)
+                    const pistesLayer = L.geoJSON(pistesRateYourTrack, {
                         style: function(feature) {
                             // Style identique à rate-your-track (gris foncé #757575)
                             return {
                                 color: '#757575',
                                 weight: 4,
                                 opacity: 0.95,
-                                interactive: true // Activer les interactions pour le survol
+                                fillColor: '#757575',
+                                fillOpacity: 0.3,
+                                interactive: true
                             };
                         },
                         onEachFeature: function(feature, layer) {
@@ -1442,10 +1443,10 @@
                         }
                     }).addTo(mapExistantes);
                     
-                    console.log("🗺️ Pistes LineStrings ajoutées (séparées par rue) !");
+                    console.log("🗺️ Polygones de pistes rate-your-track ajoutés !");
                     
-                    // === UTILISER CES SEGMENTS POUR LA NOTATION ===
-                    window.trackSegments = pistesLineStrings.features;
+                    // === UTILISER CES POLYGONES POUR LA NOTATION ===
+                    window.trackSegments = pistesRateYourTrack.features;
                     console.log(`✅ ${window.trackSegments.length} segments prêts pour la notation`);
                     
                     
@@ -2059,10 +2060,12 @@
             console.log(`📍 ${routePoints.length} points originaux → ${interpolatedPoints.length} points avec interpolation`);
             
             // Parcourir chaque segment de 100m (structure GeoJSON)
-            window.trackSegments.forEach(segment => {
-                if (foundSegmentIds.has(segment.id)) return;
+            window.trackSegments.forEach((segment, segIndex) => {
+                // Déterminer un id stable pour le segment : id existant, sinon CicCodigo/CicCIV, sinon index
+                const stableId = segment.id || (segment.properties && (segment.properties.CicCodigo || segment.properties.CicCIV)) || `seg_${segIndex}`;
+                if (foundSegmentIds.has(stableId)) return;
                 
-                const coords = segment.geometry.coordinates;
+                const coords = segment.geometry && segment.geometry.coordinates ? segment.geometry.coordinates : [];
                 
                 // Vérifier si ce segment est proche de l'itinéraire
                 let isNearby = false;
@@ -2093,13 +2096,20 @@
                 }
                 
                 if (isNearby) {
-                    foundSegmentIds.add(segment.id);
+                    foundSegmentIds.add(stableId);
+                    // Construire un nom lisible pour la piste
+                    const props = segment.properties || {};
+                    const trackName = props.parentName || props.name || props.CicCodigo || `Piste ${stableId}`;
+                    const segIndexProp = props.segmentIndex !== undefined ? props.segmentIndex : segIndex;
+                    const distanceKm = (props.length || props.distance || 0) / 1000;
+                    const parentId = props.parentId || props.CicCodigo || null;
+
                     nearbySegments.push({
-                        id: segment.id,
-                        trackName: `${segment.properties.parentName} (segment ${segment.properties.segmentIndex})`,
+                        id: stableId,
+                        trackName: `${trackName} (segment ${segIndexProp})`,
                         segment: segment,
-                        distance: segment.properties.length / 1000, // en km
-                        parentId: segment.properties.parentId
+                        distance: distanceKm,
+                        parentId: parentId
                     });
                 }
             });
@@ -2153,16 +2163,21 @@
                 if (!segmentData || 
                     !segmentData.ratings || 
                     !Array.isArray(segmentData.ratings) || 
-                    segmentData.ratings.length === 0 || 
-                    !segmentData.segment ||
-                    !segmentData.segment.geometry ||
-                    !segmentData.segment.geometry.coordinates) {
-                    console.warn('❌ Segment invalide ignoré:', segmentData);
+                    segmentData.ratings.length === 0) {
+                    console.warn('❌ Segment invalide ou sans avis ignoré:', segmentData && segmentData.id ? segmentData.id : segmentData);
+                    skippedCount++;
+                    return;
+                }
+
+                // Segment géométrique optionnel : tenter d'utiliser segment.segment ou segment.segmentData
+                const segGeom = segmentData.segment || segmentData.segmentData || null;
+                if (!segGeom || !segGeom.geometry || !segGeom.geometry.coordinates) {
+                    console.warn('❌ Segment sans géométrie ignoré:', segmentData.id || segmentData);
                     skippedCount++;
                     return;
                 }
                 
-                console.log('✅ Traitement segment:', segmentData.id, 'avec', segmentData.ratings.length, 'avis');
+                console.log('✅ Traitement segment:', segmentData.id || '(no-id)', 'avec', segmentData.ratings.length, 'avis');
                 
                 // Calculer les moyennes à partir de tous les avis
                 const allRatings = segmentData.ratings;
@@ -2340,25 +2355,39 @@
             }
             
             let savedCount = 0;
-            nearbySegments.forEach((segmentData) => {
+            nearbySegments.forEach((segmentData, idx) => {
+                // Assurer un id stable
+                const segId = segmentData.id || (segmentData.segment && segmentData.segment.properties && (segmentData.segment.properties.CicCodigo || segmentData.segment.properties.CicCIV)) || `seg_fallback_${idx}`;
+                const key = String(segId);
+
+                // Valider les valeurs numériques
+                const safeRating = {
+                    security: Number.isFinite(Number(newRating.security)) ? Number(newRating.security) : 3,
+                    noise: Number.isFinite(Number(newRating.noise)) ? Number(newRating.noise) : 3,
+                    air: Number.isFinite(Number(newRating.air)) ? Number(newRating.air) : 3,
+                    flow: Number.isFinite(Number(newRating.flow)) ? Number(newRating.flow) : 3,
+                    inclusion: Number.isFinite(Number(newRating.inclusion)) ? Number(newRating.inclusion) : 3,
+                    comment: newRating.comment || ''
+                };
+
                 // Système multi-avis: ajouter le nouvel avis au tableau existant
-                if (!portionRatings[segmentData.id]) {
+                if (!portionRatings[key]) {
                     // Première notation de ce segment: créer la structure
-                    portionRatings[segmentData.id] = {
-                        id: segmentData.id,
-                        trackName: segmentData.trackName,
-                        segment: segmentData.segment,
-                        parentId: segmentData.parentId,
+                    portionRatings[key] = {
+                        id: key,
+                        trackName: segmentData.trackName || (segmentData.segment && segmentData.segment.properties && (segmentData.segment.properties.parentName || segmentData.segment.properties.name)) || `Piste ${key}`,
+                        segment: segmentData.segment || segmentData.segment,
+                        parentId: segmentData.parentId || (segmentData.segment && segmentData.segment.properties && (segmentData.segment.properties.parentId || segmentData.segment.properties.CicCodigo)) || null,
                         ratings: []
                     };
                 }
-                
+
                 // Ajouter le nouvel avis avec timestamp
-                portionRatings[segmentData.id].ratings.push({
-                    ...newRating,
+                portionRatings[key].ratings.push({
+                    ...safeRating,
                     timestamp: new Date().toISOString()
                 });
-                
+
                 savedCount++;
             });
             
