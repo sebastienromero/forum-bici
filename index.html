@@ -1383,6 +1383,7 @@
                             // Vérifier si ce segment a des avis
                             const id = feature.id || (feature.properties && feature.properties.parentId) || null;
                             let color = '#757575'; // Gris foncé par défaut
+                            let opacity = 0.90; // Opacité réduite par défaut
                             
                             if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
                                 // Calculer la note globale moyenne
@@ -1400,12 +1401,13 @@
                                 } else {
                                     color = '#ef4444'; // Rouge (mauvais)
                                 }
+                                opacity = 0.95; // Segments notés bien visibles
                             }
                             
                             return {
                                 color: color,
                                 weight: 4,
-                                opacity: 0.95,
+                                opacity: opacity,
                                 interactive: true
                             };
                         },
@@ -1487,8 +1489,8 @@
                 // Ajouter la gestion du clic pour le tracé d'itinéraire
                 mapExistantes.on('click', handleMapClick);
                 
-                // Afficher les portions notées au chargement
-                displayPortionRatings();
+                // Appliquer la vue initiale (Sécurité par défaut)
+                updateSegmentStyles();
                 
                 // Forcer le redimensionnement de la carte
                 setTimeout(() => {
@@ -1751,14 +1753,43 @@
                 btn.textContent = '🙈 Cacher les avis';
                 btn.style.background = '#16a34a';
                 if (viewSelector) viewSelector.style.display = 'inline-block';
+                
+                // Afficher les couleurs selon la vue active
+                if (currentView === 'neutre') {
+                    // Vue neutre : tout en gris
+                    if (window.pistesLayer) {
+                        window.pistesLayer.eachLayer(function(layer) {
+                            layer.setStyle({
+                                color: '#757575',
+                                weight: 4,
+                                opacity: 0.90,
+                                interactive: true
+                            });
+                        });
+                    }
+                } else {
+                    // Autres vues : colorer selon les notes
+                    updateSegmentStyles();
+                }
             } else {
                 btn.textContent = '👁️ Afficher les avis';
                 btn.style.background = '#6b7280';
                 if (viewSelector) viewSelector.style.display = 'none';
+                
+                // Tout remettre en gris neutre
+                        if (window.pistesLayer) {
+                            window.pistesLayer.eachLayer(function(layer) {
+                                layer.setStyle({
+                                    color: '#757575',
+                                    weight: 4,
+                                    opacity: 0.90,
+                                    interactive: true
+                                });
+                            });
+                        }                // Nettoyer les overlays
+                portionLayers.forEach(layer => mapExistantes.removeLayer(layer));
+                portionLayers = [];
             }
-            
-            // Afficher/cacher les portions rate_your_track
-            displayPortionRatings();
         }
 
         function changeView() {
@@ -1767,9 +1798,35 @@
                 currentView = selector.value;
 
                 
-                // Mettre à jour l'affichage des portions selon la vue sélectionnée
+                // Mettre à jour l'affichage selon la vue sélectionnée
                 if (showRatings) {
-                    displayPortionRatings();
+                    if (currentView === 'neutre') {
+                        // Vue neutre : afficher toutes les pistes en gris sans avis
+                        console.log('🎨 Vue neutre activée');
+                        
+                        // Colorer tout en gris avec opacité forte
+                        if (window.pistesLayer) {
+                            window.pistesLayer.eachLayer(function(layer) {
+                                layer.setStyle({
+                                    color: '#757575', // Gris foncé
+                                    weight: 4,
+                                    opacity: 0.90, // Opacité forte pour bien voir
+                                    interactive: true
+                                });
+                            });
+                        }
+                        
+                        // Nettoyer les overlays des avis
+                        portionLayers.forEach(layer => mapExistantes.removeLayer(layer));
+                        portionLayers = [];
+                    } else {
+                        // Autres vues : recolorer selon les notes
+                        updateSegmentStyles(); // Recolorer tous les segments
+                        
+                        // Nettoyer les overlays des avis (on n'en a plus besoin)
+                        portionLayers.forEach(layer => mapExistantes.removeLayer(layer));
+                        portionLayers = [];
+                    }
                 }
             }
         }
@@ -1927,6 +1984,12 @@
             routePoints = [];
             routeMarkers.forEach(marker => mapExistantes.removeLayer(marker));
             routeMarkers = [];
+            
+            // Réinitialiser la distance affichée
+            const distanceElem = document.getElementById('route-distance');
+            if (distanceElem) {
+                distanceElem.textContent = '0 km';
+            }
             
             // Nettoyer la ligne EN COURS (toujours, pas seulement en mode tracé)
             if (routeLayer) {
@@ -2421,14 +2484,7 @@
             // Effacer le tracé AVANT l'affichage
             clearCurrentRoute();
             
-            // Mettre à jour les styles des segments (CHANGE LES COULEURS!)
-            updateSegmentStyles();
-            
-            // Actualiser l'affichage IMMÉDIATEMENT
-            console.log('🎨 Appel de displayPortionRatings()...');
-            displayPortionRatings();
-            
-            // Réinitialiser les sliders à la valeur par défaut (3)
+            // Réinitialiser les sliders à la valeur par défaut (3) IMMÉDIATEMENT
             document.getElementById('security-slider').value = 3;
             document.getElementById('noise-slider').value = 3;
             document.getElementById('air-slider').value = 3;
@@ -2442,6 +2498,10 @@
             updateRatingValue('air', 3);
             updateRatingValue('flow', 3);
             updateRatingValue('inclusion', 3);
+            
+            // Mettre à jour UNIQUEMENT les segments notés
+            console.log('🎨 Mise à jour des styles pour', segmentIds.length, 'segments...');
+            updateSegmentStyles(segmentIds);
             
             console.log('=== FIN savePortionRatings ===');
         }
@@ -2791,41 +2851,86 @@
         }
 
         // Mettre à jour les styles des segments sur la carte
-        function updateSegmentStyles() {
+        function updateSegmentStyles(segmentsToUpdate = null) {
             if (!window.pistesLayer) {
                 console.warn('⚠️ pistesLayer non disponible');
                 return;
             }
             
+            // Créer un ensemble des IDs à mettre à jour (si fourni)
+            const updateSet = segmentsToUpdate ? new Set(segmentsToUpdate) : null;
+            const layersToRedraw = [];
+            
             window.pistesLayer.eachLayer(function(layer) {
                 const feature = layer.feature;
                 const id = feature.id || (feature.properties && feature.properties.parentId) || null;
+                
+                // Si une liste spécifique est fournie, sauter les autres
+                if (updateSet && !updateSet.has(id)) {
+                    return;
+                }
+                
                 let color = '#757575'; // Gris foncé par défaut
+                let opacity = 0.90; // Opacité réduite pour les segments non notés
                 
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
-                    // Calculer la note globale moyenne
                     const ratings = portionRatings[id].ratings;
-                    const avgGlobal = ratings.reduce((sum, r) => 
-                        sum + (r.security + r.noise + r.air + r.flow + r.inclusion) / 5, 0) / ratings.length;
+                    let scoreToUse = 0;
                     
-                    // Appliquer la couleur selon la note
-                    if (avgGlobal >= 4) {
+                    // Calculer le score selon la vue active
+                    if (currentView === 'global') {
+                        // Vue globale : utiliser le meilleur score global
+                        let maxScore = 0;
+                        ratings.forEach(r => {
+                            const score = (r.security + r.noise + r.air + r.flow + r.inclusion) / 5;
+                            if (score > maxScore) maxScore = score;
+                        });
+                        scoreToUse = maxScore;
+                    } else if (currentView === 'security' || currentView === 'noise' || currentView === 'air' || currentView === 'flow' || currentView === 'inclusion') {
+                        // Vue par critère : calculer la moyenne du critère spécifique
+                        const sum = ratings.reduce((acc, r) => acc + r[currentView], 0);
+                        scoreToUse = sum / ratings.length;
+                    } else {
+                        // Par défaut (security) : utiliser le score max global
+                        let maxScore = 0;
+                        ratings.forEach(r => {
+                            const score = (r.security + r.noise + r.air + r.flow + r.inclusion) / 5;
+                            if (score > maxScore) maxScore = score;
+                        });
+                        scoreToUse = maxScore;
+                    }
+                    
+                    // Appliquer la couleur selon le score (échelle 1-5)
+                    if (scoreToUse >= 4) {
                         color = '#22c55e'; // Vert (excellent)
-                    } else if (avgGlobal >= 3) {
+                    } else if (scoreToUse >= 3) {
                         color = '#eab308'; // Jaune (bon)
-                    } else if (avgGlobal >= 2) {
+                    } else if (scoreToUse >= 2) {
                         color = '#f97316'; // Orange (moyen)
                     } else {
                         color = '#ef4444'; // Rouge (mauvais)
                     }
+                    opacity = 0.95; // Segments notés bien visibles
                 }
                 
+                // Changer le style ET collecter les layers à redessiner
                 layer.setStyle({
                     color: color,
                     weight: 4,
-                    opacity: 0.95,
+                    opacity: opacity,
                     interactive: true
                 });
+                
+                // Marquer pour redraw si c'était dans la liste
+                if (updateSet && updateSet.has(id)) {
+                    layersToRedraw.push(layer);
+                }
+            });
+            
+            // Forcer le redraw en retirant et ré-ajoutant les layers modifiés
+            layersToRedraw.forEach(layer => {
+                layer.removeFrom(window.pistesLayer);
+                layer.addTo(window.pistesLayer);
             });
             
             console.log('🎨 Styles des segments mis à jour');
