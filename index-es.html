@@ -2805,6 +2805,8 @@
                 const feature = layer.feature;
                 const id = feature.id || (feature.properties && feature.properties.parentId) || null;
                 let color = '#757575'; // Gris foncé par défaut
+                let weight = 4; // Épaisseur par défaut
+                let opacity = 0.90; // Opacité pour segments non notés
                 
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
                     // Utiliser le MAXIMUM INDIVIDUEL parmi tous les critères de tous les avis
@@ -2830,12 +2832,14 @@
                     } else {
                         color = '#ef4444'; // Rouge (mauvais)
                     }
+                    weight = 5; // Segments notés légèrement plus épais
+                    opacity = 0.95; // Segments notés bien visibles
                 }
                 
                 layer.setStyle({
                     color: color,
-                    weight: 4,
-                    opacity: 0.95,
+                    weight: weight,
+                    opacity: opacity,
                     interactive: true
                 });
             });

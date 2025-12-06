@@ -1868,8 +1868,7 @@
             updateTracingStatus();
             updateRouteDistance();
             
-            // Réafficher les avis (pour mettre à jour les tooltips)
-            displayPortionRatings();
+            // NE PAS modifier les styles des pistes pendant le tracé
         }
 
         function removeRoutePoint(index) {
@@ -1889,8 +1888,7 @@
             updateTracingStatus();
             updateRouteDistance();
             
-            // Réafficher les avis (pour mettre à jour les tooltips)
-            displayPortionRatings();
+            // NE PAS modifier les styles des pistes pendant le tracé
         }
 
         function redrawRouteLine() {
@@ -2499,9 +2497,9 @@
             updateRatingValue('flow', 3);
             updateRatingValue('inclusion', 3);
             
-            // Mettre à jour UNIQUEMENT les segments notés
-            console.log('🎨 Mise à jour des styles pour', segmentIds.length, 'segments...');
-            updateSegmentStyles(segmentIds);
+            // Mettre à jour TOUS les segments pour afficher immédiatement les nouvelles couleurs
+            console.log('🎨 Mise à jour GLOBALE des styles après sauvegarde...');
+            updateSegmentStyles();
             
             console.log('=== FIN savePortionRatings ===');
         }
@@ -2796,8 +2794,8 @@
                 distanceElem.textContent = '0 km';
             }
             
-            // Réafficher les avis (pour mettre à jour les tooltips)
-            displayPortionRatings();
+            // Réappliquer les styles des pistes
+            updateSegmentStyles();
             
             console.log('🔄 Itinéraire réinitialisé');
         }
@@ -2840,11 +2838,8 @@
                 showRatings = false;
                 console.log('🔄 showRatings défini à false');
                 
-                // Mettre à jour l'affichage
-                if (typeof displayPortionRatings === 'function') {
-                    displayPortionRatings();
-                    console.log('🔄 Affichage des avis réinitialisé');
-                }
+                // Mettre à jour l'affichage via updateSegmentStyles
+                updateSegmentStyles();
                 
                 alert('✅ Tous les avis ont été réinitialisés !');
             }
@@ -2859,7 +2854,6 @@
             
             // Créer un ensemble des IDs à mettre à jour (si fourni)
             const updateSet = segmentsToUpdate ? new Set(segmentsToUpdate) : null;
-            const layersToRedraw = [];
             
             window.pistesLayer.eachLayer(function(layer) {
                 const feature = layer.feature;
@@ -2872,6 +2866,7 @@
                 
                 let color = '#757575'; // Gris foncé par défaut
                 let opacity = 0.90; // Opacité réduite pour les segments non notés
+                let weight = 4; // Épaisseur par défaut
                 
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
                     const ratings = portionRatings[id].ratings;
@@ -2911,26 +2906,16 @@
                         color = '#ef4444'; // Rouge (mauvais)
                     }
                     opacity = 0.95; // Segments notés bien visibles
+                    weight = 5; // Segments notés légèrement plus épais
                 }
                 
-                // Changer le style ET collecter les layers à redessiner
+                // Appliquer le style
                 layer.setStyle({
                     color: color,
-                    weight: 4,
+                    weight: weight,
                     opacity: opacity,
                     interactive: true
                 });
-                
-                // Marquer pour redraw si c'était dans la liste
-                if (updateSet && updateSet.has(id)) {
-                    layersToRedraw.push(layer);
-                }
-            });
-            
-            // Forcer le redraw en retirant et ré-ajoutant les layers modifiés
-            layersToRedraw.forEach(layer => {
-                layer.removeFrom(window.pistesLayer);
-                layer.addTo(window.pistesLayer);
             });
             
             console.log('🎨 Styles des segments mis à jour');
