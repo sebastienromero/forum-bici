@@ -1269,7 +1269,7 @@
                     <option value="air">Qualité de l'air</option>
                     <option value="flow">Fluidité</option>
                     <option value="inclusion">Accessibilité</option>
-                    <option value="global">Note globale</option>
+                    <option value="global">Note moyenne</option>
                     <option value="neutre">Vue neutre</option>
                 </select>
             </div>
@@ -1291,40 +1291,61 @@
                 
                 <div style="font-size:11px; margin-bottom:8px;">📍 <span id="route-distance">0 km</span></div>
                 
-                <div class="rating-instruction" style="font-size:10px; margin-bottom:6px; padding:6px; background:#f8fafc; border-radius:4px;">
-                    Notez cette piste sur 5 critères (1 = très mauvais, 5 = excellent)
+                <!-- Commentaire (section prioritaire) -->
+                <div style="margin-bottom:10px;">
+                    <label style="display:block; font-size:12px; margin-bottom:4px; font-weight:700; color:#2563eb;">💬 Commentaire</label>
+                    <textarea id="rating-comment" placeholder="Partagez votre expérience sur cette piste..." style="width:100%; height:60px; padding:8px; border:2px solid #2563eb; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:11px; background:var(--input-bg); color:var(--text-primary); resize:vertical; min-height:60px; max-height:120px;" class="rating-comment"></textarea>
                 </div>
                 
-                <!-- Critères de notation -->
-                <div style="margin-top:4px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Sécurité <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider security" id="security-slider" oninput="document.getElementById('security-value').textContent = this.value" style="width:100%; height:4px;">
+                <!-- Critères de notation (avec cases à cocher pour activer) -->
+                <div style="margin-top:8px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
+                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
+                            Sécurité <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                        </label>
+                        <input type="checkbox" id="security-check" checked onchange="toggleCriterion('security')" style="cursor:pointer;">
+                    </div>
+                    <input type="range" min="1" max="5" value="3" class="rating-slider security" id="security-slider" oninput="updateRatingDisplay('security', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Calme <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider noise" id="noise-slider" oninput="document.getElementById('noise-value').textContent = this.value" style="width:100%; height:4px;">
+                <div style="margin-top:6px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
+                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
+                            Calme <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                        </label>
+                        <input type="checkbox" id="noise-check" checked onchange="toggleCriterion('noise')" style="cursor:pointer;">
+                    </div>
+                    <input type="range" min="1" max="5" value="3" class="rating-slider noise" id="noise-slider" oninput="updateRatingDisplay('noise', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Qualité de l'air <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider air" id="air-slider" oninput="document.getElementById('air-value').textContent = this.value" style="width:100%; height:4px;">
+                <div style="margin-top:6px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
+                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
+                            Qualité de l'air <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                        </label>
+                        <input type="checkbox" id="air-check" checked onchange="toggleCriterion('air')" style="cursor:pointer;">
+                    </div>
+                    <input type="range" min="1" max="5" value="3" class="rating-slider air" id="air-slider" oninput="updateRatingDisplay('air', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Fluidité <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider flow" id="flow-slider" oninput="document.getElementById('flow-value').textContent = this.value" style="width:100%; height:4px;">
+                <div style="margin-top:6px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
+                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
+                            Fluidité <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                        </label>
+                        <input type="checkbox" id="flow-check" checked onchange="toggleCriterion('flow')" style="cursor:pointer;">
+                    </div>
+                    <input type="range" min="1" max="5" value="3" class="rating-slider flow" id="flow-slider" oninput="updateRatingDisplay('flow', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:2px;">
-                    <label style="display:block; font-size:11px; margin-bottom:1px; font-weight:600;">Accessibilité <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e;">3</span></label>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider inclusion" id="inclusion-slider" oninput="document.getElementById('inclusion-value').textContent = this.value" style="width:100%; height:4px;">
-                </div>
-                
-                <!-- Commentaire -->
-                <div style="margin-top:4px;">
-                    <label style="display:block; font-size:11px; margin-bottom:2px; font-weight:600;">💬 Commentaire (optionnel)</label>
-                    <textarea id="rating-comment" placeholder="Votre avis..." style="width:100%; height:40px; padding:4px; border:1px solid var(--control-border); border-radius:4px; font-family:'DM Sans',sans-serif; font-size:10px; background:var(--input-bg); color:var(--text-primary); resize:none;" class="rating-comment"></textarea>
+                <div style="margin-top:6px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
+                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
+                            Accessibilité <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                        </label>
+                        <input type="checkbox" id="inclusion-check" checked onchange="toggleCriterion('inclusion')" style="cursor:pointer;">
+                    </div>
+                    <input type="range" min="1" max="5" value="3" class="rating-slider inclusion" id="inclusion-slider" oninput="updateRatingDisplay('inclusion', this.value)" style="width:100%; height:4px;">
                 </div>
                 
                 <!-- Boutons d'action -->
@@ -1702,7 +1723,7 @@
                                         const avgInclusion = ratings.reduce((sum, r) => sum + r.inclusion, 0) / ratings.length;
                                         const avgGlobal = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
                                         
-                                        text += `<b>Note globale</b> : ${Math.round(avgGlobal * 10) / 10} / 5<br>`;
+                                        text += `<b>Note moyenne</b> : ${Math.round(avgGlobal * 10) / 10} / 5<br>`;
                                         text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${ratings.length} avis</span><br><br>`;
                                         text += `<b>Sécurité</b> : ${Math.round(avgSecurity * 10) / 10} / 5<br>`;
                                         text += `<b>Bruit</b> : ${Math.round(avgNoise * 10) / 10} / 5<br>`;
@@ -2595,9 +2616,9 @@
                     text += `</ul>`;
                 }
                 
-                // Afficher la note globale et le nombre d'avis
+                // Afficher la note moyenne et le nombre d'avis
                 const globalAvg = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
-                text += `<b>Note globale</b> : ${Math.round(globalAvg * 10) / 10} / 5<br>`;
+                text += `<b>Note moyenne</b> : ${Math.round(globalAvg * 10) / 10} / 5<br>`;
                 text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${numAvis} avis</span><br><br>`;
                 
                 // Afficher tous les critères
@@ -2669,14 +2690,31 @@
                 return;
             }
             
-            const security = parseInt(securityEl.value);
-            const noise = parseInt(noiseEl.value);
-            const air = parseInt(airEl.value);
-            const flow = parseInt(flowEl.value);
-            const inclusion = parseInt(inclusionEl.value);
-            const comment = commentEl ? commentEl.value : '';
+            // Vérifier les cases à cocher (cochée = noter ce critère)
+            const securityCheck = document.getElementById('security-check').checked;
+            const noiseCheck = document.getElementById('noise-check').checked;
+            const airCheck = document.getElementById('air-check').checked;
+            const flowCheck = document.getElementById('flow-check').checked;
+            const inclusionCheck = document.getElementById('inclusion-check').checked;
             
-            const newRating = { security, noise, air, flow, inclusion, comment };
+            const comment = commentEl ? commentEl.value.trim() : '';
+            
+            // VALIDATION: Au moins 1 critère coché OU un commentaire
+            const hasRating = securityCheck || noiseCheck || airCheck || flowCheck || inclusionCheck;
+            const hasComment = comment.length > 0;
+            
+            if (!hasRating && !hasComment) {
+                alert('❌ Veuillez noter au moins un critère OU laisser un commentaire !');
+                return;
+            }
+            
+            // Créer l'objet avec SEULEMENT les critères cochés
+            const newRating = { comment };
+            if (securityCheck) newRating.security = parseInt(securityEl.value);
+            if (noiseCheck) newRating.noise = parseInt(noiseEl.value);
+            if (airCheck) newRating.air = parseInt(airEl.value);
+            if (flowCheck) newRating.flow = parseInt(flowEl.value);
+            if (inclusionCheck) newRating.inclusion = parseInt(inclusionEl.value);
             
             // Trouver les SEGMENTS proches du tracé actuel (nouvelle version)
             const nearbySegments = findNearbyTrackPortions();
@@ -2699,15 +2737,17 @@
                 const segId = segmentData.id || (segmentData.segment && segmentData.segment.properties && (segmentData.segment.properties.CicCodigo || segmentData.segment.properties.CicCIV)) || `seg_fallback_${idx}`;
                 const key = String(segId);
 
-                // Valider les valeurs numériques
+                // Construire safeRating avec SEULEMENT les critères notés
                 const safeRating = {
-                    security: Number.isFinite(Number(newRating.security)) ? Number(newRating.security) : 3,
-                    noise: Number.isFinite(Number(newRating.noise)) ? Number(newRating.noise) : 3,
-                    air: Number.isFinite(Number(newRating.air)) ? Number(newRating.air) : 3,
-                    flow: Number.isFinite(Number(newRating.flow)) ? Number(newRating.flow) : 3,
-                    inclusion: Number.isFinite(Number(newRating.inclusion)) ? Number(newRating.inclusion) : 3,
                     comment: newRating.comment || ''
                 };
+                
+                // Ajouter seulement les critères qui ont été notés (présents dans newRating)
+                if (newRating.security) safeRating.security = Number(newRating.security);
+                if (newRating.noise) safeRating.noise = Number(newRating.noise);
+                if (newRating.air) safeRating.air = Number(newRating.air);
+                if (newRating.flow) safeRating.flow = Number(newRating.flow);
+                if (newRating.inclusion) safeRating.inclusion = Number(newRating.inclusion);
 
                 // Système multi-avis: ajouter le nouvel avis au tableau existant
                 if (!portionRatings[key]) {
@@ -2767,11 +2807,44 @@
 
         // SYSTÈME DE PORTIONS PRÉCISES (inspiré de rate_your_track)
         
-        function updateRatingValue(criterion, value) {
+        function toggleCriterion(criterion) {
+            const checkbox = document.getElementById(`${criterion}-check`);
+            const slider = document.getElementById(`${criterion}-slider`);
             const valueSpan = document.getElementById(`${criterion}-value`);
-            if (valueSpan) {
-                valueSpan.textContent = value;
+            
+            if (checkbox.checked) {
+                // Case cochée = ACTIVER le critère
+                slider.disabled = false;
+                slider.style.opacity = '1';
+                slider.style.cursor = 'pointer';
+                valueSpan.textContent = slider.value;
+                valueSpan.style.background = '#e0f2fe';
+                valueSpan.style.color = '#0c4a6e';
+            } else {
+                // Case décochée = DÉSACTIVER le critère
+                slider.disabled = true;
+                slider.style.opacity = '0.3';
+                slider.style.cursor = 'not-allowed';
+                valueSpan.textContent = 'Non noté';
+                valueSpan.style.background = '#f1f5f9';
+                valueSpan.style.color = '#94a3b8';
             }
+        }
+        
+        function updateRatingDisplay(criterion, value) {
+            const valueSpan = document.getElementById(`${criterion}-value`);
+            const checkbox = document.getElementById(`${criterion}-check`);
+            
+            if (valueSpan && checkbox.checked) {
+                valueSpan.textContent = value;
+                valueSpan.style.background = '#e0f2fe';
+                valueSpan.style.color = '#0c4a6e';
+            }
+        }
+        
+        function updateRatingValue(criterion, value) {
+            // Garder l'ancienne fonction pour compatibilité
+            updateRatingDisplay(criterion, value);
         }
 
         function toggleFullscreen() {
@@ -3038,14 +3111,27 @@
             // Réinitialiser les données de l'itinéraire
             routePoints = [];
             
-            // Réinitialiser les sliders à 3 (valeur par défaut)
+            // Réinitialiser les sliders à 3 et COCHER les cases (critères actifs par défaut)
             ['security', 'noise', 'air', 'flow', 'inclusion'].forEach(criterion => {
                 const slider = document.getElementById(`${criterion}-slider`);
+                const checkbox = document.getElementById(`${criterion}-check`);
                 if (slider) {
                     slider.value = 3;
-                    updateRatingValue(criterion, 3);
+                    slider.disabled = false;
+                    slider.style.opacity = '1';
+                    slider.style.cursor = 'pointer';
+                    updateRatingDisplay(criterion, 3);
+                }
+                if (checkbox) {
+                    checkbox.checked = true;
                 }
             });
+            
+            // Réinitialiser le commentaire
+            const commentEl = document.getElementById('rating-comment');
+            if (commentEl) {
+                commentEl.value = '';
+            }
             
             // Mettre à jour l'affichage de la distance
             const distanceElem = document.getElementById('route-distance');
@@ -3130,42 +3216,85 @@
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
                     const ratings = portionRatings[id].ratings;
                     let scoreToUse = 0;
+                    let hasScore = false;
                     
                     // Calculer le score selon la vue active
                     if (currentView === 'global') {
-                        // Vue globale : utiliser le meilleur score global
+                        // Vue globale : utiliser le meilleur score global (moyenne des critères notés)
                         let maxScore = 0;
                         ratings.forEach(r => {
-                            const score = (r.security + r.noise + r.air + r.flow + r.inclusion) / 5;
-                            if (score > maxScore) maxScore = score;
+                            const criteria = ['security', 'noise', 'air', 'flow', 'inclusion'];
+                            let sum = 0;
+                            let count = 0;
+                            criteria.forEach(criterion => {
+                                if (r[criterion] !== undefined && r[criterion] !== null) {
+                                    sum += r[criterion];
+                                    count++;
+                                }
+                            });
+                            if (count > 0) {
+                                const score = sum / count;
+                                if (score > maxScore) maxScore = score;
+                            }
                         });
-                        scoreToUse = maxScore;
+                        if (maxScore > 0) {
+                            scoreToUse = maxScore;
+                            hasScore = true;
+                        }
                     } else if (currentView === 'security' || currentView === 'noise' || currentView === 'air' || currentView === 'flow' || currentView === 'inclusion') {
-                        // Vue par critère : calculer la moyenne du critère spécifique
-                        const sum = ratings.reduce((acc, r) => acc + r[currentView], 0);
-                        scoreToUse = sum / ratings.length;
+                        // Vue par critère : calculer la moyenne du critère spécifique (seulement si noté)
+                        let sum = 0;
+                        let count = 0;
+                        ratings.forEach(r => {
+                            if (r[currentView] !== undefined && r[currentView] !== null) {
+                                sum += r[currentView];
+                                count++;
+                            }
+                        });
+                        if (count > 0) {
+                            scoreToUse = sum / count;
+                            hasScore = true;
+                        }
                     } else {
-                        // Par défaut (security) : utiliser le score max global
+                        // Par défaut : utiliser le score max global (moyenne des critères notés)
                         let maxScore = 0;
                         ratings.forEach(r => {
-                            const score = (r.security + r.noise + r.air + r.flow + r.inclusion) / 5;
-                            if (score > maxScore) maxScore = score;
+                            const criteria = ['security', 'noise', 'air', 'flow', 'inclusion'];
+                            let sum = 0;
+                            let count = 0;
+                            criteria.forEach(criterion => {
+                                if (r[criterion] !== undefined && r[criterion] !== null) {
+                                    sum += r[criterion];
+                                    count++;
+                                }
+                            });
+                            if (count > 0) {
+                                const score = sum / count;
+                                if (score > maxScore) maxScore = score;
+                            }
                         });
-                        scoreToUse = maxScore;
+                        if (maxScore > 0) {
+                            scoreToUse = maxScore;
+                            hasScore = true;
+                        }
                     }
                     
-                    // Appliquer la couleur selon le score (échelle 1-5)
-                    if (scoreToUse >= 4) {
-                        color = '#22c55e'; // Vert (excellent)
-                    } else if (scoreToUse >= 3) {
-                        color = '#eab308'; // Jaune (bon)
-                    } else if (scoreToUse >= 2) {
-                        color = '#f97316'; // Orange (moyen)
-                    } else {
-                        color = '#ef4444'; // Rouge (mauvais)
+                    // Appliquer la couleur seulement si un score existe
+                    if (hasScore) {
+                        // Appliquer la couleur selon le score (échelle 1-5)
+                        if (scoreToUse >= 4) {
+                            color = '#22c55e'; // Vert (excellent)
+                        } else if (scoreToUse >= 3) {
+                            color = '#eab308'; // Jaune (bon)
+                        } else if (scoreToUse >= 2) {
+                            color = '#f97316'; // Orange (moyen)
+                        } else {
+                            color = '#ef4444'; // Rouge (mauvais)
+                        }
+                        opacity = 0.95; // Segments notés bien visibles
+                        weight = 5; // Segments notés légèrement plus épais
                     }
-                    opacity = 0.95; // Segments notés bien visibles
-                    weight = 5; // Segments notés légèrement plus épais
+                    // Sinon on garde la couleur grise par défaut
                 }
                 
                 // Appliquer le style

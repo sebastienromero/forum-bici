@@ -1,6 +1,26 @@
 # 📋 Notes de développement - Rate Your Track Bogotá
 
-## 🎯 État actuel du projet (17 novembre 2025)
+## 🎯 État actuel du projet (7 décembre 2025)
+
+### 🚨 PRIORITÉ STRATÉGIQUE : PROFESSIONNALISATION DU CODE
+
+**⚠️ PAUSE DÉVELOPPEMENT NOUVELLES FONCTIONNALITÉS**
+
+Avant d'ajouter de nouvelles features, **restructurer le code existant** pour :
+1. **Lisibilité** : Organiser le code de manière claire pour moi et les futurs contributeurs
+2. **Robustesse** : Éviter les régressions et bugs futurs
+3. **Maintenabilité** : Faciliter les modifications et évolutions
+4. **Apprentissage** : Acquérir de bons réflexes de développement professionnel
+
+📄 **Voir le plan détaillé dans : `Professionnalisation.md`**
+
+**Phases de professionnalisation :**
+- 🔴 **Phase 1 (Ce weekend)** : Structure & Organisation (CSS + Config + JS modules)
+- 🟠 **Phase 2 (Semaine prochaine)** : Robustesse (Logger + Validation + Versioning)
+- 🟡 **Phase 3 (2-3 semaines)** : Qualité (Tests + Conventions + .gitignore)
+- 🟢 **Phase 4 (1 mois)** : Outillage moderne (Vite + Documentation + Tests auto)
+
+**Résultat attendu :** Code professionnel, modulaire, robuste et partageable 🚀
 
 ### 💬 MÉTHODOLOGIE DÉVELOPPEMENT
 **Une amélioration par jour** - Approche "routine quotidienne productive"

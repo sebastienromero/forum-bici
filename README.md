@@ -1,5 +1,22 @@
 # 🚴‍♀️ Rate ---
 
+## ⚠️ NOTE IMPORTANTE DE DÉVELOPPEMENT
+
+**🇫🇷 VERSION FRANÇAISE UNIQUEMENT EN DÉVELOPPEMENT ACTIF**
+
+Pour l'instant, **toutes les modifications et améliorations** doivent être appliquées **UNIQUEMENT sur `index.html` (version française)**.
+
+**❌ NE PAS mettre à jour `index-es.html` (version espagnole)** sauf instruction explicite contraire.
+
+**Raison :** Focus sur une seule version pour itérer rapidement et éviter de dupliquer les efforts. La version espagnole sera synchronisée plus tard quand la version française sera stabilisée.
+
+**📝 Pour l'assistant IA :**
+- Quand tu fais une modification, applique-la SEULEMENT à `index.html`
+- Ne pose pas la question "Dois-je aussi mettre à jour index-es.html ?" → La réponse est NON par défaut
+- Si besoin de synchroniser les deux versions, l'utilisateur le demandera explicitement
+
+---
+
 ## 💡 Philosophie du projet
 
 > Ce projet est conçu pour être développé **en vibe coding**, avec l'aide de GitHub Copilot.  
