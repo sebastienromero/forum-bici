@@ -885,11 +885,12 @@
         }
         
         function getColorFromRating(rating) {
-            // Couleurs selon la moyenne (1-5)
-            if (rating >= 4) return '#16a34a';  // Vert (bon)
-            if (rating >= 3) return '#ca8a04';  // Orange (moyen)
-            if (rating >= 2) return '#ea580c';  // Orange foncé (mauvais)
-            return '#dc2626';  // Rouge (très mauvais)
+            // Palette à 5 nuances selon la moyenne (1-5)
+            if (rating >= 4.5) return '#16a34a';  // 🟢 Vert foncé (excellent) - 4.5-5
+            if (rating >= 3.5) return '#65a30d';  // 🟢 Vert clair (bon) - 3.5-4.49
+            if (rating >= 2.5) return '#ca8a04';  // 🟡 Jaune/Orange (moyen) - 2.5-3.49
+            if (rating >= 1.5) return '#ea580c';  // 🟠 Orange foncé (mauvais) - 1.5-2.49
+            return '#dc2626';  // 🔴 Rouge (très mauvais) - 0-1.49
         }
 
         // NOUVELLES FONCTIONS POUR LE TRACÉ INTERACTIF
