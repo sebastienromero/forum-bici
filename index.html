@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
+    <!-- Configuration centralisée -->
+    <script src="./config/constants.js"></script>
+    
     <!-- Données des pistes converties en LineStrings (rate-your-track) -->
     <script src="./data/pistes-linestrings.js"></script>
     
@@ -885,12 +888,12 @@
         }
         
         function getColorFromRating(rating) {
-            // Palette sympathique à 5 nuances selon la moyenne (1-5)
-            if (rating >= 4.5) return '#22c55e';  // 🟢 Vert vif (excellent) - 4.5-5
-            if (rating >= 3.5) return '#84cc16';  // 🟢 Vert lime (bon) - 3.5-4.49
-            if (rating >= 2.5) return '#eab308';  // 🟡 Jaune vif (moyen) - 2.5-3.49
-            if (rating >= 1.5) return '#f97316';  // 🟠 Orange vif (mauvais) - 1.5-2.49
-            return '#ef4444';  // 🔴 Rouge vif (très mauvais) - 0-1.49
+            // Utilise les constantes centralisées depuis config/constants.js
+            if (rating >= CONFIG.THRESHOLDS.EXCELLENT) return CONFIG.COLORS.EXCELLENT;
+            if (rating >= CONFIG.THRESHOLDS.GOOD) return CONFIG.COLORS.GOOD;
+            if (rating >= CONFIG.THRESHOLDS.AVERAGE) return CONFIG.COLORS.AVERAGE;
+            if (rating >= CONFIG.THRESHOLDS.POOR) return CONFIG.COLORS.POOR;
+            return CONFIG.COLORS.BAD;
         }
 
         // NOUVELLES FONCTIONS POUR LE TRACÉ INTERACTIF
@@ -2122,9 +2125,9 @@
                     return;
                 }
                 
-                let color = '#757575'; // Gris foncé par défaut
-                let opacity = 0.90; // Opacité réduite pour les segments non notés
-                let weight = 4; // Épaisseur par défaut
+                let color = CONFIG.COLORS.NEUTRAL; // Gris pour segments non notés
+                let opacity = CONFIG.MAP.defaultOpacity; // Opacité segments non notés
+                let weight = CONFIG.MAP.defaultWeight; // Épaisseur par défaut
                 
                 if (id && portionRatings[id] && portionRatings[id].ratings && portionRatings[id].ratings.length > 0) {
                     const ratings = portionRatings[id].ratings;
@@ -2196,8 +2199,8 @@
                     if (hasScore) {
                         // Utiliser la fonction centralisée pour les couleurs
                         color = getColorFromRating(scoreToUse);
-                        opacity = 0.95; // Segments notés bien visibles
-                        weight = 5; // Segments notés légèrement plus épais
+                        opacity = CONFIG.MAP.ratedOpacity; // Segments notés bien visibles
+                        weight = CONFIG.MAP.ratedWeight; // Segments notés légèrement plus épais
                     }
                     // Sinon on garde la couleur grise par défaut
                 }
