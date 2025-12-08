@@ -885,12 +885,12 @@
         }
         
         function getColorFromRating(rating) {
-            // Palette à 5 nuances selon la moyenne (1-5)
-            if (rating >= 4.5) return '#16a34a';  // 🟢 Vert foncé (excellent) - 4.5-5
-            if (rating >= 3.5) return '#65a30d';  // 🟢 Vert clair (bon) - 3.5-4.49
-            if (rating >= 2.5) return '#ca8a04';  // 🟡 Jaune/Orange (moyen) - 2.5-3.49
-            if (rating >= 1.5) return '#ea580c';  // 🟠 Orange foncé (mauvais) - 1.5-2.49
-            return '#dc2626';  // 🔴 Rouge (très mauvais) - 0-1.49
+            // Palette sympathique à 5 nuances selon la moyenne (1-5)
+            if (rating >= 4.5) return '#22c55e';  // 🟢 Vert vif (excellent) - 4.5-5
+            if (rating >= 3.5) return '#84cc16';  // 🟢 Vert lime (bon) - 3.5-4.49
+            if (rating >= 2.5) return '#eab308';  // 🟡 Jaune vif (moyen) - 2.5-3.49
+            if (rating >= 1.5) return '#f97316';  // 🟠 Orange vif (mauvais) - 1.5-2.49
+            return '#ef4444';  // 🔴 Rouge vif (très mauvais) - 0-1.49
         }
 
         // NOUVELLES FONCTIONS POUR LE TRACÉ INTERACTIF
@@ -2194,16 +2194,8 @@
                     
                     // Appliquer la couleur seulement si un score existe
                     if (hasScore) {
-                        // Appliquer la couleur selon le score (échelle 1-5)
-                        if (scoreToUse >= 4) {
-                            color = '#22c55e'; // Vert (excellent)
-                        } else if (scoreToUse >= 3) {
-                            color = '#eab308'; // Jaune (bon)
-                        } else if (scoreToUse >= 2) {
-                            color = '#f97316'; // Orange (moyen)
-                        } else {
-                            color = '#ef4444'; // Rouge (mauvais)
-                        }
+                        // Utiliser la fonction centralisée pour les couleurs
+                        color = getColorFromRating(scoreToUse);
                         opacity = 0.95; // Segments notés bien visibles
                         weight = 5; // Segments notés légèrement plus épais
                     }
