@@ -2238,41 +2238,7 @@
             if (themeToggle) {
                 themeToggle.addEventListener('click', toggleTheme);
             }
-            
-            // Optimisations tactiles pour mobile
-            initMobileOptimizations();
         });
-
-        // Fonction d'optimisation mobile
-        function initMobileOptimizations() {
-            // Détecter si on est sur mobile
-            const isMobile = window.matchMedia('(max-width: 768px)').matches;
-            
-            if (!isMobile) return;
-
-            // Empêcher le zoom double-tap sur toute la page
-            let lastTouchEnd = 0;
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, { passive: false });
-
-            // Améliorer le feedback tactile pour les boutons
-            document.querySelectorAll('button, .nav-btn, .map-btn, input[type="range"]').forEach(element => {
-                element.addEventListener('touchstart', function() {
-                    this.style.opacity = '0.7';
-                }, { passive: true });
-                
-                element.addEventListener('touchend', function() {
-                    this.style.opacity = '1';
-                }, { passive: true });
-            });
-
-            console.log('✅ Optimisations tactiles mobile activées');
-        }
     </script>
 </body>
 </html>
