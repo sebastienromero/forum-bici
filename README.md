@@ -4,7 +4,107 @@
 
 **🇫🇷 VERSION FRANÇAISE UNIQUEMENT EN DÉVELOPPEMENT ACTIF**
 
-Pour l'instant, **toutes les modifications et améliorations** doivent être appliquées **UNIQUEMENT sur `index.html` (version française)**.
+Pour l'instant, **toutes les modifications et améli🧑‍💻 Note à GitHub Copilot :
+Ce projet doit être développé de manière progressive, avec des explications claires à chaque étape.
+L'utilisateur est débutant.
+Tu dois expliquer chaque commande, signaler quand sauvegarder, tester, et passer à l'étape suivante.
+Ne jamais supposer que tout est évident.
+
+---
+
+## 🎯 EXIGENCE CRITIQUE : Code maintenable et scalable pour le backend futur
+
+### ⚠️ POINT FONDAMENTAL
+
+**Le système de comptes utilisateurs est l'objectif PRINCIPAL du produit.**  
+À partir de maintenant, **CHAQUE ligne de code** doit être écrite en anticipant cette évolution majeure.
+
+### 🚨 RÈGLES INCONTOURNABLES
+
+**À partir de cette date (15 décembre 2025), le code doit respecter ces principes STRICTEMENT :**
+
+#### **1️⃣ SÉPARATION DES RESPONSABILITÉS**
+- ❌ PAS de code "mélangé" (logique métier + DOM dans le même fichier)
+- ✅ Créer des modules séparés : services (logique pure) + modules UI (présentation)
+- ✅ Chaque fonction = UNE responsabilité, une seule raison de changer
+
+#### **2️⃣ CONFIGURATION CENTRALISÉE**
+- ❌ PAS de valeurs en dur (hardcoded) dans le code
+- ✅ Tous les paramètres métier dans `config/` (critères, seuils, couleurs, etc.)
+- ✅ **Modifier une fonctionnalité = modifier UN fichier de config**
+- **Exemple :** Ajouter un 6e critère de notation = 30 secondes (modifier `config/criteria.js`)
+
+#### **3️⃣ API LAYER (couche d'abstraction pour localStorage/serveur)**
+- ❌ PAS d'appels `localStorage` direct dans le code métier
+- ✅ Créer des services abstraits (StorageManager, RatingsAPI, etc.)
+- ✅ Couche service = peut fonctionner avec localStorage OU serveur sans refactoring
+- **Bénéfice :** Ajouter un backend = changer 1 fichier, pas 50
+
+#### **4️⃣ TIMESTAMPS UNIFORMES**
+- ❌ PAS de mélange : `Date.now()` + `toISOString()` + millisecondes
+- ✅ Utiliser **ISO 8601 partout** (`new Date().toISOString()`)
+- ✅ Créer `utils/time.js` pour centraliser la gestion des dates
+
+#### **5️⃣ DOCUMENTATION & TESTS**
+- ❌ PAS de code "qu'on comprend seulement en le lisant"
+- ✅ Chaque module = docstring + exemple d'usage
+- ✅ Chaque fonctionnalité = test unitaire (Jest)
+- ✅ `docs/ARCHITECTURE.md` toujours à jour
+
+#### **6️⃣ VALIDATION ROBUSTE**
+- ❌ PAS de `if` sans `try/catch` pour les appels async
+- ✅ Prévoir les erreurs réseau (sera critique avec le serveur)
+- ✅ Validation côté client + préparation validation côté serveur
+- ✅ Messages d'erreur clairs et actionnables
+
+#### **7️⃣ COMMITS ATOMIQUES & DOCUMENTÉS**
+- ❌ PAS de gros commits qui font 10 trucs à la fois
+- ✅ 1 commit = 1 fonctionnalité complète
+- ✅ Messages clairs : `feat(rating): add PMR accessibility criterion` 
+- ✅ Tags de sauvegarde avant gros changements : `git tag backup-before-modularization`
+
+#### **8️⃣ STRUCTURE DE DOSSIERS SCALABLE**
+- ✅ Préparer la structure pour 100+ fichiers (future croissance)
+- ✅ Organiser par fonctionnalité (modules/, services/, etc.)
+- ✅ Ne PAS laisser de fichiers monolithiques (> 500 lignes)
+
+### 📋 CHECKLIST : Chaque PR/commit doit valider
+
+Avant de commit, vérifier :
+
+- [ ] **Maintenabilité** : Code lisible, pas de duplication
+- [ ] **Testabilité** : Logique métier séparée du DOM
+- [ ] **Documenté** : Docstrings, exemples d'usage
+- [ ] **Scalable** : Prêt pour un backend futur
+- [ ] **Validation** : Gestion des erreurs
+- [ ] **Commit clair** : Message descriptif et atomique
+- [ ] **Pas de code mort** : Supprimer code inutile immédiatement
+
+### 🎓 Résumé : Pourquoi c'est important
+
+> **Aujourd'hui :** On code pour localStorage = code simple  
+> **Demain :** On ajoute un backend = **Si code est mauvais = 100+ heures de refactoring**  
+> **Demain +1 jour :** On ajoute l'authentification = **Chaos total si pas préparé**
+
+**La solution :** **Coder proprement DÈS LE DÉPART** = Ajouter un backend sera trivial.
+
+### 🚀 Prochaine session : PROFESSIONNALISATION PHASE 1
+
+Lors de la prochaine session de travail, on va appliquer ces principes au code existant :
+
+1. ✅ Créer couche d'abstraction Storage (localStorage/API agnostique)
+2. ✅ Créer API layer (RatingsAPI centralisée)
+3. ✅ Extraire configuration (criteria.js, colors.js, thresholds.js)
+4. ✅ Uniformiser timestamps (ISO 8601)
+5. ✅ Documenter tout dans ARCHITECTURE.md
+6. ✅ Ajouter tests unitaires de base
+
+**Durée estimée :** 2-3 semaines (14 jours de travail régulier, 2h/jour)  
+**Résultat :** Code prêt pour backend, maintenable, testable, évolutif
+
+---
+
+## 🧱 Structure du site* doivent être appliquées **UNIQUEMENT sur `index.html` (version française)**.
 
 **❌ NE PAS mettre à jour `index-es.html` (version espagnole)** sauf instruction explicite contraire.
 
