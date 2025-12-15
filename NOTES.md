@@ -1,5 +1,37 @@
 # 📋 Notes de développement - Rate Your Track Bogotá
 
+---
+
+## 🎯 DÉCISION STRATÉGIQUE (15 décembre 2025)
+
+### ⭐ **CHOIX FAIT : OPTION A - PROFESSIONNALISER MAINTENANT**
+
+**Context:** Après analyse complète du codebase et des objectifs du projet
+
+**Decision:** 
+Refactoriser le code AVANT d'ajouter un backend pour comptes utilisateurs
+
+**Raison:**
+- ✅ 2-3 semaines de modularisation MAINTENANT
+- ✅ = Ajouter un backend sera trivial (2 semaines au lieu de 10+)
+- ✅ Code scalable, maintenable, prêt pour production
+- ✅ Ajouter un critère de notation = 5 minutes (au lieu de 2-3 heures)
+- ✅ Système de comptes utilisateurs (objectif principal) sera simple à implémenter
+
+**Coût vs Bénéfice:**
+```
+Investissement : 2-3 semaines de refactoring maintenant
+Gain : 
+  - 200+ heures économisées lors de l'ajout du backend
+  - Code professionnel et maintenable
+  - Prêt pour une vraie communauté d'utilisateurs
+  - Extensibilité pour nouvelles features
+```
+
+**Timeline détaillée :** Voir `Professionnalisation.md`
+
+---
+
 ## 🎯 État actuel du projet (7 décembre 2025)
 
 ### 🚨 PRIORITÉ STRATÉGIQUE : PROFESSIONNALISATION DU CODE

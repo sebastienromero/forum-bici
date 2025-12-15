@@ -4,6 +4,66 @@ Basé sur ton historique (NOTES.md) et ton niveau débutant, voici **l'ordre de 
 
 ---
 
+## ⚡ DÉCISION STRATÉGIQUE PRISE (15 décembre 2025)
+
+### 🎯 **OPTION A : PROFESSIONNALISER MAINTENANT**
+
+**Decision:** Refactoriser le code AVANT d'ajouter un backend.
+
+**Raison:** 
+- ✅ 2-3 semaines de modularisation MAINTENANT
+- ✅ = Ajouter un backend sera trivial (2 semaines au lieu de 10+)
+- ✅ Code scalable, maintenable, prêt pour production
+- ✅ Ajouter un critère de notation = 5 minutes (au lieu de 2-3 heures)
+
+**Alternative rejetée:**
+- ❌ Garder le monolithe et ajouter backend après
+- ❌ = Refactoriser 80% du code existant (200+ heures)
+- ❌ = Bugs partout, code non-maintenable
+- ❌ = Impossible à montrer à des utilisateurs/investisseurs
+
+### 📅 TIMELINE COMPLÈTE
+
+```
+Semaine 1-2 : Phase 1 - Modularisation JS
+  → Services (storage, rating, geo, map)
+  → Modules (rating-panel, map-manager, tracing-mode)
+  → Abstraction localStorage/API
+
+Semaine 3-4 : Phase 2 - i18n (FR/EN/ES)
+  → Traductions
+  → Sélecteur de langue
+  → localStorage pour langue
+
+Semaine 5-6 : Phase 3 - Tests
+  → Jest setup
+  → Tests unitaires (80%+ couverture)
+  → Documentation ARCHITECTURE.md
+
+Semaine 7-8 : Phase 4 - Features
+  → Forum CRUD
+  → Système de votes/likes
+  → Modération
+
+Semaine 9 : Phase 5 - Production v1.0
+  → Audit final
+  → Tag v1.0.0
+  → Déploiement
+
+Semaine 10-15+ : Phase 6 - Backend (OPTIONNEL)
+  → Node.js + Express
+  → MongoDB + JWT Auth
+  → API CRUD
+  → WebSocket temps réel
+  → Migration localStorage → API
+  → v2.0 en production
+
+TOTAL : ~4-5 semaines pour v1.0 professionnelle
+        ~10-12 semaines pour v2.0 avec backend & comptes utilisateurs
+```
+
+---
+
 ## 📊 ORDRE DE PRIORITÉ COMPLET
 
 ### **🔴 PHASE 1 : STRUCTURE & ORGANISATION (1 weekend)**
