@@ -21,6 +21,9 @@
     <!-- CSS externalisé -->
     <link rel="stylesheet" href="css/main.css">
     
+    <!-- Point d'entrée JS modularisé -->
+    <script type="module" src="./src/js/main.js"></script>
+    
 </head>
 <body>
     <header>
@@ -46,6 +49,8 @@
                     <h3>🗣️ Forum</h3>
                     <p>Discutez avec la communauté cycliste</p>
                 </div>
+
+        
                 <div class="info-box">
                     <h3>🗺️ Évaluez les pistes</h3>
                     <p>Notez la sécurité, le calme, la qualité de l'air...</p>
@@ -160,11 +165,11 @@
                         <div style="font-size: 12px; color: var(--text-secondary);">Sujets</div>
                     </div>
                     <div>
-                        <div style="font-size: 24px; font-weight: 700; color: #22c55e;">842</div>
+                        <div style="font-size: 24px; font-weight: 700, color: #22c55e;">842</div>
                         <div style="font-size: 12px; color: var(--text-secondary);">Messages</div>
                     </div>
                     <div>
-                        <div style="font-size: 24px; font-weight: 700; color: #f59e0b;">234</div>
+                        <div style="font-size: 24px; font-weight: 700, color: #f59e0b;">234</div>
                         <div style="font-size: 12px; color: var(--text-secondary);">Membres</div>
                     </div>
                 </div>
@@ -434,6 +439,7 @@
     <script>
         // Variables globales
         let mapExistantes = null;
+        window.mapExistantes = null;
         
         // === VÉRIFICATION CHARGEMENT DES FICHIERS ===
         console.log('🔍 Vérification des fichiers chargés...');
@@ -492,30 +498,6 @@
         let showRatings = true;
         let currentView = 'security';
 
-        // Navigation simple
-        const navButtons = document.querySelectorAll('.nav-btn');
-        const sections = document.querySelectorAll('.section');
-
-        navButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Retirer active de tous les boutons et sections
-                navButtons.forEach(btn => btn.classList.remove('active'));
-                sections.forEach(section => section.classList.remove('active'));
-                
-                // Activer le bouton cliqué
-                button.classList.add('active');
-                
-                // Afficher la section correspondante
-                const targetSection = button.getAttribute('data-section');
-                document.getElementById(targetSection).classList.add('active');
-                
-                // Initialiser la carte si on va sur la section carte-existantes
-                if (targetSection === 'carte-existantes' && !mapExistantes) {
-                    initMapExistantes();
-                }
-            });
-        });
-
         // Fonction pour initialiser la carte des pistes existantes
         function initMapExistantes() {
             try {
@@ -526,7 +508,8 @@
                     maxZoom: 18,  // Limiter le zoom max pour éviter le flou
                     zoomControl: false  // Désactiver le contrôle de zoom par défaut
                 }).setView([4.65, -74.0817], 12);  // Centrage plus haut pour voir "BOGOTA" centré
-                
+                window.mapExistantes = mapExistantes;
+
                 // Ajouter le contrôle de zoom à droite en haut (à côté du sélecteur de fond de carte)
                 L.control.zoom({
                     position: 'topright'
@@ -799,8 +782,6 @@
                     let popupContent;
                     if (routePoints.length === 1) {
                         popupContent = `
-                            <strong>📍 Zone notée</strong><br>
-                            <strong>📊 Note: ${average.toFixed(1)}/5</strong><br>
                             🛡️ Sécurité: ${ratings.security}/5<br>
                             � Calme: ${ratings.noise}/5<br>
                             🌬️ Air: ${ratings.air}/5<br>
