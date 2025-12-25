@@ -21,6 +21,58 @@
     <!-- CSS externalisé -->
     <link rel="stylesheet" href="../src/css/main.css">
     
+    <!-- Module API Supabase -->
+    <script type="module">
+        // Import CDN Supabase (évite les problèmes de modules ES6)
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+        
+        // Credentials Supabase
+        const SUPABASE_URL = 'https://xdvrfrogmfkntuluypdx.supabase.co'
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkdnJmcm9nbWZrbnR1bHV5cGR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2ODk5ODcsImV4cCI6MjA4MjI2NTk4N30.X8aDHaqYVEXVXZiNwicbI8GatvFNrfXBKn_QTHBcnck'
+        
+        // Créer le client Supabase
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+        
+        // Fonction pour créer un avis
+        async function createRating(rating) {
+            const { data, error } = await supabase
+                .from('ratings')
+                .insert([rating])
+                .select()
+            
+            if (error) {
+                console.error('❌ Erreur création avis:', error)
+                return { data: null, error }
+            }
+            
+            console.log('✅ Avis créé:', data)
+            return { data, error: null }
+        }
+        
+        // Fonction pour récupérer tous les avis
+        async function getAllRatings() {
+            const { data, error } = await supabase
+                .from('ratings')
+                .select('*')
+                .order('timestamp', { ascending: false })
+            
+            if (error) {
+                console.error('❌ Erreur récupération:', error)
+                return []
+            }
+            
+            console.log(`📊 ${data.length} avis récupérés`)
+            return data
+        }
+        
+        // Exposer les fonctions globalement
+        window.createRating = createRating
+        window.getAllRatings = getAllRatings
+        window.supabase = supabase
+        
+        console.log('✅ Module API Supabase chargé dans index.html')
+    </script>
+    
 </head>
 <body>
     <header>

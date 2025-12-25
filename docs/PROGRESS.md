@@ -2,31 +2,35 @@
 
 **Date de démarrage :** 25 décembre 2025  
 **Branche :** TEST-MVP  
-**Méthode :** Vibe Coding (petits commits incrémentaux)  
+**Méthode :** Vibe Codi---
+
+## ✅ Étapes Complétées (0-5)
+
+### 🟢 ÉTAPE 4 : Enrichir la table `ratings` (15 min) ✅ COMPLÉTÉEetits commits incrémentaux)  
 **Objectif :** 🚀 **Site déployé et partageable entre cyclistes**
 
 ---
 
 ## 🎯 Phase Actuelle
 
-**ÉTAPE 4 : Enrichir table ratings** ✅ **COMPLÉTÉE**
+**ÉTAPE 5 : Importer API dans index.html** ✅ **COMPLÉTÉE**
 
-**Prochaine étape :** ÉTAPE 5 - Importer API dans index.html
+**Prochaine étape :** ÉTAPE 6 - Charger avis au démarrage
 
 ---
 
 ## 📊 Progression Globale
 
 ```
-██████████████░░░░░░░░░░ 42% (Étapes 0-4 complétées / 12 totales)
+████████████████░░░░░░░░ 50% (Étapes 0-5 complétées / 12 totales)
 
 ✅ ÉTAPE 0 : Préparation
 ✅ ÉTAPE 1 : Setup Supabase - Table minimale
 ✅ ÉTAPE 2 : Setup npm
 ✅ ÉTAPE 3 : Module API + Tests
 ✅ ÉTAPE 4 : Enrichir table ratings
-🔄 ÉTAPE 5 : Intégrer API dans index.html
-⏳ ÉTAPE 6 : Charger avis au démarrage
+✅ ÉTAPE 5 : Intégrer API dans index.html
+🔄 ÉTAPE 6 : Charger avis au démarrage
 ⏳ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
 ⏳ ÉTAPE 8 : Utiliser vrais segment_id
 ⏳ ÉTAPE 9 : Tests locaux approfondis
@@ -177,7 +181,7 @@ CREATE INDEX idx_segment_id ON ratings(segment_id);
 
 ---
 
-### 🟡 ÉTAPE 5 : Import API dans index.html (15 min)
+### � ÉTAPE 5 : Import API dans index.html (15 min) ✅ COMPLÉTÉE
 
 **Objectif :** Faire fonctionner l'API dans la page principale du site
 
@@ -191,14 +195,16 @@ CREATE INDEX idx_segment_id ON ratings(segment_id);
   console.log('✅ Module API chargé dans index.html')
 </script>
 ```
-- [ ] 5.3 - Sauvegarder
-- [ ] 5.4 - Ouvrir `http://localhost:8001/index.html`
-- [ ] 5.5 - Console (F12) → Voir "✅ Module API chargé" ✅
-- [ ] 5.6 - Console → Tester : `await getAllRatings()`
-- [ ] 5.7 - Console → Voir les avis de test ✅
-- [ ] 5.8 - Commit : `feat: import API module in index.html`
+- [x] 5.3 - Sauvegarder
+- [x] 5.4 - Ouvrir `http://localhost:8001/public/index.html`
+- [x] 5.5 - Console (F12) → Voir "✅ Module API chargé" ✅
+- [x] 5.6 - Console → Tester : `await getAllRatings()` ✅
+- [x] 5.7 - Console → Voir les avis (8 avis) ✅
+- [x] 5.8 - Console → Tester création avis ✅
+- [x] 5.9 - Commit : `feat: import API module in index.html`
 
-**Durée estimée :** 15 min
+**Durée réelle :** 20 min  
+**Status :** ✅ **100% complétée**
 
 ---
 
