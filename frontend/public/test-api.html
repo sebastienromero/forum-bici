@@ -212,14 +212,60 @@
     </div>
   </div>
 
-  <!-- Import du module API avec type="module" -->
+  <!-- Import Supabase directement depuis CDN -->
   <script type="module">
-    // Import des fonctions depuis api.js
-    import { 
-      testConnection as apiTestConnection,
-      getAllRatings as apiGetAllRatings,
-      createRating as apiCreateRating
-    } from '../src/services/api.js'
+    // Import direct depuis CDN pour éviter les problèmes de modules
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm'
+
+    // Configuration Supabase (mêmes credentials que dans api.js)
+    const SUPABASE_URL = 'https://xdvrfrogmfkntuluypdx.supabase.co'
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkdnJmcm9nbWZrbnR1bHV5cGR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY2ODk5ODcsImV4cCI6MjA4MjI2NTk4N30.X8aDHaqYVEXVXZiNwicbI8GatvFNrfXBKn_QTHBcnck'
+    
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+    // Fonctions API recréées localement
+    async function apiTestConnection() {
+      console.log('🔄 Test connexion Supabase...')
+      const { data, error } = await supabase.from('ratings').select('*')
+      console.log('📊 Résultat:', { data, error })
+      
+      if (error) {
+        console.error('❌ Erreur:', error)
+        return { success: false, error }
+      }
+      console.log('✅ Connexion OK !', data)
+      return { success: true, data }
+    }
+
+    async function apiGetAllRatings() {
+      console.log('📥 Récupération de tous les avis...')
+      const { data, error } = await supabase
+        .from('ratings')
+        .select('*')
+        .order('timestamp', { ascending: false })
+      
+      if (error) {
+        console.error('❌ Erreur:', error)
+        return { success: false, error }
+      }
+      console.log(`✅ ${data.length} avis récupérés`)
+      return { success: true, data }
+    }
+
+    async function apiCreateRating(rating) {
+      console.log('📝 Création d\'un avis:', rating)
+      const { data, error } = await supabase
+        .from('ratings')
+        .insert([rating])
+        .select()
+      
+      if (error) {
+        console.error('❌ Erreur lors de la création:', error)
+        return { success: false, error }
+      }
+      console.log('✅ Avis créé avec succès:', data)
+      return { success: true, data: data[0] }
+    }
 
     // Rendre les fonctions accessibles globalement pour les boutons
     window.testConnection = async function() {
