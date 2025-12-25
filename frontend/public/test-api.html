@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧪 Test API Supabase - Rate Your Track</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    .test-section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .result {
+      margin-top: 15px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #dee2e6;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .success {
+      border-left: 4px solid #28a745;
+      background: #d4edda;
+    }
+
+    .error {
+      border-left: 4px solid #dc3545;
+      background: #f8d7da;
+    }
+
+    .info {
+      border-left: 4px solid #17a2b8;
+      background: #d1ecf1;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+
+    .badge-success {
+      background: #28a745;
+      color: white;
+    }
+
+    .badge-error {
+      background: #dc3545;
+      color: white;
+    }
+
+    .badge-info {
+      background: #17a2b8;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧪 Test API Supabase</h1>
+    <p class="subtitle">Rate Your Track Bogotá - Test de connexion à la base de données</p>
+
+    <!-- Test 1: Connexion -->
+    <div class="test-section">
+      <h2>1️⃣ Test de connexion</h2>
+      <p>Vérifie que la connexion à Supabase fonctionne et récupère tous les avis.</p>
+      <button onclick="testConnection()" id="btnTest1">🔌 Tester la connexion</button>
+      <div id="result1" class="result" style="display: none;"></div>
+    </div>
+
+    <!-- Test 2: Récupérer tous les avis -->
+    <div class="test-section">
+      <h2>2️⃣ Récupérer tous les avis</h2>
+      <p>Récupère et affiche tous les avis de la base de données.</p>
+      <button onclick="getAllRatings()" id="btnTest2">📥 Récupérer les avis</button>
+      <div id="result2" class="result" style="display: none;"></div>
+    </div>
+
+    <!-- Test 3: Créer un nouvel avis -->
+    <div class="test-section">
+      <h2>3️⃣ Créer un nouvel avis</h2>
+      <p>Insère un nouvel avis dans la base de données.</p>
+      
+      <div class="form-group">
+        <label for="segmentId">Segment ID</label>
+        <input type="text" id="segmentId" placeholder="Ex: SEG_TEST_002" value="SEG_TEST_002">
+      </div>
+
+      <div class="form-group">
+        <label for="comment">Commentaire</label>
+        <textarea id="comment" placeholder="Votre commentaire...">Excellent test depuis la page HTML !</textarea>
+      </div>
+
+      <button onclick="createRating()" id="btnTest3">📝 Créer l'avis</button>
+      <div id="result3" class="result" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- Import du module API avec type="module" -->
+  <script type="module">
+    // Import des fonctions depuis api.js
+    import { 
+      testConnection as apiTestConnection,
+      getAllRatings as apiGetAllRatings,
+      createRating as apiCreateRating
+    } from '../src/services/api.js'
+
+    // Rendre les fonctions accessibles globalement pour les boutons
+    window.testConnection = async function() {
+      const resultDiv = document.getElementById('result1')
+      const btn = document.getElementById('btnTest1')
+      
+      resultDiv.style.display = 'block'
+      resultDiv.className = 'result info'
+      resultDiv.innerHTML = '⏳ Test en cours...'
+      btn.disabled = true
+
+      try {
+        const result = await apiTestConnection()
+        
+        if (result.success) {
+          resultDiv.className = 'result success'
+          resultDiv.innerHTML = `
+            <strong>✅ Connexion réussie !</strong><br><br>
+            <strong>Nombre d'avis trouvés:</strong> ${result.data.length}<br><br>
+            <strong>Données:</strong>
+            <pre>${JSON.stringify(result.data, null, 2)}</pre>
+          `
+        } else {
+          resultDiv.className = 'result error'
+          resultDiv.innerHTML = `
+            <strong>❌ Erreur de connexion</strong><br><br>
+            <pre>${JSON.stringify(result.error, null, 2)}</pre>
+          `
+        }
+      } catch (error) {
+        resultDiv.className = 'result error'
+        resultDiv.innerHTML = `
+          <strong>❌ Erreur JavaScript</strong><br><br>
+          <pre>${error.message}</pre>
+        `
+      } finally {
+        btn.disabled = false
+      }
+    }
+
+    window.getAllRatings = async function() {
+      const resultDiv = document.getElementById('result2')
+      const btn = document.getElementById('btnTest2')
+      
+      resultDiv.style.display = 'block'
+      resultDiv.className = 'result info'
+      resultDiv.innerHTML = '⏳ Récupération en cours...'
+      btn.disabled = true
+
+      try {
+        const result = await apiGetAllRatings()
+        
+        if (result.success) {
+          resultDiv.className = 'result success'
+          resultDiv.innerHTML = `
+            <strong>✅ ${result.data.length} avis récupérés !</strong><br><br>
+            <pre>${JSON.stringify(result.data, null, 2)}</pre>
+          `
+        } else {
+          resultDiv.className = 'result error'
+          resultDiv.innerHTML = `
+            <strong>❌ Erreur</strong><br><br>
+            <pre>${JSON.stringify(result.error, null, 2)}</pre>
+          `
+        }
+      } catch (error) {
+        resultDiv.className = 'result error'
+        resultDiv.innerHTML = `
+          <strong>❌ Erreur JavaScript</strong><br><br>
+          <pre>${error.message}</pre>
+        `
+      } finally {
+        btn.disabled = false
+      }
+    }
+
+    window.createRating = async function() {
+      const resultDiv = document.getElementById('result3')
+      const btn = document.getElementById('btnTest3')
+      const segmentId = document.getElementById('segmentId').value
+      const comment = document.getElementById('comment').value
+
+      if (!segmentId || !comment) {
+        resultDiv.style.display = 'block'
+        resultDiv.className = 'result error'
+        resultDiv.innerHTML = '<strong>❌ Veuillez remplir tous les champs !</strong>'
+        return
+      }
+      
+      resultDiv.style.display = 'block'
+      resultDiv.className = 'result info'
+      resultDiv.innerHTML = '⏳ Création en cours...'
+      btn.disabled = true
+
+      try {
+        const rating = {
+          segment_id: segmentId,
+          comment: comment
+        }
+
+        const result = await apiCreateRating(rating)
+        
+        if (result.success) {
+          resultDiv.className = 'result success'
+          resultDiv.innerHTML = `
+            <strong>✅ Avis créé avec succès !</strong><br><br>
+            <strong>ID:</strong> ${result.data.id}<br>
+            <strong>Segment:</strong> ${result.data.segment_id}<br>
+            <strong>Date:</strong> ${new Date(result.data.timestamp).toLocaleString('fr-FR')}<br><br>
+            <strong>Données complètes:</strong>
+            <pre>${JSON.stringify(result.data, null, 2)}</pre>
+          `
+          
+          // Réinitialiser le formulaire
+          document.getElementById('segmentId').value = 'SEG_TEST_' + Math.floor(Math.random() * 1000)
+          document.getElementById('comment').value = ''
+        } else {
+          resultDiv.className = 'result error'
+          resultDiv.innerHTML = `
+            <strong>❌ Erreur lors de la création</strong><br><br>
+            <pre>${JSON.stringify(result.error, null, 2)}</pre>
+          `
+        }
+      } catch (error) {
+        resultDiv.className = 'result error'
+        resultDiv.innerHTML = `
+          <strong>❌ Erreur JavaScript</strong><br><br>
+          <pre>${error.message}</pre>
+        `
+      } finally {
+        btn.disabled = false
+      }
+    }
+
+    // Message de bienvenue dans la console
+    console.log('🎉 Page de test chargée !')
+    console.log('📌 Ouvrez la console pour voir les logs détaillés des requêtes Supabase')
+  </script>
+</body>
+</html>
