@@ -1,11 +1,14 @@
 # Configuration Netlify pour Rate Your Track Bogotá
 
 [build]
-  # Dossier à déployer (contient index.html)
-  publish = "frontend/public"
+  # Dossier racine du projet
+  base = "frontend"
   
-  # Pas de commande de build nécessaire (site statique)
-  command = "echo 'Site statique, pas de build nécessaire'"
+  # Dossier à déployer (contient index.html)
+  publish = "public"
+  
+  # Commande de build : copier src dans public
+  command = "bash build.sh"
 
 # Redirections et règles
 [[redirects]]
