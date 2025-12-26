@@ -1,70 +1,208 @@
-# 🚴‍♀️ Rate ---
+# 🚴‍♀️ Rate Your Track Bogotá - MVP
 
-## ⚠️ NOTE IMPORTANTE DE DÉVELOPPEMENT
-
-**🇫🇷 VERSION FRANÇAISE UNIQUEMENT EN DÉVELOPPEMENT ACTIF**
-
-Pour l'instant, **toutes les modifications et améli🧑‍💻 Note à GitHub Copilot :
-Ce projet doit être développé de manière progressive, avec des explications claires à chaque étape.
-L'utilisateur est débutant.
-Tu dois expliquer chaque commande, signaler quand sauvegarder, tester, et passer à l'étape suivante.
-Ne jamais supposer que tout est évident.
+**Califica las ciclorrutas de Bogotá y ayuda a mejorar la movilidad ciclista** 🇨🇴
 
 ---
 
-## 🎯 EXIGENCE CRITIQUE : Code maintenable et scalable pour le backend futur
+## 🌐 Site en ligne
 
-### ⚠️ POINT FONDAMENTAL
+**👉 https://bicibogota.netlify.app**
 
-**Le système de comptes utilisateurs est l'objectif PRINCIPAL du produit.**  
-À partir de maintenant, **CHAQUE ligne de code** doit être écrite en anticipant cette évolution majeure.
+---
 
-### 🚨 RÈGLES INCONTOURNABLES
+## ✨ Qu'est-ce que c'est ?
 
-**À partir de cette date (15 décembre 2025), le code doit respecter ces principes STRICTEMENT :**
+**Rate Your Track Bogotá** est une application web collaborative qui permet aux cyclistes de Bogotá de :
 
-#### **1️⃣ SÉPARATION DES RESPONSABILITÉS**
-- ❌ PAS de code "mélangé" (logique métier + DOM dans le même fichier)
-- ✅ Créer des modules séparés : services (logique pure) + modules UI (présentation)
-- ✅ Chaque fonction = UNE responsabilité, une seule raison de changer
+- 🗺️ **Noter les pistes cyclables** sur 5 critères (sécurité, bruit, air, fluidité, inclusion)
+- 📍 **Tracer des itinéraires** en cliquant sur la carte
+- 🎨 **Visualiser la qualité** des segments grâce à un code couleur
+- 💬 **Partager leurs expériences** avec la communauté cycliste
+- 📊 **Voir les données en temps réel** (synchronisation automatique)
 
-#### **2️⃣ CONFIGURATION CENTRALISÉE**
-- ❌ PAS de valeurs en dur (hardcoded) dans le code
-- ✅ Tous les paramètres métier dans `config/` (critères, seuils, couleurs, etc.)
-- ✅ **Modifier une fonctionnalité = modifier UN fichier de config**
-- **Exemple :** Ajouter un 6e critère de notation = 30 secondes (modifier `config/criteria.js`)
+---
 
-#### **3️⃣ API LAYER (couche d'abstraction pour localStorage/serveur)**
-- ❌ PAS d'appels `localStorage` direct dans le code métier
-- ✅ Créer des services abstraits (StorageManager, RatingsAPI, etc.)
-- ✅ Couche service = peut fonctionner avec localStorage OU serveur sans refactoring
-- **Bénéfice :** Ajouter un backend = changer 1 fichier, pas 50
+## 🚀 Fonctionnalités (MVP v1.0)
 
-#### **4️⃣ TIMESTAMPS UNIFORMES**
-- ❌ PAS de mélange : `Date.now()` + `toISOString()` + millisecondes
-- ✅ Utiliser **ISO 8601 partout** (`new Date().toISOString()`)
-- ✅ Créer `utils/time.js` pour centraliser la gestion des dates
+✅ **Carte interactive** avec 6017 segments de pistes cyclables  
+✅ **Système de notation** multi-critères (1-5 étoiles)  
+✅ **Tracé d'itinéraire** par clic sur la carte  
+✅ **Visualisation en couleur** (vert=bon, rouge=mauvais)  
+✅ **Base de données cloud** (Supabase)  
+✅ **Synchronisation temps réel** entre utilisateurs  
+✅ **Site responsive** (mobile & desktop)  
 
-#### **5️⃣ DOCUMENTATION & TESTS**
-- ❌ PAS de code "qu'on comprend seulement en le lisant"
-- ✅ Chaque module = docstring + exemple d'usage
-- ✅ Chaque fonctionnalité = test unitaire (Jest)
-- ✅ `docs/ARCHITECTURE.md` toujours à jour
+---
 
-#### **6️⃣ VALIDATION ROBUSTE**
-- ❌ PAS de `if` sans `try/catch` pour les appels async
-- ✅ Prévoir les erreurs réseau (sera critique avec le serveur)
-- ✅ Validation côté client + préparation validation côté serveur
-- ✅ Messages d'erreur clairs et actionnables
+## 📱 Comment utiliser le site ?
 
-#### **7️⃣ COMMITS ATOMIQUES & DOCUMENTÉS**
-- ❌ PAS de gros commits qui font 10 trucs à la fois
-- ✅ 1 commit = 1 fonctionnalité complète
-- ✅ Messages clairs : `feat(rating): add PMR accessibility criterion` 
-- ✅ Tags de sauvegarde avant gros changements : `git tag backup-before-modularization`
+### **1. Tracer un itinéraire**
+- Clique sur la carte pour définir ton trajet
+- L'app trouve automatiquement les segments de pistes
 
-#### **8️⃣ STRUCTURE DE DOSSIERS SCALABLE**
-- ✅ Préparer la structure pour 100+ fichiers (future croissance)
+### **2. Noter les segments**
+- Remplis le formulaire avec tes notes (1-5) :
+  - 🛡️ **Sécurité** : Te sens-tu en sécurité ?
+  - 🔇 **Bruit** : Niveau de pollution sonore ?
+  - 💨 **Air** : Qualité de l'air ?
+  - 🚦 **Fluidité** : Facilité de circulation ?
+  - ♿ **Inclusion** : Accessibilité pour tous ?
+- Ajoute un commentaire (optionnel)
+
+### **3. Voir les avis**
+- Les segments colorés montrent la qualité :
+  - 🟢 **Vert** : Excellentes conditions (4-5/5)
+  - 🟡 **Jaune** : Conditions correctes (3-4/5)
+  - 🟠 **Orange** : Conditions médiocres (2-3/5)
+  - 🔴 **Rouge** : Mauvaises conditions (1-2/5)
+  - 🔵 **Bleu** : Pas encore évalué
+
+---
+
+## 🛠️ Technologies utilisées
+
+| Composant | Technologie |
+|-----------|-------------|
+| **Frontend** | HTML5, CSS3, JavaScript (Vanilla) |
+| **Carte** | Leaflet.js + OpenStreetMap |
+| **Backend** | Supabase (PostgreSQL) |
+| **Hébergement** | Netlify (CDN mondial) |
+| **Données** | OpenStreetMap (pistes cyclables Bogotá) |
+| **Déploiement** | GitHub Actions → Netlify |
+
+---
+
+## 📊 Statistiques actuelles
+
+- 🗺️ **6017 segments** de pistes cyclables
+- 📝 **120+ avis** enregistrés
+- 🎨 **90+ segments** colorés
+- 🌍 **Site accessible** partout dans le monde
+- ⚡ **HTTPS** activé (connexion sécurisée)
+
+---
+
+## 👨‍💻 Développement local
+
+### Prérequis
+- Python 3.x (pour le serveur local)
+- Un navigateur moderne (Chrome, Firefox, Safari)
+- Un éditeur de code (VS Code recommandé)
+
+### Lancer le site en local
+```bash
+# Cloner le repo
+git clone https://github.com/sebastienromero/forum-bici.git
+cd forum-bici-bogota
+
+# Lancer le serveur
+cd frontend
+python3 -m http.server 8001
+
+# Ouvrir dans le navigateur
+open http://localhost:8001/public/index.html
+```
+
+---
+
+## 📁 Structure du projet
+
+```
+forum-bici-bogota/
+├── frontend/
+│   ├── public/
+│   │   └── index.html          # Page principale
+│   └── src/
+│       ├── css/                # Styles
+│       ├── config/             # Configuration
+│       └── data/               # Données des pistes
+├── backend/
+│   └── database/
+│       └── schema.sql          # Schéma Supabase
+├── docs/
+│   ├── PROGRESS.md             # Suivi d'avancement
+│   ├── DEPLOIEMENT.md          # Guide déploiement
+│   └── COMMANDES.md            # Commandes essentielles
+└── netlify.toml                # Config Netlify
+```
+
+---
+
+## 🔮 Roadmap (Phase 2)
+
+### Fonctionnalités prévues :
+
+1. **🔐 Authentification** (Supabase Auth)
+   - Comptes utilisateurs
+   - Profils cyclistes
+   - Historique personnel
+
+2. **💬 Forum communautaire**
+   - Discussions par piste
+   - Signalement de problèmes
+   - Partage de photos
+
+3. **🗳️ Pistes souhaitées**
+   - Proposer de nouvelles pistes
+   - Vote communautaire
+   - Carte des demandes
+
+4. **📊 Statistiques avancées**
+   - Évolution dans le temps
+   - Comparaison de pistes
+   - Export de données
+
+5. **🌐 Internationalisation**
+   - Interface en espagnol
+   - Support multilingue
+
+---
+
+## 🤝 Contribuer
+
+Les contributions sont les bienvenues ! 
+
+1. Fork le projet
+2. Crée une branche (`git checkout -b feature/AmazingFeature`)
+3. Commit tes changements (`git commit -m 'Add AmazingFeature'`)
+4. Push sur la branche (`git push origin feature/AmazingFeature`)
+5. Ouvre une Pull Request
+
+---
+
+## 📄 Licence
+
+Ce projet est sous licence MIT - voir le fichier LICENSE pour plus de détails.
+
+---
+
+## 👤 Auteur
+
+**Sebastien Romero**
+- GitHub: [@sebastienromero](https://github.com/sebastienromero)
+- Site: https://bicibogota.netlify.app
+
+---
+
+## 🙏 Remerciements
+
+- OpenStreetMap pour les données de pistes cyclables
+- Leaflet.js pour la bibliothèque de cartes
+- Supabase pour le backend
+- Netlify pour l'hébergement
+- La communauté cycliste de Bogotá 🚴‍♂️🇨🇴
+
+---
+
+## 📞 Contact & Support
+
+- **Bugs** : Ouvre une issue sur GitHub
+- **Questions** : Discussions GitHub
+- **Email** : [créer un email de contact]
+
+---
+
+**🚴‍♀️ Pédale avec prudence, note avec conscience ! 🇨🇴**
 - ✅ Organiser par fonctionnalité (modules/, services/, etc.)
 - ✅ Ne PAS laisser de fichiers monolithiques (> 500 lignes)
 
