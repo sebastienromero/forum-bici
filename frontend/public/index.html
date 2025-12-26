@@ -1636,7 +1636,7 @@
         window.closeRatingPanel = closeRatingPanel;
         
         // Nouvelle fonction de sauvegarde pour le système rate_your_track (SEGMENTS 100m)
-        function savePortionRatings() {
+        async function savePortionRatings() {
             
             if (routePoints.length === 0) {
                 console.log('Erreur: Aucun point tracé');
@@ -1698,6 +1698,60 @@
             if (nearbySegments.length > 0) {
                 console.log('🔍 Structure premier segment:', nearbySegments[0]);
             }
+            
+            // 💾 SAUVEGARDER DANS SUPABASE (ÉTAPE 7)
+            console.log('💾 Envoi des avis à Supabase...');
+            let supabaseSavedCount = 0;
+            
+            // Créer les promesses pour tous les segments
+            const supabasePromises = nearbySegments.map(async (segmentData, idx) => {
+                // Récupérer l'ID du segment
+                const segId = segmentData.id || 
+                             (segmentData.segment?.properties?.CicCodigo) || 
+                             (segmentData.segment?.properties?.CicCIV) || 
+                             `seg_fallback_${idx}`;
+                
+                // Récupérer le nom de la piste
+                const trackName = segmentData.trackName || 
+                                 segmentData.segment?.properties?.parentName || 
+                                 segmentData.segment?.properties?.name || 
+                                 `Piste ${segId}`;
+                
+                // Récupérer le parent_id
+                const parentId = segmentData.parentId || 
+                                segmentData.segment?.properties?.parentId || 
+                                segmentData.segment?.properties?.CicCodigo || 
+                                null;
+                
+                // Construire l'objet pour Supabase
+                const supabaseRating = {
+                    segment_id: String(segId),
+                    track_name: trackName,
+                    parent_id: parentId,
+                    comment: newRating.comment || ''
+                };
+                
+                // Ajouter seulement les critères notés
+                if (newRating.security) supabaseRating.security = newRating.security;
+                if (newRating.noise) supabaseRating.noise = newRating.noise;
+                if (newRating.air) supabaseRating.air = newRating.air;
+                if (newRating.flow) supabaseRating.flow = newRating.flow;
+                if (newRating.inclusion) supabaseRating.inclusion = newRating.inclusion;
+                
+                try {
+                    const result = await createRating(supabaseRating);
+                    if (result.data) {
+                        supabaseSavedCount++;
+                        console.log(`✅ Supabase: Segment ${segId} sauvegardé`);
+                    }
+                } catch (error) {
+                    console.error(`❌ Erreur Supabase pour segment ${segId}:`, error);
+                }
+            });
+            
+            // Attendre que tous les avis soient sauvegardés dans Supabase
+            await Promise.all(supabasePromises);
+            console.log(`✅ ${supabaseSavedCount}/${nearbySegments.length} segments sauvegardés dans Supabase`);
             
             let savedCount = 0;
             nearbySegments.forEach((segmentData, idx) => {

@@ -13,16 +13,16 @@
 
 ## 🎯 Phase Actuelle
 
-**ÉTAPE 6 : Charger avis au démarrage** ✅ **COMPLÉTÉE**
+**ÉTAPE 7 : Sauvegarder depuis savePortionRatings()** ✅ **COMPLÉTÉE**
 
-**Prochaine étape :** ÉTAPE 7 - Sauvegarder depuis savePortionRatings()
+**Prochaine étape :** ÉTAPE 8 - Afficher les couleurs sur la carte
 
 ---
 
 ## 📊 Progression Globale
 
 ```
-███████████████████░░░░░ 58% (Étapes 0-6 complétées / 12 totales)
+█████████████████████░░░ 67% (Étapes 0-7 complétées / 12 totales)
 
 ✅ ÉTAPE 0 : Préparation
 ✅ ÉTAPE 1 : Setup Supabase - Table minimale
@@ -31,8 +31,8 @@
 ✅ ÉTAPE 4 : Enrichir table ratings
 ✅ ÉTAPE 5 : Intégrer API dans index.html
 ✅ ÉTAPE 6 : Charger avis au démarrage
-🔄 ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
-✅ ÉTAPE 4 : Enrichir table ratings
+✅ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
+🔄 ÉTAPE 8 : Afficher couleurs sur la carte selon avis Supabase
 ✅ ÉTAPE 5 : Intégrer API dans index.html
 🔄 ÉTAPE 6 : Charger avis au démarrage
 ⏳ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
@@ -233,12 +233,28 @@ CREATE INDEX idx_segment_id ON ratings(segment_id);
 
 ### 🟡 ÉTAPE 7 : Sauvegarder depuis savePortionRatings() (30 min)
 
-### 🟡 ÉTAPE 7 : Sauvegarder depuis savePortionRatings() (30 min)
+### � ÉTAPE 7 : Sauvegarder depuis savePortionRatings() (30 min) ✅ COMPLÉTÉE
 
 **Objectif :** Quand l'utilisateur clique "Enregistrer", envoyer à Supabase
 
-- [ ] 7.1 - Trouver la fonction `savePortionRatings()` dans index.html
-- [ ] 7.2 - Avant `localStorage.setItem()`, ajouter :
+- [x] 7.1 - Trouver la fonction `savePortionRatings()` dans index.html
+- [x] 7.2 - Transformer en `async function`
+- [x] 7.3 - Ajouter boucle pour sauvegarder tous les segments dans Supabase
+- [x] 7.4 - Récupérer segment_id, track_name, parent_id pour chaque segment
+- [x] 7.5 - Collecter les valeurs des critères notés (security, noise, air, flow, inclusion)
+- [x] 7.6 - Envoyer chaque avis avec `createRating()`
+- [x] 7.7 - Utiliser `Promise.all()` pour attendre toutes les sauvegardes
+- [x] 7.8 - Tester : Tracer un itinéraire, noter, cliquer "Enregistrer"
+- [x] 7.9 - Vérifier console : "✅ 16/16 segments sauvegardés dans Supabase" ✅
+- [x] 7.10 - Vérifier Supabase : 44 avis au total ✅
+- [x] 7.11 - Commit : `feat: save ratings to Supabase from UI`
+
+**Durée réelle :** 25 min  
+**Status :** ✅ **100% complétée**
+
+---
+
+### 🟡 ÉTAPE 8 : Utiliser vrais segment_id et track_name (20 min)
 ```javascript
 // Collecter les valeurs des sliders
 const ratings = {
