@@ -13,16 +13,18 @@
 
 ## 🎯 Phase Actuelle
 
-**ÉTAPE 9 : Tests locaux approfondis** ✅ **COMPLÉTÉE**
+**ÉTAPE 10 : Déploiement sur Netlify** ✅ **COMPLÉTÉE**
 
-**Prochaine étape :** ÉTAPE 10 - Déploiement sur Netlify
+**Site en ligne :** https://bicibogota.netlify.app
+
+**Prochaine étape :** ÉTAPE 11 - Tests en production
 
 ---
 
 ## 📊 Progression Globale
 
 ```
-████████████████████████ 83% (Étapes 0-9 complétées / 12 totales)
+█████████████████████████ 91% (Étapes 0-10 complétées / 12 totales)
 
 ✅ ÉTAPE 0 : Préparation
 ✅ ÉTAPE 1 : Setup Supabase - Table minimale
@@ -34,8 +36,8 @@
 ✅ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
 ✅ ÉTAPE 8 : Afficher couleurs sur carte depuis Supabase
 ✅ ÉTAPE 9 : Tests locaux approfondis
-⏳ ÉTAPE 10 : Déploiement sur Netlify/GitHub Pages
-⏳ ÉTAPE 11 : Tests en production
+✅ ÉTAPE 10 : Déploiement sur Netlify
+🔄 ÉTAPE 11 : Tests en production
 ⏳ ÉTAPE 12 : MVP finalisé et partageable ✨
 ```
 
@@ -332,32 +334,32 @@ try {
 
 **Durée réelle :** 25 min  
 **Status :** ✅ **100% complétée**
-- [ ] 9.10 - Commit : `fix: resolve critical bugs before deployment`
-
-**Durée estimée :** 30 min
 
 ---
 
-### 🟡 ÉTAPE 10 : Déploiement sur Netlify/GitHub Pages (15 min)
+### ✅ ÉTAPE 10 : Déploiement sur Netlify (15 min) ✅ COMPLÉTÉE
 
 **Objectif :** 🚀 Mettre le site en ligne !
 
-#### Option A : Netlify (Recommandé - Plus simple)
-- [ ] 10.1 - Aller sur [netlify.com](https://netlify.com)
-- [ ] 10.2 - Créer un compte (GitHub/email)
-- [ ] 10.3 - Cliquer "Add new site" → "Deploy manually"
-- [ ] 10.4 - Glisser-déposer le dossier `frontend/public/`
-- [ ] 10.5 - Attendre 1 minute
-- [ ] 10.6 - Noter l'URL : `https://____________.netlify.app`
+**Déploiement effectué :**
+- [x] 10.1 - Configuration `netlify.toml` avec base directory
+- [x] 10.2 - Script de build `frontend/build.sh` pour copier src/ dans public/
+- [x] 10.3 - Push sur GitHub : `forum-bici` → branche `TEST-MVP`
+- [x] 10.4 - Connexion Netlify ↔ GitHub
+- [x] 10.5 - Déploiement automatique depuis GitHub
+- [x] 10.6 - Personnalisation du nom : `bicibogota.netlify.app`
+- [x] 10.7 - Tests initiaux : Site accessible ✅
+- [x] 10.8 - Commit : `fix: configure Netlify deployment with build script`
 
-#### Option B : GitHub Pages
-- [ ] 10.1 - Commit et push final : `git push origin TEST-MVP`
-- [ ] 10.2 - Repo GitHub → Settings → Pages
-- [ ] 10.3 - Source : Branch `TEST-MVP`, Folder `/frontend/public`
-- [ ] 10.4 - Save → Attendre 2 minutes
-- [ ] 10.5 - Noter l'URL : `https://username.github.io/forum-bici-bogota`
+**Résultats :**
+- ✅ **Site en ligne :** https://bicibogota.netlify.app
+- ✅ Déploiement automatique via GitHub
+- ✅ HTTPS activé (cadenas vert)
+- ✅ CDN mondial (Netlify)
+- ✅ Nom de domaine mémorable
 
-- [ ] 10.7 - Tester l'URL en navigation privée
+**Durée réelle :** 20 min  
+**Status :** ✅ **100% complétée**
 - [ ] 10.8 - Vérifier que le site charge ✅
 - [ ] 10.9 - Vérifier que les avis se chargent ✅
 - [ ] 10.10 - Commit : `deploy: MVP deployed to production 🚀`
