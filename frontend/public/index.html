@@ -526,12 +526,12 @@
             });
             
             if (needsMigration) {
-                console.warn('⚠️ Migration requise: ancien format détecté, réinitialisation localStorage...');
+                console.log('🔄 Nettoyage automatique: ancien format détecté (normal après mise à jour)');
                 portionRatings = {};
                 localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-                console.log('✅ Migration complétée: localStorage nettoyé');
+                console.log('✅ localStorage nettoyé - les données sont maintenant en Supabase');
             } else {
-                console.log('✅ Format de données correct, aucune migration nécessaire');
+                console.log('✅ Format de données correct');
             }
         })();
         
@@ -1969,9 +1969,11 @@
                 localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
                 
                 // 🎨 Mettre à jour les couleurs de la carte si elle est déjà initialisée
-                if (window.updateSegmentStyles) {
+                if (window.updateSegmentStyles && window.pistesLayer) {
                     console.log('🎨 Mise à jour des couleurs de la carte avec avis Supabase...');
                     updateSegmentStyles();
+                } else {
+                    console.log('⏳ Carte pas encore initialisée, les couleurs seront appliquées après...');
                 }
                 
             } catch (error) {
