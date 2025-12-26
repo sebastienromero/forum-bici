@@ -1,0 +1,24 @@
+# Configuration Netlify pour Rate Your Track Bogotá
+
+[build]
+  # Dossier à déployer (contient index.html)
+  publish = "frontend/public"
+  
+  # Pas de commande de build nécessaire (site statique)
+  command = "echo 'Site statique, pas de build nécessaire'"
+
+# Redirections et règles
+[[redirects]]
+  # Redirection pour SPA (Single Page Application)
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de sécurité
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
