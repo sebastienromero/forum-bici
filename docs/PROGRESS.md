@@ -13,21 +13,25 @@
 
 ## 🎯 Phase Actuelle
 
-**ÉTAPE 5 : Importer API dans index.html** ✅ **COMPLÉTÉE**
+**ÉTAPE 6 : Charger avis au démarrage** ✅ **COMPLÉTÉE**
 
-**Prochaine étape :** ÉTAPE 6 - Charger avis au démarrage
+**Prochaine étape :** ÉTAPE 7 - Sauvegarder depuis savePortionRatings()
 
 ---
 
 ## 📊 Progression Globale
 
 ```
-████████████████░░░░░░░░ 50% (Étapes 0-5 complétées / 12 totales)
+███████████████████░░░░░ 58% (Étapes 0-6 complétées / 12 totales)
 
 ✅ ÉTAPE 0 : Préparation
 ✅ ÉTAPE 1 : Setup Supabase - Table minimale
 ✅ ÉTAPE 2 : Setup npm
 ✅ ÉTAPE 3 : Module API + Tests
+✅ ÉTAPE 4 : Enrichir table ratings
+✅ ÉTAPE 5 : Intégrer API dans index.html
+✅ ÉTAPE 6 : Charger avis au démarrage
+🔄 ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
 ✅ ÉTAPE 4 : Enrichir table ratings
 ✅ ÉTAPE 5 : Intégrer API dans index.html
 🔄 ÉTAPE 6 : Charger avis au démarrage
@@ -208,31 +212,26 @@ CREATE INDEX idx_segment_id ON ratings(segment_id);
 
 ---
 
-### 🟡 ÉTAPE 6 : Charger avis au démarrage (20 min)
+### � ÉTAPE 6 : Charger avis au démarrage (20 min) ✅ COMPLÉTÉE
 
 **Objectif :** Afficher les avis existants au chargement de la page
 
-- [ ] 6.1 - Dans `index.html`, trouver `document.addEventListener('DOMContentLoaded'`
-- [ ] 6.2 - Au début de cette fonction, ajouter :
-```javascript
-console.log('🔄 Chargement avis depuis Supabase...')
-try {
-  const allRatings = await getAllRatings()
-  console.log(`✅ ${allRatings.length} avis chargés`)
-  window.supabaseRatings = allRatings
-  // TODO: Convertir en format portionRatings
-} catch (error) {
-  console.error('❌ Erreur:', error)
-}
-```
-- [ ] 6.3 - Sauvegarder et tester
-- [ ] 6.4 - Console → Voir "✅ X avis chargés" ✅
-- [ ] 6.5 - Console → `supabaseRatings` → Voir le tableau ✅
-- [ ] 6.6 - Commit : `feat: load ratings on page load`
+- [x] 6.1 - Dans `index.html`, trouver `document.addEventListener('DOMContentLoaded'`
+- [x] 6.2 - Ajouter code de chargement automatique des avis
+- [x] 6.3 - Transformer fonction en `async function`
+- [x] 6.4 - Sauvegarder et tester
+- [x] 6.5 - Console → Voir "✅ 8 avis chargés depuis Supabase" ✅
+- [x] 6.6 - Console → `supabaseRatings` → Voir le tableau ✅
+- [x] 6.7 - Commit : `feat: load ratings on page load`
 
-**Durée estimée :** 20 min
+**Durée réelle :** 15 min  
+**Status :** ✅ **100% complétée**
 
 ---
+
+## 🔄 Prochaines Étapes (7-12)
+
+### 🟡 ÉTAPE 7 : Sauvegarder depuis savePortionRatings() (30 min)
 
 ### 🟡 ÉTAPE 7 : Sauvegarder depuis savePortionRatings() (30 min)
 

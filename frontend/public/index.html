@@ -1845,13 +1845,28 @@
         }
 
         // Initialiser la carte après le chargement de la page si Leaflet est disponible
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             if (typeof L === 'undefined') {
                 console.error('Leaflet n\'est pas chargé !');
                 document.getElementById('map-existantes').innerHTML = 
                     '<div style="padding: 2rem; text-align: center; color: #ef4444;">❌ Leaflet.js n\'a pas pu se charger</div>';
             } else {
                 console.log('Leaflet chargé avec succès !');
+            }
+            
+            // 🔄 CHARGER LES AVIS DEPUIS SUPABASE AU DÉMARRAGE
+            console.log('🔄 Chargement des avis depuis Supabase...');
+            try {
+                const allRatings = await getAllRatings();
+                console.log(`✅ ${allRatings.length} avis chargés depuis Supabase`);
+                
+                // Stocker globalement pour accès ultérieur
+                window.supabaseRatings = allRatings;
+                
+                // TODO ÉTAPE 7 : Convertir en format portionRatings et afficher sur la carte
+                console.log('📊 Avis disponibles:', allRatings);
+            } catch (error) {
+                console.error('❌ Erreur chargement avis:', error);
             }
             
             // Initialiser le bouton et le sélecteur selon l'état showRatings
