@@ -1917,8 +1917,63 @@
                 // Stocker globalement pour accès ultérieur
                 window.supabaseRatings = allRatings;
                 
-                // TODO ÉTAPE 7 : Convertir en format portionRatings et afficher sur la carte
-                console.log('📊 Avis disponibles:', allRatings);
+                // 🎨 ÉTAPE 8 : Transformer en format portionRatings et afficher sur la carte
+                console.log('🎨 Transformation des avis Supabase pour la carte...');
+                
+                // Grouper les avis par segment_id
+                const ratingsBySegment = {};
+                allRatings.forEach(rating => {
+                    const segId = String(rating.segment_id);
+                    if (!ratingsBySegment[segId]) {
+                        ratingsBySegment[segId] = [];
+                    }
+                    ratingsBySegment[segId].push(rating);
+                });
+                
+                // Transformer en format portionRatings
+                Object.keys(ratingsBySegment).forEach(segId => {
+                    const ratings = ratingsBySegment[segId];
+                    
+                    // Créer ou mettre à jour portionRatings
+                    if (!portionRatings[segId]) {
+                        portionRatings[segId] = {
+                            id: segId,
+                            trackName: ratings[0].track_name || `Piste ${segId}`,
+                            parentId: ratings[0].parent_id,
+                            ratings: []
+                        };
+                    }
+                    
+                    // Ajouter tous les avis pour ce segment
+                    ratings.forEach(r => {
+                        const ratingObj = {
+                            comment: r.comment || '',
+                            timestamp: r.timestamp
+                        };
+                        
+                        // Ajouter seulement les critères non-null
+                        if (r.security !== null) ratingObj.security = r.security;
+                        if (r.noise !== null) ratingObj.noise = r.noise;
+                        if (r.air !== null) ratingObj.air = r.air;
+                        if (r.flow !== null) ratingObj.flow = r.flow;
+                        if (r.inclusion !== null) ratingObj.inclusion = r.inclusion;
+                        
+                        portionRatings[segId].ratings.push(ratingObj);
+                    });
+                });
+                
+                console.log(`✅ ${Object.keys(ratingsBySegment).length} segments transformés pour affichage`);
+                console.log('📊 portionRatings mis à jour:', portionRatings);
+                
+                // Mettre à jour localStorage avec les avis Supabase
+                localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
+                
+                // 🎨 Mettre à jour les couleurs de la carte si elle est déjà initialisée
+                if (window.updateSegmentStyles) {
+                    console.log('🎨 Mise à jour des couleurs de la carte avec avis Supabase...');
+                    updateSegmentStyles();
+                }
+                
             } catch (error) {
                 console.error('❌ Erreur chargement avis:', error);
             }

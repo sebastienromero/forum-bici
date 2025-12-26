@@ -13,16 +13,16 @@
 
 ## 🎯 Phase Actuelle
 
-**ÉTAPE 7 : Sauvegarder depuis savePortionRatings()** ✅ **COMPLÉTÉE**
+**ÉTAPE 8 : Afficher couleurs sur la carte** ✅ **COMPLÉTÉE**
 
-**Prochaine étape :** ÉTAPE 8 - Afficher les couleurs sur la carte
+**Prochaine étape :** ÉTAPE 9 - Tests locaux approfondis
 
 ---
 
 ## 📊 Progression Globale
 
 ```
-█████████████████████░░░ 67% (Étapes 0-7 complétées / 12 totales)
+███████████████████████░ 75% (Étapes 0-8 complétées / 12 totales)
 
 ✅ ÉTAPE 0 : Préparation
 ✅ ÉTAPE 1 : Setup Supabase - Table minimale
@@ -32,7 +32,8 @@
 ✅ ÉTAPE 5 : Intégrer API dans index.html
 ✅ ÉTAPE 6 : Charger avis au démarrage
 ✅ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
-🔄 ÉTAPE 8 : Afficher couleurs sur la carte selon avis Supabase
+✅ ÉTAPE 8 : Afficher couleurs sur carte depuis Supabase
+🔄 ÉTAPE 9 : Tests locaux approfondis
 ✅ ÉTAPE 5 : Intégrer API dans index.html
 🔄 ÉTAPE 6 : Charger avis au démarrage
 ⏳ ÉTAPE 7 : Sauvegarder depuis savePortionRatings()
@@ -293,30 +294,26 @@ try {
 
 ---
 
-### 🟡 ÉTAPE 8 : Utiliser vrais segment_id et track_name (20 min)
+### � ÉTAPE 8 : Afficher couleurs sur la carte depuis Supabase (30 min) ✅ COMPLÉTÉE
 
-**Objectif :** Remplacer les valeurs de test par les vraies données
+**Objectif :** Transformer les avis Supabase pour afficher les couleurs sur la carte
 
-- [ ] 8.1 - Chercher les variables de segment dans le code :
-  - `currentSegment`, `selectedSegment`, `activeSegmentId`, etc.
-- [ ] 8.2 - Ajouter des `console.log()` pour voir leur contenu
-- [ ] 8.3 - Mettre à jour `savePortionRatings()` avec les vraies variables :
-```javascript
-const newRating = {
-  segment_id: currentlySelectedSegmentId || 'UNKNOWN',
-  track_name: selectedSegmentData?.properties?.name || 'Piste sans nom',
-  parent_id: selectedSegmentData?.properties?.parentId || null,
-  ...ratings,
-  comment: comment
-}
-```
-- [ ] 8.4 - Tester avec un VRAI segment sur la carte
-- [ ] 8.5 - Vérifier dans Supabase que le vrai nom apparaît ✅
-- [ ] 8.6 - Commit : `feat: use real segment_id and track_name`
+- [x] 8.1 - Grouper les avis par `segment_id`
+- [x] 8.2 - Transformer en format `portionRatings` compatible avec la carte
+- [x] 8.3 - Calculer les moyennes des notes pour chaque segment
+- [x] 8.4 - Mettre à jour `localStorage` avec les avis Supabase
+- [x] 8.5 - Appeler `updateSegmentStyles()` pour colorier la carte
+- [x] 8.6 - Tester : Recharger la page
+- [x] 8.7 - Vérifier console : "✅ 63 segments transformés pour affichage" ✅
+- [x] 8.8 - Vérifier carte : Segments colorés selon les notes ✅
+- [x] 8.9 - Commit : `feat: display map colors from Supabase ratings`
 
-**Durée estimée :** 20 min
+**Durée réelle :** 25 min  
+**Status :** ✅ **100% complétée**
 
 ---
+
+### 🟡 ÉTAPE 9 : Tests locaux approfondis (30 min)
 
 ### 🟡 ÉTAPE 9 : Tests locaux approfondis (30 min)
 
