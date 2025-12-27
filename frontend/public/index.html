@@ -79,9 +79,9 @@
         <div class="logo">🚴‍♀️ Rate Your Track Bogotá</div>
         <nav>
             <button class="nav-btn active" data-section="accueil">Accueil</button>
-            <button class="nav-btn" data-section="forum">Forum</button>
             <button class="nav-btn" data-section="carte-existantes">Pistes existantes</button>
             <button class="nav-btn" data-section="carte-souhaitees">Pistes souhaitées</button>
+            <button class="nav-btn" data-section="forum">Forum</button>
             <button class="nav-btn" data-section="apropos">À propos</button>
         </nav>
         <button id="theme-toggle" class="theme-toggle" title="Basculer mode nuit">🌙</button>
@@ -94,17 +94,26 @@
             <p>Un site collaboratif pour améliorer les pistes cyclables de Bogotá !</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
-                <div class="info-box">
-                    <h3>🗣️ Forum</h3>
-                    <p>Discutez avec la communauté cycliste</p>
+                <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(37,99,235,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=carte-existantes]').click()">
+                    <h3>�️ Évaluez les pistes</h3>
+                    <p>Notez la sécurité, le calme, la qualité de l'air des pistes existantes</p>
+                    <button style="margin-top: 12px; background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
+                        Voir la carte →
+                    </button>
                 </div>
-                <div class="info-box">
-                    <h3>🗺️ Évaluez les pistes</h3>
-                    <p>Notez la sécurité, le calme, la qualité de l'air...</p>
-                </div>
-                <div class="info-box">
+                <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(22,163,74,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=carte-souhaitees]').click()">
                     <h3>✨ Proposez des améliorations</h3>
-                    <p>Tracez de nouvelles pistes sur la carte</p>
+                    <p>Tracez de nouvelles pistes et votez pour celles des autres</p>
+                    <button style="margin-top: 12px; background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
+                        Proposer une piste →
+                    </button>
+                </div>
+                <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(107,114,128,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=forum]').click()">
+                    <h3>🗣️ Forum</h3>
+                    <p>Discutez avec la communauté cycliste de Bogotá</p>
+                    <button style="margin-top: 12px; background: #6b7280; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
+                        Rejoindre le forum →
+                    </button>
                 </div>
             </div>
         </section>
