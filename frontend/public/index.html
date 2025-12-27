@@ -243,13 +243,13 @@
             </div>
             
             <!-- Bouton flottant pour rouvrir le panneau -->
-            <button id="floating-panel-btn" style="display:none; position:fixed; top:80px; left:20px; z-index:1300; background:var(--control-border); border:none; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px rgba(37,99,235,0.18); cursor:pointer; align-items:center; justify-content:center;">
+            <button id="floating-panel-btn" style="display:flex; position:fixed; top:80px; left:20px; z-index:1300; background:var(--control-border); border:none; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px rgba(37,99,235,0.18); cursor:pointer; align-items:center; justify-content:center;">
                 <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#fff"/><rect y="14" width="32" height="4" rx="2" fill="#fff"/><rect y="22" width="32" height="4" rx="2" fill="#fff"/></svg>
             </button>
-            <div id="floating-panel-label" style="display:none; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
+            <div id="floating-panel-label" style="display:block; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
             
-            <!-- Panneau de notation flottant (Hamburger) -->
-            <div id="floating-rating-panel" style="display:flex; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:1; transform:translateX(0); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:auto; flex-direction:column;">
+            <!-- Panneau de notation flottant (Hamburger) - Masqué par défaut -->
+            <div id="floating-rating-panel" style="display:none; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:0; transform:translateX(-280px); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:none; flex-direction:column;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
                     <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
                     <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
