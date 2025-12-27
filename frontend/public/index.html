@@ -84,13 +84,13 @@
             <button class="nav-btn" data-section="forum">Forum</button>
             <button class="nav-btn" data-section="apropos">À propos</button>
         </nav>
-        <button id="theme-toggle" class="theme-toggle" title="Basculer mode nuit">🌙</button>
+        <button id="theme-toggle" class="theme-toggle" title="Basculer mode nuit">☾</button>
     </header>
 
     <main>
         <!-- Section Accueil -->
         <section class="section active" id="accueil">
-            <h2>🌍 Bienvenue sur Rate Your Track Bogotá</h2>
+            <h2>Bienvenue sur Rate Your Track Bogotá</h2>
             <p>Un site collaboratif pour améliorer les pistes cyclables de Bogotá !</p>
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
@@ -102,14 +102,14 @@
                     </button>
                 </div>
                 <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(22,163,74,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=carte-souhaitees]').click()">
-                    <h3>✨ Proposez des améliorations</h3>
+                    <h3>Proposez des améliorations</h3>
                     <p>Tracez de nouvelles pistes et votez pour celles des autres</p>
                     <button style="margin-top: 12px; background: #16a34a; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
                         Proposer une piste →
                     </button>
                 </div>
                 <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(107,114,128,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=forum]').click()">
-                    <h3>🗣️ Forum</h3>
+                    <h3>Forum</h3>
                     <p>Discutez avec la communauté cycliste de Bogotá</p>
                     <button style="margin-top: 12px; background: #6b7280; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
                         Rejoindre le forum →
@@ -120,7 +120,7 @@
 
         <!-- Section Forum -->
         <section class="section" id="forum">
-            <h2>🗣️ Forum de discussion</h2>
+            <h2>Forum de discussion</h2>
             <p>Espace de discussion pour la communauté cycliste de Bogotá</p>
             
             <div style="max-width: 900px; margin: 0 auto; padding: 20px;">
@@ -160,7 +160,6 @@
                     <!-- Catégorie Infrastructures -->
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                            <span style="font-size: 24px;">🏗️</span>
                             <h3 style="margin: 0; color: var(--text-primary);">Infrastructures</h3>
                         </div>
                         <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Propositions d'amélioration des infrastructures</p>
@@ -332,14 +331,13 @@
 
         <!-- Section Carte Souhaitées -->
         <section class="section" id="carte-souhaitees">
-            <h2>✨ Pistes cyclables souhaitées</h2>
+            <h2>Pistes cyclables souhaitées</h2>
             <p>Proposez de nouveaux tracés pour améliorer le réseau cyclable</p>
             
             <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
                 <!-- Carte de démonstration -->
                 <div id="map-souhaitees" style="height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 24px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; border: 2px solid var(--border-color);">
                     <div style="text-align: center; color: var(--text-secondary);">
-                        <div style="font-size: 48px; margin-bottom: 12px;">🗺️</div>
                         <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Carte interactive à venir</div>
                         <div style="font-size: 14px;">Vous pourrez tracer vos pistes idéales directement sur la carte</div>
                     </div>
@@ -357,7 +355,7 @@
                 </div>
                 
                 <!-- Liste des propositions -->
-                <h3 style="color: var(--text-primary); margin-bottom: 16px;">🎯 Propositions populaires</h3>
+                <h3 style="color: var(--text-primary); margin-bottom: 16px;">Propositions populaires</h3>
                 
                 <div style="display: grid; gap: 16px;">
                     <!-- Proposition 1 -->
@@ -462,7 +460,7 @@
                 <!-- Bouton pour ajouter une proposition -->
                 <div style="text-align: center; margin-top: 32px;">
                     <button onclick="alert('Fonctionnalité en cours de développement 🚧\n\nBientôt vous pourrez :\n- Tracer votre piste sur la carte\n- Ajouter une description\n- Justifier votre proposition')" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; padding: 16px 32px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        ✏️ Proposer une nouvelle piste
+                        Proposer une nouvelle piste
                     </button>
                 </div>
             </div>
@@ -470,11 +468,11 @@
 
         <!-- Section À propos -->
         <section class="section" id="apropos">
-            <h2>📋 À propos du projet</h2>
+            <h2>À propos du projet</h2>
             <p><strong>Objectif :</strong> Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo encore plus attractif.</p>
             
             <div style="margin-top: 2rem;">
-                <h3>🎯 Mission</h3>
+                <h3>Mission</h3>
                 <ul style="margin-left: 2rem; margin-top: 0.5rem;">
                     <li>Améliorer la sécurité des cyclistes</li>
                     <li>Encourager la participation citoyenne</li>
@@ -1026,7 +1024,7 @@
                     updateSegmentStyles();
                 }
             } else {
-                btn.textContent = '👁️ Afficher les avis';
+                btn.textContent = 'Afficher les avis';
                 btn.style.background = '#6b7280';
                 if (viewSelector) viewSelector.style.display = 'none';
                 
@@ -1278,7 +1276,7 @@
             const segmentNameEl = document.getElementById('segment-name');
             if (segmentNameEl) {
                 segmentNameEl.innerHTML = `
-                    <strong>�‍♀️ Noter ${nearbyPortions.length} portion(s) de pistes</strong><br>
+                    <strong>Noter ${nearbyPortions.length} portion(s) de pistes</strong><br>
                     <small>Trouvées dans un rayon de 80m autour de votre tracé</small>
                 `;
             }
@@ -1356,7 +1354,7 @@
         function findNearbyTrackPortions() {
             if (routePoints.length === 0) return [];
             if (!window.trackSegments || window.trackSegments.length === 0) {
-                console.warn('⚠️ Segments non initialisés');
+                console.warn('Segments non initialisés');
                 return [];
             }
             
@@ -1485,7 +1483,7 @@
             portionLayers = [];
             
             if (!showRatings) {
-                console.log('⚠️ showRatings=false, affichage désactivé');
+                console.log('showRatings=false, affichage désactivé');
                 return;
             }
             
@@ -1995,7 +1993,7 @@
                     toggleBtn.style.background = '#16a34a';
                     if (viewSelector) viewSelector.style.display = 'inline-block';
                 } else {
-                    toggleBtn.textContent = '👁️ Afficher les avis';
+                    toggleBtn.textContent = 'Afficher les avis';
                     toggleBtn.style.background = '#6b7280';
                     if (viewSelector) viewSelector.style.display = 'none';
                 }
@@ -2100,7 +2098,7 @@
         // Fonction pour sauvegarder la notation de l'itinéraire
         function saveRouteRating() {
             if (routePoints.length === 0) {
-                alert('⚠️ Tracez un itinéraire en cliquant sur la carte avant de noter !');
+                alert('Tracez un itinéraire en cliquant sur la carte avant de noter !');
                 return;
             }
             
@@ -2258,7 +2256,7 @@
 
         // Réinitialiser tous les avis enregistrés
         function resetAllRatings() {
-            if (confirm('⚠️ Êtes-vous sûr ? Cela supprimera TOUS les avis enregistrés. Cette action est irréversible.')) {
+            if (confirm('Êtes-vous sûr ? Cela supprimera TOUS les avis enregistrés. Cette action est irréversible.')) {
                 // Vider le localStorage
                 localStorage.removeItem('portionRatings');
                 console.log('🧹 Tous les avis ont été supprimés du localStorage');
@@ -2293,7 +2291,7 @@
         // Mettre à jour les styles des segments sur la carte
         function updateSegmentStyles(segmentsToUpdate = null) {
             if (!window.pistesLayer) {
-                console.warn('⚠️ pistesLayer non disponible');
+                console.warn('pistesLayer non disponible');
                 return;
             }
             
@@ -2412,7 +2410,7 @@
         function updateThemeToggleButton() {
             const themeToggle = document.getElementById('theme-toggle');
             const isDarkMode = document.documentElement.classList.contains('dark-mode');
-            themeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+            themeToggle.textContent = isDarkMode ? 'Jour' : 'Nuit';
         }
 
         // Ajouter un event listener au bouton de toggle
