@@ -2048,12 +2048,12 @@
             const floatingLabel = document.getElementById('floating-panel-label');
             const closePanelBtn = document.getElementById('close-floating-panel');
             
-            // Afficher le bouton hamburger bleu au démarrage
+            // Le panneau est fermé au démarrage, donc on affiche le bouton hamburger
             if (floatingBtn) {
-                floatingBtn.style.display = 'none'; // Caché puisque le panel est déjà ouvert
+                floatingBtn.style.display = 'flex'; // Bouton visible
             }
             if (floatingLabel) {
-                floatingLabel.style.display = 'none'; // Caché puisque le panel est déjà ouvert
+                floatingLabel.style.display = 'block'; // Label "Noter" visible
             }
             
             // Gestion du bouton hamburger pour rouvrir
