@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚴‍♀️ Rate Your Track Bogotá</title>
+    <title>Rate Your Track Bogotá</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -41,11 +41,11 @@
                 .select()
             
             if (error) {
-                console.error('❌ Erreur création avis:', error)
+                console.error('Erreur création avis:', error)
                 return { data: null, error }
             }
             
-            console.log('✅ Avis créé:', data)
+            console.log('Avis créé:', data)
             return { data, error: null }
         }
         
@@ -57,7 +57,7 @@
                 .order('timestamp', { ascending: false })
             
             if (error) {
-                console.error('❌ Erreur récupération:', error)
+                console.error('Erreur récupération:', error)
                 return []
             }
             
@@ -70,13 +70,13 @@
         window.getAllRatings = getAllRatings
         window.supabase = supabase
         
-        console.log('✅ Module API Supabase chargé dans index.html')
+        console.log('Module API Supabase chargé dans index.html')
     </script>
     
 </head>
 <body>
     <header>
-        <div class="logo">🚴‍♀️ Rate Your Track Bogotá</div>
+        <div class="logo">Rate Your Track Bogotá</div>
         <nav>
             <button class="nav-btn active" data-section="accueil">Accueil</button>
             <button class="nav-btn" data-section="carte-existantes">Pistes existantes</button>
@@ -95,7 +95,7 @@
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                 <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(37,99,235,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=carte-existantes]').click()">
-                    <h3>🗺️ Évaluez les pistes</h3>
+                    <h3>Évaluez les pistes</h3>
                     <p>Notez la sécurité, le calme, la qualité de l'air des pistes existantes</p>
                     <button style="margin-top: 12px; background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
                         Voir la carte →
@@ -388,7 +388,7 @@
                                 👍 Voter pour cette piste
                             </button>
                             <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
-                                💬 12 commentaires
+                                12 commentaires
                             </button>
                         </div>
                     </div>
@@ -420,7 +420,7 @@
                                 👍 Voter pour cette piste
                             </button>
                             <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
-                                💬 7 commentaires
+                                7 commentaires
                             </button>
                         </div>
                     </div>
@@ -445,7 +445,7 @@
                         <div style="display: flex; gap: 12px; margin-bottom: 12px;">
                             <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 4.7 km</span>
                             <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Engativá</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🛡️ Sécurité</span>
+                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">Sécurité</span>
                         </div>
                         
                         <div style="display: flex; gap: 8px;">
@@ -453,7 +453,7 @@
                                 👍 Voter pour cette piste
                             </button>
                             <button onclick="alert('Fonctionnalité en cours de développement 🚧')" style="background: var(--bg-secondary); color: var(--text-primary); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 13px;">
-                                💬 5 commentaires
+                                5 commentaires
                             </button>
                         </div>
                     </div>
@@ -494,8 +494,8 @@
         let mapExistantes = null;
         
         // === VÉRIFICATION CHARGEMENT DES FICHIERS ===
-        console.log('🔍 Vérification des fichiers chargés...');
-        console.log('pistesLineStrings:', typeof pistesLineStrings !== 'undefined' ? `✅ ${pistesLineStrings.features.length} segments (rate-your-track)` : '❌ NON CHARGÉ');
+        console.log('Vérification des fichiers chargés...');
+        console.log('pistesLineStrings:', typeof pistesLineStrings !== 'undefined' ? `${pistesLineStrings.features.length} segments (rate-your-track)` : 'NON CHARGÉ');
         
         // Système rate_your_track : portions de pistes notées par proximité
         let portionRatings = JSON.parse(localStorage.getItem('portionRatings') || '{}');
@@ -512,7 +512,7 @@
             console.warn('🧹 NETTOYAGE FORCÉ du localStorage pour résoudre les bugs...');
             portionRatings = {};
             localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-            console.log('✅ localStorage complètement nettoyé');
+            console.log('localStorage complètement nettoyé');
             */
             
             // VERSION NORMALE: vérifier si migration nécessaire
@@ -532,12 +532,12 @@
             });
             
             if (needsMigration) {
-                console.log('🔄 Nettoyage automatique: ancien format détecté (normal après mise à jour)');
+                console.log('Nettoyage automatique: ancien format détecté (normal après mise à jour)');
                 portionRatings = {};
                 localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-                console.log('✅ localStorage nettoyé - les données sont maintenant en Supabase');
+                console.log('localStorage nettoyé - les données sont maintenant en Supabase');
             } else {
-                console.log('✅ Format de données correct');
+                console.log('Format de données correct');
             }
         })();
         
@@ -611,9 +611,9 @@
                 
                 // Contrôle des couches (seulement les fonds de carte) - positionné en haut à droite
                 const baseMaps = {
-                    "🗺️ Voyager": baseVoyager,
+                    "Voyager": baseVoyager,
                     "🎨 Carte neutre": baseNeutre,
-                    "📍 Carte standard": baseStandard
+                    "Carte standard": baseStandard
                 };
                 
                 L.control.layers(baseMaps, null, {
@@ -621,14 +621,14 @@
                 }).addTo(mapExistantes);
                 
                 // Utiliser les données intégrées directement (évite les problèmes CORS)
-                console.log('🔍 Chargement des pistes cyclables...');
+                console.log('Chargement des pistes cyclables...');
                 
                 try {
                     if (typeof pistesLineStrings === 'undefined') {
                         throw new Error('Données pistesLineStrings non disponibles');
                     }
                     
-                    console.log('✅ Données chargées:', pistesLineStrings.features.length, 'LineStrings (contours rate-your-track)');
+                    console.log('Données chargées:', pistesLineStrings.features.length, 'LineStrings (contours rate-your-track)');
                     
                     // Ajouter les LineStrings à la carte
                     window.pistesLayer = L.geoJSON(pistesLineStrings, {
@@ -681,7 +681,7 @@
                                         // Afficher les commentaires EN PREMIER
                                         const comments = ratings.map(r => r.comment).filter(c => c && c.trim());
                                         if (comments.length > 0) {
-                                            text += `<b>💬 Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                                            text += `<b>Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
                                             comments.forEach(c => {
                                                 text += `<li style='margin-bottom:4px;'>${c}</li>`;
                                             });
@@ -697,7 +697,7 @@
                                         const avgGlobal = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
                                         
                                         text += `<b>Note moyenne</b> : ${Math.round(avgGlobal * 10) / 10} / 5<br>`;
-                                        text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${ratings.length} avis</span><br><br>`;
+                                        text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>Sur la base de ${ratings.length} avis</span><br><br>`;
                                         text += `<b>Sécurité</b> : ${Math.round(avgSecurity * 10) / 10} / 5<br>`;
                                         text += `<b>Bruit</b> : ${Math.round(avgNoise * 10) / 10} / 5<br>`;
                                         text += `<b>Qualité de l'air</b> : ${Math.round(avgAir * 10) / 10} / 5<br>`;
@@ -717,11 +717,11 @@
                         }
                     }).addTo(mapExistantes);
                     
-                    console.log("🗺️ LineStrings de pistes rate-your-track ajoutés !");
+                    console.log("LineStrings de pistes rate-your-track ajoutés !");
                     
                     // === UTILISER CES LINESTRINGS POUR LA NOTATION ===
                     window.trackSegments = pistesLineStrings.features;
-                    console.log(`✅ ${window.trackSegments.length} segments prêts pour la notation`);
+                    console.log(`${window.trackSegments.length} segments prêts pour la notation`);
                     
                     
                     // Ajuster la vue sur les pistes
@@ -730,10 +730,10 @@
                     // }
                     
                 } catch (error) {
-                    console.error('❌ Erreur:', error);
+                    console.error('Erreur:', error);
                     L.popup()
                         .setLatLng([4.6097, -74.0817])
-                        .setContent(`❌ Erreur: ${error.message}`)
+                        .setContent(`Erreur: ${error.message}`)
                         .openOn(mapExistantes);
                 }
                 
@@ -753,7 +753,7 @@
             } catch (error) {
                 console.error('Erreur lors de l\'initialisation de la carte:', error);
                 document.getElementById('map-existantes').innerHTML = 
-                    '<div style="padding: 2rem; text-align: center; color: #ef4444;">❌ Erreur lors du chargement de la carte. Vérifiez votre connexion internet.</div>';
+                    '<div style="padding: 2rem; text-align: center; color: #ef4444;">Erreur lors du chargement de la carte. Vérifiez votre connexion internet.</div>';
             }
         }
 
@@ -791,7 +791,7 @@
                 const status = document.getElementById('tracing-status');
                 
                 if (btn) {
-                    btn.textContent = '📍 Mode tracé OFF';
+                    btn.textContent = 'Mode tracé OFF';
                     btn.style.background = '#374151';
                 }
                 if (status) {
@@ -857,28 +857,28 @@
                     let popupContent;
                     if (routePoints.length === 1) {
                         popupContent = `
-                            <strong>📍 Zone notée</strong><br>
-                            <strong>📊 Note: ${average.toFixed(1)}/5</strong><br>
-                            🛡️ Sécurité: ${ratings.security}/5<br>
+                            <strong>Zone notée</strong><br>
+                            <strong>Note: ${average.toFixed(1)}/5</strong><br>
+                            Sécurité: ${ratings.security}/5<br>
                             � Calme: ${ratings.noise}/5<br>
-                            🌬️ Air: ${ratings.air}/5<br>
-                            ⚡ Fluidité: ${ratings.flow}/5<br>
-                            👥 Inclusion: ${ratings.inclusion}/5<br>
+                            Air: ${ratings.air}/5<br>
+                            Fluidité: ${ratings.flow}/5<br>
+                            Inclusion: ${ratings.inclusion}/5<br>
                             <small>Rayon d'évaluation: 80m</small>
                         `;
                     } else {
                         popupContent = `
-                            <strong>🛣️ Itinéraire noté</strong><br>
-                            <strong>📊 Note: ${average.toFixed(1)}/5</strong><br>
-                            🛡️ Sécurité: ${ratings.security}/5<br>
+                            <strong>Itinéraire noté</strong><br>
+                            <strong>Note: ${average.toFixed(1)}/5</strong><br>
+                            Sécurité: ${ratings.security}/5<br>
                             � Calme: ${ratings.noise}/5<br>
-                            🌬️ Air: ${ratings.air}/5<br>
-                            ⚡ Fluidité: ${ratings.flow}/5<br>
-                            👥 Inclusion: ${ratings.inclusion}/5
+                            Air: ${ratings.air}/5<br>
+                            Fluidité: ${ratings.flow}/5<br>
+                            Inclusion: ${ratings.inclusion}/5
                         `;
                     }
                     if (comment) {
-                        popupContent += `<br><br>💬 <em>"${comment}"</em>`;
+                        popupContent += `<br><br><em>"${comment}"</em>`;
                     }
                     
                     if (routeLayer) {
@@ -895,9 +895,9 @@
                 // Feedback adapté selon le type
                 let feedbackMessage;
                 if (routePoints.length === 1) {
-                    feedbackMessage = `✅ Zone notée ! Moyenne : ${average.toFixed(1)}/5\n📍 ${intersectedSegments.length} portion${intersectedSegments.length > 1 ? 's' : ''} mise${intersectedSegments.length > 1 ? 's' : ''} à jour dans un rayon de 80m\n📍 Point conservé sur la carte`;
+                    feedbackMessage = `Zone notée ! Moyenne : ${average.toFixed(1)}/5\n${intersectedSegments.length} portion${intersectedSegments.length > 1 ? 's' : ''} mise${intersectedSegments.length > 1 ? 's' : ''} à jour dans un rayon de 80m\nPoint conservé sur la carte`;
                 } else {
-                    feedbackMessage = `✅ Itinéraire noté ! Moyenne : ${average.toFixed(1)}/5\n📍 ${intersectedSegments.length} portion${intersectedSegments.length > 1 ? 's' : ''} mise${intersectedSegments.length > 1 ? 's' : ''} à jour\n🛣️ Tracé conservé sur la carte`;
+                    feedbackMessage = `Itinéraire noté ! Moyenne : ${average.toFixed(1)}/5\n${intersectedSegments.length} portion${intersectedSegments.length > 1 ? 's' : ''} mise${intersectedSegments.length > 1 ? 's' : ''} à jour\nTracé conservé sur la carte`;
                 }
                 alert(feedbackMessage);
                 
@@ -905,7 +905,7 @@
                 isTracingMode = false;
                 const btn = document.getElementById('toggle-tracing');
                 const status = document.getElementById('tracing-status');
-                btn.textContent = '🛣️ Mode tracé OFF';
+                btn.textContent = 'Mode tracé OFF';
                 btn.style.background = '#6b7280';
                 status.textContent = '';
                 
@@ -926,7 +926,7 @@
             closeRatingPanel();
             
             // Feedback utilisateur
-            alert(`✅ Note sauvegardée ! Moyenne : ${average.toFixed(1)}/5`);
+            alert(`Note sauvegardée ! Moyenne : ${average.toFixed(1)}/5`);
         }
         
         function updateSegmentColor(segmentId, average) {
@@ -976,13 +976,13 @@
                     const segmentNameEl = document.getElementById('segment-name');
                     if (segmentNameEl) {
                         segmentNameEl.innerHTML = `
-                            <strong>🚴‍♀️ Notation des pistes cyclables</strong><br>
+                            <strong>Notation des pistes cyclables</strong><br>
                             <small>Placez des points sur la carte puis notez les pistes à proximité</small>
                         `;
                     }
                 }
             } else {
-                btn.textContent = '🛣️ Mode tracé OFF';
+                btn.textContent = 'Mode tracé OFF';
                 btn.style.background = '#6b7280';
                 status.textContent = '';
                 if (clearBtn) clearBtn.style.display = 'none';
@@ -1164,7 +1164,7 @@
                 
                 // Ajouter popup pour noter l'itinéraire
                 routeLayer.bindPopup(`
-                    <strong>🛣️ Itinéraire tracé</strong><br>
+                    <strong>Itinéraire tracé</strong><br>
                     ${routePoints.length} points<br>
                     <button onclick="rateCurrentRoute()" style="margin-top: 8px; padding: 4px 8px; background: #16a34a; color: white; border: none; border-radius: 4px; cursor: pointer;">
                         ⭐ Noter cet itinéraire
@@ -1391,7 +1391,7 @@
                 interpolatedPoints.push(routePoints[routePoints.length - 1]);
             }
             
-            console.log(`📍 ${routePoints.length} points originaux → ${interpolatedPoints.length} points avec interpolation`);
+            console.log(`${routePoints.length} points originaux → ${interpolatedPoints.length} points avec interpolation`);
             
             // Parcourir chaque segment de 100m (structure GeoJSON)
             window.trackSegments.forEach((segment, segIndex) => {
@@ -1448,7 +1448,7 @@
                 }
             });
             
-            console.log(`✅ Trouvé ${nearbySegments.length} segments de 100m à proximité de l'itinéraire`);
+            console.log(`Trouvé ${nearbySegments.length} segments de 100m à proximité de l'itinéraire`);
             return nearbySegments;
         }
         
@@ -1465,18 +1465,18 @@
             
             portionRatings[segmentData.id] = segmentRating;
             localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-            console.log('✅ Segment noté et sauvegardé:', segmentData.id, segmentData.trackName);
+            console.log('Segment noté et sauvegardé:', segmentData.id, segmentData.trackName);
         }
         
         // Affiche visuellement les segments notés sur la carte (NOUVELLE VERSION)
         function displayPortionRatings() {
             console.log('🎨 displayPortionRatings() appelé');
-            console.log('📊 Nombre total de segments notés:', Object.keys(portionRatings).length);
-            console.log('📊 showRatings:', showRatings);
-            console.log('🗺️ mapExistantes exists:', !!mapExistantes);
+            console.log('Nombre total de segments notés:', Object.keys(portionRatings).length);
+            console.log('showRatings:', showRatings);
+            console.log('mapExistantes exists:', !!mapExistantes);
             
             if (!mapExistantes) {
-                console.error('❌ mapExistantes n\'existe pas encore!');
+                console.error('mapExistantes n\'existe pas encore!');
                 return;
             }
             
@@ -1498,7 +1498,7 @@
                     !segmentData.ratings || 
                     !Array.isArray(segmentData.ratings) || 
                     segmentData.ratings.length === 0) {
-                    console.warn('❌ Segment invalide ou sans avis ignoré:', segmentData && segmentData.id ? segmentData.id : segmentData);
+                    console.warn('Segment invalide ou sans avis ignoré:', segmentData && segmentData.id ? segmentData.id : segmentData);
                     skippedCount++;
                     return;
                 }
@@ -1506,12 +1506,12 @@
                 // Segment géométrique optionnel : tenter d'utiliser segment.segment ou segment.segmentData
                 const segGeom = segmentData.segment || segmentData.segmentData || null;
                 if (!segGeom || !segGeom.geometry || !segGeom.geometry.coordinates) {
-                    console.warn('❌ Segment sans géométrie ignoré:', segmentData.id || segmentData);
+                    console.warn('Segment sans géométrie ignoré:', segmentData.id || segmentData);
                     skippedCount++;
                     return;
                 }
                 
-                console.log('✅ Traitement segment:', segmentData.id || '(no-id)', 'avec', segmentData.ratings.length, 'avis');
+                console.log('Traitement segment:', segmentData.id || '(no-id)', 'avec', segmentData.ratings.length, 'avis');
                 
                 // Calculer les moyennes à partir de tous les avis
                 const allRatings = segmentData.ratings;
@@ -1583,7 +1583,7 @@
                 // Afficher les commentaires EN PREMIER
                 const comments = allRatings.map(r => r.comment).filter(c => c && c.trim());
                 if (comments.length > 0) {
-                    text += `<b>💬 Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                    text += `<b>Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
                     comments.forEach(c => {
                         text += `<li style='margin-bottom:4px;'>${c}</li>`;
                     });
@@ -1593,7 +1593,7 @@
                 // Afficher la note moyenne et le nombre d'avis
                 const globalAvg = (avgSecurity + avgNoise + avgAir + avgFlow + avgInclusion) / 5;
                 text += `<b>Note moyenne</b> : ${Math.round(globalAvg * 10) / 10} / 5<br>`;
-                text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>📊 Sur la base de ${numAvis} avis</span><br><br>`;
+                text += `<span style='font-size:13px;color:#1976d2;font-weight:bold;'>Sur la base de ${numAvis} avis</span><br><br>`;
                 
                 // Afficher tous les critères
                 text += `<b>Sécurité</b> : ${Math.round(avgSecurity * 10) / 10} / 5<br>`;
@@ -1628,8 +1628,8 @@
                 displayedCount++;
             });
             
-            console.log(`✅ Affiché ${displayedCount} segments notés sur la carte (${skippedCount} ignorés)`);
-            console.log('📊 portionLayers.length:', portionLayers.length);
+            console.log(`Affiché ${displayedCount} segments notés sur la carte (${skippedCount} ignorés)`);
+            console.log('portionLayers.length:', portionLayers.length);
         }
         
         // Rendre les fonctions globales pour les onclick
@@ -1678,7 +1678,7 @@
             const hasComment = comment.length > 0;
             
             if (!hasRating && !hasComment) {
-                alert('❌ Veuillez noter au moins un critère OU laisser un commentaire !');
+                alert('Veuillez noter au moins un critère OU laisser un commentaire !');
                 return;
             }
             
@@ -1692,7 +1692,7 @@
             
             // Trouver les SEGMENTS proches du tracé actuel (nouvelle version)
             const nearbySegments = findNearbyTrackPortions();
-            console.log('🔍 Segments trouvés:', nearbySegments.length);
+            console.log('Segments trouvés:', nearbySegments.length);
             
             if (nearbySegments.length === 0) {
                 console.log('Aucun segment trouvé à proximité');
@@ -1702,7 +1702,7 @@
             
             // DEBUG: Vérifier la structure du premier segment
             if (nearbySegments.length > 0) {
-                console.log('🔍 Structure premier segment:', nearbySegments[0]);
+                console.log('Structure premier segment:', nearbySegments[0]);
             }
             
             // 💾 SAUVEGARDER DANS SUPABASE (ÉTAPE 7)
@@ -1748,16 +1748,16 @@
                     const result = await createRating(supabaseRating);
                     if (result.data) {
                         supabaseSavedCount++;
-                        console.log(`✅ Supabase: Segment ${segId} sauvegardé`);
+                        console.log(`Supabase: Segment ${segId} sauvegardé`);
                     }
                 } catch (error) {
-                    console.error(`❌ Erreur Supabase pour segment ${segId}:`, error);
+                    console.error(`Erreur Supabase pour segment ${segId}:`, error);
                 }
             });
             
             // Attendre que tous les avis soient sauvegardés dans Supabase
             await Promise.all(supabasePromises);
-            console.log(`✅ ${supabaseSavedCount}/${nearbySegments.length} segments sauvegardés dans Supabase`);
+            console.log(`${supabaseSavedCount}/${nearbySegments.length} segments sauvegardés dans Supabase`);
             
             let savedCount = 0;
             nearbySegments.forEach((segmentData, idx) => {
@@ -1800,11 +1800,11 @@
             
             // Sauvegarder dans localStorage
             localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
-            console.log(`✅ ${savedCount} segments notés et sauvegardés`);
-            console.log('📊 portionRatings après sauvegarde:', Object.keys(portionRatings).length, 'segments');
+            console.log(`${savedCount} segments notés et sauvegardés`);
+            console.log('portionRatings après sauvegarde:', Object.keys(portionRatings).length, 'segments');
             
             // MESSAGE DE CONFIRMATION
-            alert(`✅ Enregistré !\n\n${savedCount} segment${savedCount > 1 ? 's' : ''} de piste noté${savedCount > 1 ? 's' : ''}.`);
+            alert(`Enregistré !\n\n${savedCount} segment${savedCount > 1 ? 's' : ''} de piste noté${savedCount > 1 ? 's' : ''}.`);
             
             // Effacer le tracé AVANT l'affichage
             clearCurrentRoute();
@@ -1909,16 +1909,16 @@
             if (typeof L === 'undefined') {
                 console.error('Leaflet n\'est pas chargé !');
                 document.getElementById('map-existantes').innerHTML = 
-                    '<div style="padding: 2rem; text-align: center; color: #ef4444;">❌ Leaflet.js n\'a pas pu se charger</div>';
+                    '<div style="padding: 2rem; text-align: center; color: #ef4444;">Leaflet.js n\'a pas pu se charger</div>';
             } else {
                 console.log('Leaflet chargé avec succès !');
             }
             
-            // 🔄 CHARGER LES AVIS DEPUIS SUPABASE AU DÉMARRAGE
-            console.log('🔄 Chargement des avis depuis Supabase...');
+            // CHARGER LES AVIS DEPUIS SUPABASE AU DÉMARRAGE
+            console.log('Chargement des avis depuis Supabase...');
             try {
                 const allRatings = await getAllRatings();
-                console.log(`✅ ${allRatings.length} avis chargés depuis Supabase`);
+                console.log(`${allRatings.length} avis chargés depuis Supabase`);
                 
                 // Stocker globalement pour accès ultérieur
                 window.supabaseRatings = allRatings;
@@ -1968,8 +1968,8 @@
                     });
                 });
                 
-                console.log(`✅ ${Object.keys(ratingsBySegment).length} segments transformés pour affichage`);
-                console.log('📊 portionRatings mis à jour:', portionRatings);
+                console.log(`${Object.keys(ratingsBySegment).length} segments transformés pour affichage`);
+                console.log('portionRatings mis à jour:', portionRatings);
                 
                 // Mettre à jour localStorage avec les avis Supabase
                 localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
@@ -1983,7 +1983,7 @@
                 }
                 
             } catch (error) {
-                console.error('❌ Erreur chargement avis:', error);
+                console.error('Erreur chargement avis:', error);
             }
             
             // Initialiser le bouton et le sélecteur selon l'état showRatings
@@ -2188,8 +2188,8 @@
             // Sauvegarder dans localStorage
             localStorage.setItem('portionRatings', JSON.stringify(portionRatings));
             
-            console.log(`✅ ${nearbyPortions.length} portions sauvegardées (${totalDistance.toFixed(2)} km)`);
-            alert(`✅ Notation enregistrée !\n${nearbyPortions.length} portions notées sur ${totalDistance.toFixed(2)} km`);
+            console.log(`${nearbyPortions.length} portions sauvegardées (${totalDistance.toFixed(2)} km)`);
+            alert(`Notation enregistrée !\n${nearbyPortions.length} portions notées sur ${totalDistance.toFixed(2)} km`);
             
             // Réinitialiser l'itinéraire et rafraîchir l'affichage
             resetCurrentRoute();
@@ -2242,7 +2242,7 @@
             // Réappliquer les styles des pistes
             updateSegmentStyles();
             
-            console.log('🔄 Itinéraire réinitialisé');
+            console.log('Itinéraire réinitialisé');
         }
 
         // ===== MODE NUIT =====
@@ -2276,17 +2276,17 @@
                             interactive: true
                         });
                     });
-                    console.log('🔄 Styles des pistes réinitialisés');
+                    console.log('Styles des pistes réinitialisés');
                 }
                 
                 // Cacher les couches colorées
                 showRatings = false;
-                console.log('🔄 showRatings défini à false');
+                console.log('showRatings défini à false');
                 
                 // Mettre à jour l'affichage via updateSegmentStyles
                 updateSegmentStyles();
                 
-                alert('✅ Tous les avis ont été réinitialisés !');
+                alert('Tous les avis ont été réinitialisés !');
             }
         }
 
