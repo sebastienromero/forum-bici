@@ -1,7 +1,14 @@
 #!/bin/bash
-# Script de préparation pour le déploiement Netlify
 
-echo "📦 Copie des fichiers src dans public..."
-cp -r src public/
+echo "🔨 Building Rate Your Track Bogotá..."
 
-echo "✅ Build terminé !"
+# Supprimer les anciens fichiers copiés
+rm -rf public/css public/config public/data
+
+# Copier src/ vers public/
+echo "📁 Copying src/ to public/..."
+cp -rv src/* public/
+
+echo "✅ Build complete!"
+echo "📦 Files in public/:"
+ls -la public/
