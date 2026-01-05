@@ -1,20 +1,15 @@
 # Dependencies
 node_modules/
-package-lock.json
+
+# Generated files (do not commit)
+public/css/
+public/config/
+public/data/
 
 # Environment variables
 .env
 .env.local
-.env.production
 
 # OS files
 .DS_Store
 Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Build output (pour plus tard)
-dist/
-build/
