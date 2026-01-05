@@ -37,6 +37,10 @@ frontend/node_modules/
 docs/CREDENTIALS-SUPABASE.txt
 CREDENTIALS-SUPABASE.txt
 
+# 🔐 Credentials Cloudflare (PRIVÉ - NE JAMAIS COMMITER)
+docs/CREDENTIALS-CLOUDFLARE.txt
+CREDENTIALS-CLOUDFLARE.txt
+
 # ---------------------------
 # Python
 # ---------------------------

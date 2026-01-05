@@ -6,7 +6,9 @@
 
 ## 🌐 Site en ligne
 
-**👉 https://bicibogota.netlify.app**
+**👉 https://bicibogota.pages.dev**
+
+🚀 **Hébergement :** Cloudflare Pages (bandwidth illimité)
 
 ---
 
