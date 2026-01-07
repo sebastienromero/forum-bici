@@ -14,11 +14,79 @@
     <!-- Configuration centralisée -->
 <script src="config/constants.js"></script>
 
+<!-- Traductions FR/ES -->
+<script src="config/translations.js"></script>
+
 <!-- Données des pistes -->
 <script src="data/pistes-linestrings.js"></script>
 
 <!-- CSS externalisé -->
 <link rel="stylesheet" href="css/main.css">
+
+    <!-- Système i18n -->
+    <script>
+        let currentLang = 'fr';
+        
+        function getCurrentLanguage() {
+            const saved = localStorage.getItem('lang');
+            if (saved) return saved;
+            
+            const browserLang = navigator.language.toLowerCase();
+            if (browserLang.startsWith('es')) return 'es';
+            
+            return 'fr';
+        }
+        
+        function t(key) {
+            const keys = key.split('.');
+            let value = translations[currentLang];
+            
+            for (const k of keys) {
+                value = value[k];
+                if (!value) return key;
+            }
+            
+            return value;
+        }
+        
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            
+            // Traduire éléments avec data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                el.textContent = t(key);
+            });
+            
+            // Traduire placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                el.placeholder = t(key);
+            });
+            
+            // Traduire titles
+            document.querySelectorAll('[data-i18n-title]').forEach(el => {
+                const key = el.getAttribute('data-i18n-title');
+                el.title = t(key);
+            });
+        }
+        
+        function switchLanguage(lang) {
+            setLanguage(lang);
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`lang-${lang}`).classList.add('active');
+        }
+        
+        // Initialiser au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = getCurrentLanguage();
+            switchLanguage(lang);
+        });
+    </script>
 
     <!-- Module API Supabase -->
     <script type="module">
@@ -83,7 +151,18 @@
             <button class="nav-btn" data-section="forum">Forum</button>
             <button class="nav-btn" data-section="apropos">À propos</button>
         </nav>
-        <button id="theme-toggle" class="theme-toggle" title="Basculer mode nuit">🌙</button>
+        
+        <!-- Sélecteur de langue -->
+        <div class="language-selector">
+            <button class="lang-btn active" id="lang-fr" onclick="switchLanguage('fr')">
+                🇫🇷 FR
+            </button>
+            <button class="lang-btn" id="lang-es" onclick="switchLanguage('es')">
+                🇪🇸 ES
+            </button>
+        </div>
+        
+        <button id="theme-toggle" class="theme-toggle" data-i18n-title="darkMode" title="Basculer mode nuit">🌙</button>
     </header>
 
     <main>
@@ -94,8 +173,8 @@
             
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
                 <div class="info-box" style="cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(37,99,235,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';" onclick="document.querySelector('[data-section=carte-existantes]').click()">
-                    <h3>🗺️ Évaluez les pistes</h3>
-                    <p>Notez la sécurité, le calme, la qualité de l'air des pistes existantes</p>
+                    <h3 data-i18n="heroTitle">🗺️ Évaluez les pistes</h3>
+                    <p data-i18n="heroSubtitle">Notez la sécurité, le calme, la qualité de l'air des pistes existantes</p>
                     <button style="margin-top: 12px; background: #2563eb; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%;">
                         Voir la carte →
                     </button>
@@ -238,14 +317,14 @@
             
             <!-- Sélecteur de vue (coin supérieur droit) -->
             <div id="view-controls" style="position: fixed; right: 20px; top: 80px; background: var(--control-bg); border: 2px solid var(--control-border); padding: 12px 14px; border-radius: 8px; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12); z-index: 1100; width: 260px; font-size: 13px; font-weight: 600; color: var(--text-primary);">
-                <div style="font-weight:600; font-size:12px; margin-bottom:8px; letter-spacing:0px; color:var(--control-border); text-transform:uppercase;">Voir par critère</div>
+                <div data-i18n="filterLabel" style="font-weight:600; font-size:12px; margin-bottom:8px; letter-spacing:0px; color:var(--control-border); text-transform:uppercase;">Voir par critère</div>
                 <select id="view-selector" onchange="changeView()" style="width: 100%; font-size:13px; font-weight:500; border:1px solid var(--control-border); border-radius:6px; padding:6px 10px; background:var(--input-bg); color:var(--text-primary); cursor: pointer;">
-                    <option value="security" selected>Sécurité</option>
-                    <option value="noise">Calme</option>
-                    <option value="air">Qualité de l'air</option>
-                    <option value="flow">Fluidité</option>
-                    <option value="inclusion">Accessibilité</option>
-                    <option value="global">Note moyenne</option>
+                    <option value="security" selected data-i18n="criteria.security">Sécurité</option>
+                    <option value="noise" data-i18n="criteria.noise">Calme</option>
+                    <option value="air" data-i18n="criteria.air">Qualité de l'air</option>
+                    <option value="flow" data-i18n="criteria.flow">Fluidité</option>
+                    <option value="inclusion" data-i18n="criteria.inclusion">Accessibilité</option>
+                    <option value="global" data-i18n="criteria.global">Note moyenne</option>
                     <option value="neutre">Vue neutre</option>
                 </select>
             </div>
@@ -259,7 +338,7 @@
             <!-- Panneau de notation flottant (Hamburger) - Masqué par défaut -->
             <div id="floating-rating-panel" style="display:none; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:0; transform:translateX(-280px); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:none; flex-direction:column;">
                 <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                    <h4 style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
+                    <h4 data-i18n="ratingPanelTitle" style="margin:0; color:#1e40af; font-size:0.9rem; font-weight:600;">Noter 🚴</h4>
                     <button id="close-floating-panel" style="background:none; border:none; cursor:pointer; padding:0; outline:none;" title="Cacher">
                         <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#2563eb"/><rect y="14" width="32" height="4" rx="2" fill="#2563eb"/><rect y="22" width="32" height="4" rx="2" fill="#2563eb"/></svg>
                     </button>
@@ -269,15 +348,15 @@
                 
                 <!-- Commentaire (section prioritaire) -->
                 <div style="margin-bottom:10px;">
-                    <label style="display:block; font-size:12px; margin-bottom:4px; font-weight:700; color:#2563eb;">💬 Commentaire</label>
-                    <textarea id="rating-comment" placeholder="Partagez votre expérience sur cette piste..." style="width:100%; height:60px; padding:8px; border:2px solid #2563eb; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:11px; background:var(--input-bg); color:var(--text-primary); resize:vertical; min-height:60px; max-height:120px;" class="rating-comment"></textarea>
+                    <label data-i18n="commentLabel" style="display:block; font-size:12px; margin-bottom:4px; font-weight:700; color:#2563eb;">💬 Commentaire</label>
+                    <textarea id="rating-comment" data-i18n-placeholder="commentPlaceholder" placeholder="Partagez votre expérience sur cette piste..." style="width:100%; height:60px; padding:8px; border:2px solid #2563eb; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:11px; background:var(--input-bg); color:var(--text-primary); resize:vertical; min-height:60px; max-height:120px;" class="rating-comment"></textarea>
                 </div>
                 
                 <!-- Critères de notation (avec cases à cocher pour activer) -->
                 <div style="margin-top:8px;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
                         <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            Sécurité <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                            <span data-i18n="criteria.security">Sécurité</span> <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
                         </label>
                         <input type="checkbox" id="security-check" checked onchange="toggleCriterion('security')" style="cursor:pointer;">
                     </div>
@@ -287,7 +366,7 @@
                 <div style="margin-top:6px;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
                         <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            Calme <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                            <span data-i18n="criteria.noise">Calme</span> <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
                         </label>
                         <input type="checkbox" id="noise-check" checked onchange="toggleCriterion('noise')" style="cursor:pointer;">
                     </div>
@@ -297,7 +376,7 @@
                 <div style="margin-top:6px;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
                         <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            Qualité de l'air <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                            <span data-i18n="criteria.air">Qualité de l'air</span> <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
                         </label>
                         <input type="checkbox" id="air-check" checked onchange="toggleCriterion('air')" style="cursor:pointer;">
                     </div>
@@ -307,7 +386,7 @@
                 <div style="margin-top:6px;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
                         <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            Fluidité <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                            <span data-i18n="criteria.flow">Fluidité</span> <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
                         </label>
                         <input type="checkbox" id="flow-check" checked onchange="toggleCriterion('flow')" style="cursor:pointer;">
                     </div>
@@ -317,7 +396,7 @@
                 <div style="margin-top:6px;">
                     <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
                         <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            Accessibilité <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
+                            <span data-i18n="criteria.inclusion">Accessibilité</span> <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
                         </label>
                         <input type="checkbox" id="inclusion-check" checked onchange="toggleCriterion('inclusion')" style="cursor:pointer;">
                     </div>

@@ -19,8 +19,8 @@ const translations = {
             security: "Sécurité",
             noise: "Calme",
             air: "Qualité de l'air",
-            flow: "Qualité du revêtement",
-            inclusion: "Largeur de la piste",
+            flow: "Fluidité",
+            inclusion: "Accessibilité",
             global: "Note moyenne"
         },
         
@@ -92,8 +92,8 @@ const translations = {
             security: "Seguridad",
             noise: "Tranquilidad",
             air: "Calidad del aire",
-            flow: "Calidad del pavimento",
-            inclusion: "Ancho de la ciclovía",
+            flow: "Fluidez",
+            inclusion: "Accesibilidad",
             global: "Calificación promedio"
         },
         
