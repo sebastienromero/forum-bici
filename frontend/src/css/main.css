@@ -594,7 +594,7 @@ main {
 }
 
 .leaflet-control-layers-base::before {
-    content: "🗺️ Fonds de carte" !important;
+    content: attr(data-i18n-title) !important;
     display: block !important;
     font-weight: 600 !important;
     color: var(--text-primary) !important;
@@ -603,6 +603,15 @@ main {
     text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
     font-family: 'DM Sans', sans-serif !important;
+}
+
+/* Fallback pour navigateurs qui ne supportent pas attr() */
+html[lang="fr"] .leaflet-control-layers-base::before {
+    content: "🗺️ Fonds de carte" !important;
+}
+
+html[lang="es"] .leaflet-control-layers-base::before {
+    content: "🗺️ Mapa base" !important;
 }
 
 /* Appliquer DM Sans à tous les éléments de la carte */

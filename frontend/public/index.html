@@ -75,6 +75,9 @@
         function switchLanguage(lang) {
             setLanguage(lang);
             
+            // Mettre à jour l'attribut lang de la balise HTML pour le CSS
+            document.documentElement.setAttribute('lang', lang);
+            
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -229,16 +232,16 @@
                         <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
                                 <div>
-                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Carrera 7 : Nids de poule dangereux</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> Juan • <span>12 </span><span data-i18n="forumReplies">réponses</span> • Aujourd'hui à 14:23</div>
+                                    <div data-i18n="forumTopic1" style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Carrera 7 : Nids de poule dangereux</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> Juan • <span>12 </span><span data-i18n="forumReplies">réponses</span> • <span data-i18n="forumTopic1Time">Aujourd'hui à 14:23</span></div>
                                 </div>
                                 <span data-i18n="forumActive" style="background: #2563eb; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Actif</span>
                             </div>
                             
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
                                 <div>
-                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Éclairage insuffisant sur Calle 26</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> María • <span>7 </span><span data-i18n="forumReplies">réponses</span> • Hier à 18:45</div>
+                                    <div data-i18n="forumTopic2" style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Éclairage insuffisant sur Calle 26</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> María • <span>7 </span><span data-i18n="forumReplies">réponses</span> • <span data-i18n="forumTopic2Time">Hier à 18:45</span></div>
                                 </div>
                             </div>
                         </div>
@@ -248,17 +251,17 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
                             <span style="font-size: 24px;">🏗️</span>
-                            <h3 style="margin: 0; color: var(--text-primary);">Infrastructures</h3>
+                            <h3 data-i18n="forumInfrastructure" style="margin: 0; color: var(--text-primary);">Infrastructures</h3>
                         </div>
-                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Propositions d'amélioration des infrastructures</p>
+                        <p data-i18n="forumInfrastructureDesc" style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Propositions d'amélioration des infrastructures</p>
                         
                         <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; margin-bottom: 8px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
                                 <div>
-                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Plus de parkings vélo nécessaires</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Carlos • 23 réponses • Il y a 2 jours</div>
+                                    <div data-i18n="forumTopic3" style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Plus de parkings vélo nécessaires</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> Carlos • <span>23 </span><span data-i18n="forumReplies">réponses</span> • <span data-i18n="forumTopic3Time">Il y a 2 jours</span></div>
                                 </div>
-                                <span style="background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Populaire</span>
+                                <span data-i18n="forumPopular" style="background: #22c55e; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600;">Populaire</span>
                             </div>
                         </div>
                     </div>
@@ -267,15 +270,15 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
                             <span style="font-size: 24px;">🎉</span>
-                            <h3 style="margin: 0; color: var(--text-primary);">Événements</h3>
+                            <h3 data-i18n="forumEvents" style="margin: 0; color: var(--text-primary);">Événements</h3>
                         </div>
-                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Sorties et événements cyclistes</p>
+                        <p data-i18n="forumEventsDesc" style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Sorties et événements cyclistes</p>
                         
                         <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
                                 <div>
-                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Ciclovía du dimanche - qui vient ?</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Ana • 15 réponses • Il y a 3 heures</div>
+                                    <div data-i18n="forumTopic4" style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Ciclovía du dimanche - qui vient ?</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> Ana • <span>15 </span><span data-i18n="forumReplies">réponses</span> • <span data-i18n="forumTopic4Time">Il y a 3 heures</span></div>
                                 </div>
                             </div>
                         </div>
@@ -285,15 +288,15 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 16px;">
                         <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
                             <span style="font-size: 24px;">💬</span>
-                            <h3 style="margin: 0; color: var(--text-primary);">Discussions générales</h3>
+                            <h3 data-i18n="forumGeneral" style="margin: 0; color: var(--text-primary);">Discussions générales</h3>
                         </div>
-                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Tout ce qui concerne le vélo à Bogotá</p>
+                        <p data-i18n="forumGeneralDesc" style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;">Tout ce qui concerne le vélo à Bogotá</p>
                         
                         <div style="border-top: 1px solid var(--border-color); padding-top: 12px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: var(--bg-secondary); border-radius: 6px; cursor: pointer;" onclick="alert('Fonctionnalité en cours de développement 🚧')">
                                 <div>
-                                    <div style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Conseils pour cyclistes débutants</div>
-                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">Par Pedro • 8 réponses • Il y a 1 jour</div>
+                                    <div data-i18n="forumTopic5" style="font-weight: 600; color: var(--text-primary); font-size: 14px;">Conseils pour cyclistes débutants</div>
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;"><span data-i18n="forumBy">Par</span> Pedro • <span>8 </span><span data-i18n="forumReplies">réponses</span> • <span data-i18n="forumTopic5Time">Il y a 1 jour</span></div>
                                 </div>
                             </div>
                         </div>
@@ -304,15 +307,15 @@
                 <div style="margin-top: 24px; padding: 16px; background: var(--bg-secondary); border-radius: 8px; display: flex; justify-content: space-around; text-align: center;">
                     <div>
                         <div style="font-size: 24px; font-weight: 700; color: #2563eb;">127</div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">Sujets</div>
+                        <div data-i18n="forumTopics" style="font-size: 12px; color: var(--text-secondary);">Sujets</div>
                     </div>
                     <div>
                         <div style="font-size: 24px; font-weight: 700; color: #22c55e;">842</div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">Messages</div>
+                        <div data-i18n="forumMessages" style="font-size: 12px; color: var(--text-secondary);">Messages</div>
                     </div>
                     <div>
                         <div style="font-size: 24px; font-weight: 700; color: #f59e0b;">234</div>
-                        <div style="font-size: 12px; color: var(--text-secondary);">Membres</div>
+                        <div data-i18n="forumMembers" style="font-size: 12px; color: var(--text-secondary);">Membres</div>
                     </div>
                 </div>
             </div>
@@ -341,7 +344,7 @@
             <button id="floating-panel-btn" style="display:flex; position:fixed; top:80px; left:20px; z-index:1300; background:var(--control-border); border:none; border-radius:50%; width:44px; height:44px; box-shadow:0 2px 8px rgba(37,99,235,0.18); cursor:pointer; align-items:center; justify-content:center;">
                 <svg viewBox="0 0 32 32" width="28" height="28"><rect y="6" width="32" height="4" rx="2" fill="#fff"/><rect y="14" width="32" height="4" rx="2" fill="#fff"/><rect y="22" width="32" height="4" rx="2" fill="#fff"/></svg>
             </button>
-            <div id="floating-panel-label" style="display:block; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
+            <div id="floating-panel-label" data-i18n="rateLabel" style="display:block; position:fixed; top:128px; left:20px; z-index:1300; background:var(--control-bg); color:var(--control-border); font-weight:bold; font-size:15px; padding:4px 12px; border-radius:8px; box-shadow:0 2px 8px rgba(37,99,235,0.10);">Noter</div>
             
             <!-- Panneau de notation flottant (Hamburger) - Masqué par défaut -->
             <div id="floating-rating-panel" style="display:none; position:fixed; top:80px; left:20px; z-index:1202; background:var(--panel-bg); border-radius:8px; padding:8px; width:260px; box-shadow:0 2px 8px rgba(0,0,0,0.15); font-family:'DM Sans',sans-serif; opacity:0; transform:translateX(-280px); transition:opacity 0.23s cubic-bezier(.25,0.46,0.45,0.94), transform 0.23s cubic-bezier(.25,0.46,0.45,0.94); pointer-events:none; flex-direction:column;">
@@ -453,23 +456,25 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; transition: box-shadow 0.2s;">
                         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                             <div style="flex: 1;">
-                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Extension de la Ciclorruta de la Carrera 7</h4>
-                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>María G.</strong> • Il y a 2 jours</div>
+                                <h4 data-i18n="demo1Title" style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Extension de la Ciclorruta de la Carrera 7</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">
+                                    <span data-i18n="wishedProposedBy">Proposé par</span> <strong><span data-i18n="demo1Author">María G.</span></strong> • <span data-i18n="wishedAgo">Il y a</span> 2 <span data-i18n="wishedDays">jours</span>
+                                </div>
                             </div>
                             <div style="text-align: center; background: #22c55e; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
                                 <div style="font-size: 24px; font-weight: 700;">156</div>
-                                <div style="font-size: 11px;">votes</div>
+                                <div data-i18n="wishedVotes" style="font-size: 11px;">votes</div>
                             </div>
                         </div>
                         
-                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                        <p data-i18n="demo1Desc" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
                             Prolonger la piste de la Carrera 7 jusqu'à la Calle 170. Cette zone est très fréquentée par les cyclistes mais manque d'infrastructure sécurisée.
                         </p>
                         
                         <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 3.5 km</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Usaquén</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">⭐ Prioritaire</span>
+                            <span data-i18n="demo1Tag1" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 3.5 km</span>
+                            <span data-i18n="demo1Tag2" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Usaquén</span>
+                            <span data-i18n="demo1Tag3" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">⭐ Prioritaire</span>
                         </div>
                         
                         <div style="display: flex; gap: 8px;">
@@ -486,22 +491,24 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                             <div style="flex: 1;">
-                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Connexion Unicentro - Parque de la 93</h4>
-                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>Carlos M.</strong> • Il y a 5 jours</div>
+                                <h4 data-i18n="demo2Title" style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Connexion Unicentro - Parque de la 93</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">
+                                    <span data-i18n="wishedProposedBy">Proposé par</span> <strong><span data-i18n="demo2Author">Carlos M.</span></strong> • <span data-i18n="wishedAgo">Il y a</span> 5 <span data-i18n="wishedDays">jours</span>
+                                </div>
                             </div>
                             <div style="text-align: center; background: #3b82f6; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
                                 <div style="font-size: 24px; font-weight: 700;">89</div>
-                                <div style="font-size: 11px;">votes</div>
+                                <div data-i18n="wishedVotes" style="font-size: 11px;">votes</div>
                             </div>
                         </div>
                         
-                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                        <p data-i18n="demo2Desc" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
                             Créer une piste sécurisée entre Unicentro et le Parque de la 93. Actuellement, il faut emprunter des rues dangereuses avec beaucoup de trafic.
                         </p>
                         
                         <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 2.1 km</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Chapinero</span>
+                            <span data-i18n="demo2Tag1" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 2.1 km</span>
+                            <span data-i18n="demo2Tag2" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Chapinero</span>
                         </div>
                         
                         <div style="display: flex; gap: 8px;">
@@ -518,23 +525,25 @@
                     <div style="background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
                             <div style="flex: 1;">
-                                <h4 style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Piste protégée sur Avenida Boyacá</h4>
-                                <div style="font-size: 13px; color: var(--text-secondary);">Proposé par <strong>Ana R.</strong> • Il y a 1 semaine</div>
+                                <h4 data-i18n="demo3Title" style="margin: 0 0 8px 0; color: var(--text-primary); font-size: 16px;">Piste protégée sur Avenida Boyacá</h4>
+                                <div style="font-size: 13px; color: var(--text-secondary);">
+                                    <span data-i18n="wishedProposedBy">Proposé par</span> <strong><span data-i18n="demo3Author">Ana R.</span></strong> • <span data-i18n="wishedAgo">Il y a</span> 1 <span data-i18n="wishedWeek">semaine</span>
+                                </div>
                             </div>
                             <div style="text-align: center; background: #8b5cf6; color: white; padding: 8px 16px; border-radius: 8px; min-width: 80px;">
                                 <div style="font-size: 24px; font-weight: 700;">67</div>
-                                <div style="font-size: 11px;">votes</div>
+                                <div data-i18n="wishedVotes" style="font-size: 11px;">votes</div>
                             </div>
                         </div>
                         
-                        <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+                        <p data-i18n="demo3Desc" style="color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
                             Installer une piste séparée physiquement sur l'Avenida Boyacá entre la Calle 80 et la Calle 127. Cette avenue est très dangereuse pour les cyclistes.
                         </p>
                         
                         <div style="display: flex; gap: 12px; margin-bottom: 12px;">
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 4.7 km</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Engativá</span>
-                            <span style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🛡️ Sécurité</span>
+                            <span data-i18n="demo3Tag1" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">📏 4.7 km</span>
+                            <span data-i18n="demo3Tag2" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🏢 Engativá</span>
+                            <span data-i18n="demo3Tag3" style="background: var(--bg-secondary); padding: 4px 12px; border-radius: 16px; font-size: 12px; color: var(--text-primary);">🛡️ Sécurité</span>
                         </div>
                         
                         <div style="display: flex; gap: 8px;">
@@ -550,8 +559,8 @@
                 
                 <!-- Bouton pour ajouter une proposition -->
                 <div style="text-align: center; margin-top: 32px;">
-                    <button onclick="alert('Fonctionnalité en cours de développement 🚧\n\nBientôt vous pourrez :\n- Tracer votre piste sur la carte\n- Ajouter une description\n- Justifier votre proposition')" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; padding: 16px 32px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                        ✏️ Proposer une nouvelle piste
+                    <button onclick="alert(t('wishedProposeAlert'))" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; padding: 16px 32px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        <span data-i18n="wishedProposeButton">✏️ Proposer une nouvelle piste</span>
                     </button>
                 </div>
             </div>
@@ -778,7 +787,7 @@
                                         // Afficher les commentaires EN PREMIER
                                         const comments = ratings.map(r => r.comment).filter(c => c && c.trim());
                                         if (comments.length > 0) {
-                                            text += `<b>💬 Commentaires :</b><ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                                            text += `<b>💬 ${t('tooltipComments')}</b> :<ul style='margin:2px 0 8px 12px;padding:0;'>`;
                                             comments.forEach(c => {
                                                 text += `<li style='margin-bottom:4px;'>${c}</li>`;
                                             });
@@ -1680,7 +1689,7 @@
                 // Afficher les commentaires EN PREMIER
                 const comments = allRatings.map(r => r.comment).filter(c => c && c.trim());
                 if (comments.length > 0) {
-                    text += `<b>💬 ${t('commentLabel').replace('💬 ', '')}</b> :<ul style='margin:2px 0 8px 12px;padding:0;'>`;
+                    text += `<b>💬 ${t('tooltipComments')}</b> :<ul style='margin:2px 0 8px 12px;padding:0;'>`;
                     comments.forEach(c => {
                         text += `<li style='margin-bottom:4px;'>${c}</li>`;
                     });
