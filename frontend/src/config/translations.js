@@ -1,20 +1,44 @@
-// frontend/src/config/translations.js
 // Système de traduction FR/ES pour Rate Your Track Bogotá
 
 const translations = {
     fr: {
-        // Header
+        // Header / Navigation
         siteTitle: "Rate Your Track Bogotá",
-        
-        // Navigation / Menu
         darkMode: "Basculer mode nuit",
+        navHome: "Accueil",
+        navExisting: "Pistes existantes",
+        navWished: "Pistes souhaitées",
+        navForum: "Forum",
+        navAbout: "À propos",
         
-        // Section Hero
+        // Page Accueil
+        welcomeTitle: "🌍 Bienvenue sur Rate Your Track Bogotá",
+        welcomeSubtitle: "Un site collaboratif pour améliorer les pistes cyclables de Bogotá !",
+        
+        // Section Hero - Boutons
         heroTitle: "🗺️ Évaluez les pistes",
         heroSubtitle: "Notez la sécurité, le calme, la qualité de l'air des pistes existantes",
+        seeMapButton: "Voir la carte →",
+        
+        heroTitle2: "✨ Proposez des améliorations",
+        heroSubtitle2: "Tracez de nouvelles pistes et votez pour celles des autres",
+        proposeButton: "Proposer une piste →",
+        
+        heroTitle3: "💬 Participez au forum",
+        heroSubtitle3: "Échangez avec la communauté sur la sécurité et les aménagements",
+        joinForumButton: "Rejoindre le forum →",
+        
+        // Carte - Sélecteur de fond
+        basemapLabel: "Fond de carte",
+        basemapVoyager: "🗺️ Voyager",
+        basemapNeutral: "🎨 Carte neutre",
+        basemapStreet: "📍 Carte standard",
         
         // Critères de notation
-        filterLabel: "Filtrer par critère:",
+        filterLabel: "Voir par critère",
+        neutralView: "Vue neutre",
+        basemapControl: "Fond de carte",
+        hidePanel: "Cacher",
         criteria: {
             security: "Sécurité",
             noise: "Calme",
@@ -28,66 +52,106 @@ const translations = {
         rateLabel: "Noter",
         ratingPanelTitle: "Noter 🚴",
         commentLabel: "💬 Commentaire",
-        commentPlaceholder: "Décrivez votre expérience...",
-        submitButton: "💾 Sauvegarder",
+        commentPlaceholder: "Partagez votre expérience sur cette piste...",
+        submitButton: "Sauvegarder",
+        resetButton: "Réinitialiser",
         
-        // Forum (aperçu)
-        forumCategoryTitle: "Sécurité",
-        forumCategoryDesc: "Discussions sur la sécurité des pistes cyclables",
-        forumTopicExample1: "Éclairage insuffisant sur Calle 26",
-        forumTopicExample2: "Plus de parkings vélo nécessaires",
-        popularBadge: "Populaire",
+        // Pistes souhaitées
+        wishedTitle: "✨ Pistes cyclables souhaitées",
+        wishedSubtitle: "Proposez et votez pour de nouvelles pistes",
+        wishedMapComingSoon: "Carte interactive à venir",
+        wishedMapDescription: "Vous pourrez tracer vos pistes idéales directement sur la carte",
+        wishedHowTitle: "📝 Comment ça marche ?",
+        wishedStep1: "Cliquez sur la carte pour tracer votre piste idéale",
+        wishedStep2: "Ajoutez une description et une justification",
+        wishedStep3: "Votez pour les propositions des autres cyclistes",
+        wishedStep4: "Les pistes les plus votées seront transmises à la municipalité",
+        wishedPopularTitle: "🎯 Propositions populaires",
+        wishedProposedBy: "Proposé par",
+        wishedAgo: "Il y a",
+        wishedDays: "jours",
+        wishedVotes: "votes",
+        wishedVoteButton: "👍 Voter pour cette piste",
+        wishedComments: "commentaires",
         
-        // Propositions
-        propositionsTitle: "🎯 Propositions populaires",
-        priorityBadge: "⭐ Prioritaire",
-        securityBadge: "🛡️ Sécurité",
-        commentsCount: "💬 {count} commentaires",
+        // Forum
+        forumTitle: "💬 Forum communautaire",
+        forumSubtitle: "Discussions sur la sécurité et les aménagements cyclables",
+        newTopicButton: "➕ Nouveau sujet",
+        forumSecurity: "Sécurité",
+        forumSecurityDesc: "Discussions sur la sécurité des pistes cyclables",
+        forumBy: "Par",
+        forumReplies: "réponses",
+        forumActive: "Actif",
+        
+        // Tooltips carte
+        tooltipAverageRating: "Note moyenne",
+        tooltipBasedOn: "Sur la base de",
+        tooltipReviews: "avis",
+        tooltipSecurity: "Sécurité",
+        tooltipNoise: "Bruit",
+        tooltipAir: "Qualité de l'air",
+        tooltipFlow: "Fluidité",
+        tooltipInclusion: "Inclusion",
+        tooltipNoReviews: "Aucun avis pour cette portion",
         
         // À propos
-        aboutObjective: "Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo encore plus attractif.",
-        aboutGoal1: "Améliorer la sécurité des cyclistes",
+        aboutTitle: "📋 À propos du projet",
+        aboutObjective: "Objectif :",
+        aboutObjectiveText: "Fédérer la communauté cycliste de Bogotá pour améliorer la sécurité et rendre le vélo encore plus attractif.",
+        aboutMission: "🎯 Mission",
+        aboutMissionItem1: "Améliorer la sécurité des cyclistes",
+        aboutMissionItem2: "Encourager la participation citoyenne",
+        aboutMissionItem3: "Promouvoir le vélo comme alternative à la voiture",
+        aboutContact: "📧 Contact",
+        aboutContactText: "Pour toute question :",
         
-        // Messages (utilisés dans JS)
-        messages: {
-            success: {
-                ratingSaved: "✅ Avis enregistré avec succès",
-                thankYou: "✅ Merci pour votre contribution"
-            },
-            error: {
-                saveFailed: "❌ Erreur lors de l'enregistrement",
-                fillAllFields: "⚠️ Veuillez remplir tous les champs",
-                selectSegment: "⚠️ Veuillez sélectionner un segment"
-            },
-            loading: {
-                loading: "🔄 Chargement...",
-                loadingRatings: "📊 Chargement des avis...",
-                loadingMap: "🗺️ Chargement de la carte..."
-            }
-        },
-        
-        // Console (debug)
+        // Console logs
         console: {
             ratingCreated: "✅ Avis créé",
             ratingsLoaded: "📊 {count} avis récupérés",
-            transformingRatings: "🎨 Transformation des avis",
-            errorCreatingRating: "❌ Erreur création avis"
+            errorCreating: "❌ Erreur création avis"
         }
     },
     
     es: {
-        // Header
+        // Header / Navigation
         siteTitle: "Califica Tu Ciclovía Bogotá",
-        
-        // Navigation / Menu
         darkMode: "Cambiar modo noche",
+        navHome: "Inicio",
+        navExisting: "Ciclovías existentes",
+        navWished: "Ciclovías deseadas",
+        navForum: "Foro",
+        navAbout: "Acerca de",
         
-        // Section Hero
+        // Page Accueil
+        welcomeTitle: "🌍 Bienvenido a Califica Tu Ciclovía Bogotá",
+        welcomeSubtitle: "¡Un sitio colaborativo para mejorar las ciclovías de Bogotá!",
+        
+        // Section Hero - Boutons
         heroTitle: "🗺️ Evalúa las ciclovías",
         heroSubtitle: "Califica la seguridad, la tranquilidad, la calidad del aire de las ciclovías existentes",
+        seeMapButton: "Ver el mapa →",
+        
+        heroTitle2: "✨ Propone mejoras",
+        heroSubtitle2: "Traza nuevas ciclovías y vota por las de otros",
+        proposeButton: "Proponer una ciclovía →",
+        
+        heroTitle3: "💬 Participa en el foro",
+        heroSubtitle3: "Intercambia con la comunidad sobre seguridad y acondicionamientos",
+        joinForumButton: "Unirse al foro →",
+        
+        // Carte - Sélecteur de fond
+        basemapLabel: "Mapa base",
+        basemapVoyager: "🗺️ Voyager",
+        basemapNeutral: "🎨 Mapa neutral",
+        basemapStreet: "📍 Mapa estándar",
         
         // Critères de notation
-        filterLabel: "Filtrar por criterio:",
+        filterLabel: "Filtrar por criterio",
+        neutralView: "Vista neutra",
+        basemapControl: "Mapa base",
+        hidePanel: "Ocultar",
         criteria: {
             security: "Seguridad",
             noise: "Tranquilidad",
@@ -101,55 +165,70 @@ const translations = {
         rateLabel: "Calificar",
         ratingPanelTitle: "Calificar 🚴",
         commentLabel: "💬 Comentario",
-        commentPlaceholder: "Describe tu experiencia...",
-        submitButton: "💾 Guardar",
+        commentPlaceholder: "Comparte tu experiencia en esta ciclovía...",
+        submitButton: "Guardar",
+        resetButton: "Reiniciar",
         
-        // Forum (aperçu)
-        forumCategoryTitle: "Seguridad",
-        forumCategoryDesc: "Discusiones sobre la seguridad de las ciclovías",
-        forumTopicExample1: "Iluminación insuficiente en Calle 26",
-        forumTopicExample2: "Más parqueaderos de bicicletas necesarios",
-        popularBadge: "Popular",
+        // Pistes souhaitées
+        wishedTitle: "✨ Ciclovías deseadas",
+        wishedSubtitle: "Propone y vota por nuevas ciclovías",
+        wishedMapComingSoon: "Mapa interactivo próximamente",
+        wishedMapDescription: "Podrás trazar tus ciclovías ideales directamente en el mapa",
+        wishedHowTitle: "📝 ¿Cómo funciona?",
+        wishedStep1: "Haz clic en el mapa para trazar tu ciclovía ideal",
+        wishedStep2: "Agrega una descripción y justificación",
+        wishedStep3: "Vota por las propuestas de otros ciclistas",
+        wishedStep4: "Las ciclovías más votadas se enviarán al municipio",
+        wishedPopularTitle: "🎯 Propuestas populares",
+        wishedProposedBy: "Propuesto por",
+        wishedAgo: "Hace",
+        wishedDays: "días",
+        wishedVotes: "votos",
+        wishedVoteButton: "👍 Votar por esta ciclovía",
+        wishedComments: "comentarios",
         
-        // Propositions
-        propositionsTitle: "🎯 Propuestas populares",
-        priorityBadge: "⭐ Prioritaria",
-        securityBadge: "🛡️ Seguridad",
-        commentsCount: "💬 {count} comentarios",
+        // Forum
+        forumTitle: "💬 Foro comunitario",
+        forumSubtitle: "Discusiones sobre seguridad y acondicionamientos ciclistas",
+        newTopicButton: "➕ Nuevo tema",
+        forumSecurity: "Seguridad",
+        forumSecurityDesc: "Discusiones sobre la seguridad de las ciclovías",
+        forumBy: "Por",
+        forumReplies: "respuestas",
+        forumActive: "Activo",
+        
+        // Tooltips carte
+        tooltipAverageRating: "Calificación promedio",
+        tooltipBasedOn: "Basado en",
+        tooltipReviews: "calificaciones",
+        tooltipSecurity: "Seguridad",
+        tooltipNoise: "Ruido",
+        tooltipAir: "Calidad del aire",
+        tooltipFlow: "Fluidez",
+        tooltipInclusion: "Inclusión",
+        tooltipNoReviews: "Sin calificaciones para esta porción",
         
         // À propos
-        aboutObjective: "Unir la comunidad ciclista de Bogotá para mejorar la seguridad y hacer el ciclismo aún más atractivo.",
-        aboutGoal1: "Mejorar la seguridad de los ciclistas",
+        forumTitle: "💬 Foro comunitario",
+        forumSubtitle: "Discusiones sobre seguridad y acondicionamientos ciclistas",
+        newTopicButton: "➕ Nuevo tema",
         
-        // Messages (utilisés dans JS)
-        messages: {
-            success: {
-                ratingSaved: "✅ Calificación guardada exitosamente",
-                thankYou: "✅ Gracias por tu contribución"
-            },
-            error: {
-                saveFailed: "❌ Error al guardar",
-                fillAllFields: "⚠️ Por favor completa todos los campos",
-                selectSegment: "⚠️ Por favor selecciona un segmento"
-            },
-            loading: {
-                loading: "🔄 Cargando...",
-                loadingRatings: "📊 Cargando calificaciones...",
-                loadingMap: "🗺️ Cargando mapa..."
-            }
-        },
+        // À propos
+        aboutTitle: "📋 Acerca del proyecto",
+        aboutObjective: "Objetivo:",
+        aboutObjectiveText: "Unir la comunidad ciclista de Bogotá para mejorar la seguridad y hacer el ciclismo aún más atractivo.",
+        aboutMission: "🎯 Misión",
+        aboutMissionItem1: "Mejorar la seguridad de los ciclistas",
+        aboutMissionItem2: "Fomentar la participación ciudadana",
+        aboutMissionItem3: "Promover la bicicleta como alternativa al automóvil",
+        aboutContact: "📧 Contacto",
+        aboutContactText: "Para cualquier pregunta:",
         
-        // Console (debug)
+        // Console logs
         console: {
             ratingCreated: "✅ Calificación creada",
             ratingsLoaded: "📊 {count} calificaciones recuperadas",
-            transformingRatings: "🎨 Transformando calificaciones",
-            errorCreatingRating: "❌ Error al crear calificación"
+            errorCreating: "❌ Error al crear calificación"
         }
     }
 };
-
-// Export pour utilisation dans index.html
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = translations;
-}
