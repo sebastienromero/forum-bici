@@ -25,16 +25,16 @@
 
     <!-- Système i18n -->
     <script>
-        let currentLang = 'fr';
+        let currentLang = 'es';
         
         function getCurrentLanguage() {
             const saved = localStorage.getItem('lang');
             if (saved) return saved;
             
             const browserLang = navigator.language.toLowerCase();
-            if (browserLang.startsWith('es')) return 'es';
+            if (browserLang.startsWith('fr')) return 'fr';
             
-            return 'fr';
+            return 'es';
         }
         
         function t(key) {
@@ -165,11 +165,11 @@
         
         <!-- Sélecteur de langue -->
         <div class="language-selector">
-            <button class="lang-btn active" id="lang-fr" onclick="switchLanguage('fr')">
-                🇫🇷 FR
-            </button>
-            <button class="lang-btn" id="lang-es" onclick="switchLanguage('es')">
+            <button class="lang-btn active" id="lang-es" onclick="switchLanguage('es')">
                 🇪🇸 ES
+            </button>
+            <button class="lang-btn" id="lang-fr" onclick="switchLanguage('fr')">
+                🇫🇷 FR
             </button>
         </div>
         
