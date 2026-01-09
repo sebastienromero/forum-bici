@@ -153,6 +153,49 @@
     
 </head>
 <body>
+    <!-- Modal de bienvenue (première visite) -->
+    <div id="welcome-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>🚴 <span data-i18n="welcomeModalTitle">Bienvenue sur BiciBogotá !</span></h2>
+            
+            <div class="welcome-intro">
+                <p data-i18n="welcomeModalIntro">
+                    Participez à l'amélioration des pistes cyclables de Bogotá en notant vos trajets et en proposant de nouvelles pistes.
+                </p>
+            </div>
+            
+            <div class="welcome-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🗺️</div>
+                    <h3 data-i18n="feature1Title">Explorez les pistes</h3>
+                    <p data-i18n="feature1Desc">Consultez la carte interactive avec les notes de la communauté</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">⭐</div>
+                    <h3 data-i18n="feature2Title">Notez votre expérience</h3>
+                    <p data-i18n="feature2Desc">Évaluez la sécurité, le confort et l'accessibilité</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">💡</div>
+                    <h3 data-i18n="feature3Title">Proposez des améliorations</h3>
+                    <p data-i18n="feature3Desc">Suggérez de nouvelles pistes pour améliorer le réseau</p>
+                </div>
+            </div>
+            
+            <div class="welcome-actions">
+                <label style="font-size:14px; display:flex; align-items:center; gap:8px; margin-top:16px;">
+                    <input type="checkbox" id="dont-show-welcome">
+                    <span data-i18n="dontShowAgain">Ne plus afficher ce message</span>
+                </label>
+                <button class="btn-primary" onclick="closeWelcomeModal()" style="margin-top:16px; width:100%; padding:12px; font-size:16px;">
+                    <span data-i18n="getStarted">Commencer !</span> 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <header>
         <div class="logo" data-i18n="siteTitle">Rate Your Track Bogotá</div>
         
@@ -374,55 +417,75 @@
                     <textarea id="rating-comment" data-i18n-placeholder="commentPlaceholder" placeholder="Partagez votre expérience sur cette piste..." style="width:100%; height:60px; padding:8px; border:2px solid #2563eb; border-radius:6px; font-family:'DM Sans',sans-serif; font-size:11px; background:var(--input-bg); color:var(--text-primary); resize:vertical; min-height:60px; max-height:120px;" class="rating-comment"></textarea>
                 </div>
                 
-                <!-- Critères de notation (avec cases à cocher pour activer) -->
-                <div style="margin-top:8px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
-                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            <span data-i18n="criteria.security">Sécurité</span> <span id="security-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
-                        </label>
-                        <input type="checkbox" id="security-check" checked onchange="toggleCriterion('security')" style="cursor:pointer;">
+                <!-- Critères de notation (EMOJIS cliquables) -->
+                <div style="margin-top:12px;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:8px;">
+                        🛡️ <span data-i18n="criteria.security">Sécurité</span>
+                        <span style="font-size:10px; color:var(--text-secondary); font-weight:normal; display:block; margin-top:2px;" data-i18n="criteria.securityHelp">(pistes dédiées, respect des voitures)</span>
+                    </label>
+                    <div class="emoji-rating" data-criterion="security">
+                        <button class="emoji-btn" data-value="1" title="Très mauvais">😢</button>
+                        <button class="emoji-btn" data-value="2" title="Mauvais">☹️</button>
+                        <button class="emoji-btn selected" data-value="3" title="Moyen">😐</button>
+                        <button class="emoji-btn" data-value="4" title="Bon">🙂</button>
+                        <button class="emoji-btn" data-value="5" title="Excellent">😊</button>
                     </div>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider security" id="security-slider" oninput="updateRatingDisplay('security', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:6px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
-                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            <span data-i18n="criteria.noise">Calme</span> <span id="noise-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
-                        </label>
-                        <input type="checkbox" id="noise-check" checked onchange="toggleCriterion('noise')" style="cursor:pointer;">
+                <div style="margin-top:12px;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:8px;">
+                        🔇 <span data-i18n="criteria.noise">Calme</span>
+                        <span style="font-size:10px; color:var(--text-secondary); font-weight:normal; display:block; margin-top:2px;" data-i18n="criteria.noiseHelp">(niveau de bruit, circulation)</span>
+                    </label>
+                    <div class="emoji-rating" data-criterion="noise">
+                        <button class="emoji-btn" data-value="1">😢</button>
+                        <button class="emoji-btn" data-value="2">☹️</button>
+                        <button class="emoji-btn selected" data-value="3">😐</button>
+                        <button class="emoji-btn" data-value="4">🙂</button>
+                        <button class="emoji-btn" data-value="5">😊</button>
                     </div>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider noise" id="noise-slider" oninput="updateRatingDisplay('noise', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:6px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
-                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            <span data-i18n="criteria.air">Qualité de l'air</span> <span id="air-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
-                        </label>
-                        <input type="checkbox" id="air-check" checked onchange="toggleCriterion('air')" style="cursor:pointer;">
+                <div style="margin-top:12px;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:8px;">
+                        🌬️ <span data-i18n="criteria.air">Qualité de l'air</span>
+                        <span style="font-size:10px; color:var(--text-secondary); font-weight:normal; display:block; margin-top:2px;" data-i18n="criteria.airHelp">(pollution, gaz d'échappement)</span>
+                    </label>
+                    <div class="emoji-rating" data-criterion="air">
+                        <button class="emoji-btn" data-value="1">😢</button>
+                        <button class="emoji-btn" data-value="2">☹️</button>
+                        <button class="emoji-btn selected" data-value="3">😐</button>
+                        <button class="emoji-btn" data-value="4">🙂</button>
+                        <button class="emoji-btn" data-value="5">😊</button>
                     </div>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider air" id="air-slider" oninput="updateRatingDisplay('air', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:6px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
-                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            <span data-i18n="criteria.flow">Fluidité</span> <span id="flow-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
-                        </label>
-                        <input type="checkbox" id="flow-check" checked onchange="toggleCriterion('flow')" style="cursor:pointer;">
+                <div style="margin-top:12px;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:8px;">
+                        🚴 <span data-i18n="criteria.flow">Fluidité</span>
+                        <span style="font-size:10px; color:var(--text-secondary); font-weight:normal; display:block; margin-top:2px;" data-i18n="criteria.flowHelp">(état de la route, obstacles)</span>
+                    </label>
+                    <div class="emoji-rating" data-criterion="flow">
+                        <button class="emoji-btn" data-value="1">😢</button>
+                        <button class="emoji-btn" data-value="2">☹️</button>
+                        <button class="emoji-btn selected" data-value="3">😐</button>
+                        <button class="emoji-btn" data-value="4">🙂</button>
+                        <button class="emoji-btn" data-value="5">😊</button>
                     </div>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider flow" id="flow-slider" oninput="updateRatingDisplay('flow', this.value)" style="width:100%; height:4px;">
                 </div>
                 
-                <div style="margin-top:6px;">
-                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:2px;">
-                        <label style="display:flex; align-items:center; font-size:11px; font-weight:600; flex:1;">
-                            <span data-i18n="criteria.inclusion">Accessibilité</span> <span id="inclusion-value" class="rating-value" style="background:#e0f2fe; padding:1px 4px; border-radius:3px; font-weight:600; font-size:10px; color:#0c4a6e; margin-left:4px;">3</span>
-                        </label>
-                        <input type="checkbox" id="inclusion-check" checked onchange="toggleCriterion('inclusion')" style="cursor:pointer;">
+                <div style="margin-top:12px;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:8px;">
+                        ♿ <span data-i18n="criteria.inclusion">Accessibilité</span>
+                        <span style="font-size:10px; color:var(--text-secondary); font-weight:normal; display:block; margin-top:2px;" data-i18n="criteria.inclusionHelp">(adaptée à tous, rampes, largeur)</span>
+                    </label>
+                    <div class="emoji-rating" data-criterion="inclusion">
+                        <button class="emoji-btn" data-value="1">😢</button>
+                        <button class="emoji-btn" data-value="2">☹️</button>
+                        <button class="emoji-btn selected" data-value="3">😐</button>
+                        <button class="emoji-btn" data-value="4">🙂</button>
+                        <button class="emoji-btn" data-value="5">😊</button>
                     </div>
-                    <input type="range" min="1" max="5" value="3" class="rating-slider inclusion" id="inclusion-slider" oninput="updateRatingDisplay('inclusion', this.value)" style="width:100%; height:4px;">
                 </div>
                 
                 <!-- Boutons d'action -->
@@ -1758,6 +1821,38 @@
         window.savePortionRatings = savePortionRatings;
         window.closeRatingPanel = closeRatingPanel;
         
+        // ===== GESTION RATING EMOJIS =====
+        let emojiRatings = {
+            security: 3,
+            noise: 3,
+            air: 3,
+            flow: 3,
+            inclusion: 3
+        };
+        
+        // Initialiser les emojis au chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.emoji-rating').forEach((ratingGroup) => {
+                const criterion = ratingGroup.dataset.criterion;
+                
+                ratingGroup.querySelectorAll('.emoji-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        // Retirer sélection précédente
+                        ratingGroup.querySelectorAll('.emoji-btn').forEach(b => {
+                            b.classList.remove('selected');
+                        });
+                        
+                        // Ajouter sélection
+                        btn.classList.add('selected');
+                        const value = parseInt(btn.dataset.value);
+                        emojiRatings[criterion] = value;
+                        
+                        console.log(`${criterion}: ${value}`);
+                    });
+                });
+            });
+        });
+        
         // Nouvelle fonction de sauvegarde pour le système rate_your_track (SEGMENTS 100m)
         async function savePortionRatings() {
             
@@ -1767,45 +1862,26 @@
                 return;
             }
             
-            // Vérifier que les éléments existent
-            const securityEl = document.getElementById('security-slider');
-            const noiseEl = document.getElementById('noise-slider');
-            const airEl = document.getElementById('air-slider');
-            const flowEl = document.getElementById('flow-slider');
-            const inclusionEl = document.getElementById('inclusion-slider');
             const commentEl = document.getElementById('rating-comment');
-            
-            if (!securityEl || !noiseEl || !airEl || !flowEl || !inclusionEl) {
-                console.error('Erreur: Éléments de notation manquants');
-                alert('Erreur: Éléments de notation non trouvés');
-                return;
-            }
-            
-            // Vérifier les cases à cocher (cochée = noter ce critère)
-            const securityCheck = document.getElementById('security-check').checked;
-            const noiseCheck = document.getElementById('noise-check').checked;
-            const airCheck = document.getElementById('air-check').checked;
-            const flowCheck = document.getElementById('flow-check').checked;
-            const inclusionCheck = document.getElementById('inclusion-check').checked;
-            
             const comment = commentEl ? commentEl.value.trim() : '';
             
-            // VALIDATION: Au moins 1 critère coché OU un commentaire
-            const hasRating = securityCheck || noiseCheck || airCheck || flowCheck || inclusionCheck;
+            // VALIDATION: Au moins 1 critère noté OU un commentaire
             const hasComment = comment.length > 0;
             
-            if (!hasRating && !hasComment) {
+            if (!hasComment && !emojiRatings) {
                 alert('❌ Veuillez noter au moins un critère OU laisser un commentaire !');
                 return;
             }
             
-            // Créer l'objet avec SEULEMENT les critères cochés
-            const newRating = { comment };
-            if (securityCheck) newRating.security = parseInt(securityEl.value);
-            if (noiseCheck) newRating.noise = parseInt(noiseEl.value);
-            if (airCheck) newRating.air = parseInt(airEl.value);
-            if (flowCheck) newRating.flow = parseInt(flowEl.value);
-            if (inclusionCheck) newRating.inclusion = parseInt(inclusionEl.value);
+            // Créer l'objet avec les notes emoji (toujours tous les critères)
+            const newRating = {
+                security: emojiRatings.security,
+                noise: emojiRatings.noise,
+                air: emojiRatings.air,
+                flow: emojiRatings.flow,
+                inclusion: emojiRatings.inclusion,
+                comment
+            };
             
             // Trouver les SEGMENTS proches du tracé actuel (nouvelle version)
             const nearbySegments = findNearbyTrackPortions();
@@ -2570,6 +2646,29 @@
             nav.classList.remove('open');
             overlay.classList.remove('show');
         }
+        
+        // ===== MODAL DE BIENVENUE =====
+        function showWelcomeModal() {
+            document.getElementById('welcome-modal').style.display = 'flex';
+        }
+        
+        function closeWelcomeModal() {
+            const dontShow = document.getElementById('dont-show-welcome').checked;
+            if (dontShow) {
+                localStorage.setItem('welcome-shown', 'true');
+            }
+            document.getElementById('welcome-modal').style.display = 'none';
+        }
+        
+        // Afficher le modal au premier chargement
+        document.addEventListener('DOMContentLoaded', () => {
+            // Attendre 500ms pour laisser le temps à la page de charger
+            setTimeout(() => {
+                if (!localStorage.getItem('welcome-shown')) {
+                    showWelcomeModal();
+                }
+            }, 500);
+        });
     </script>
 </body>
 </html>

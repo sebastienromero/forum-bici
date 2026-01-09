@@ -876,6 +876,51 @@ html.dark-mode .leaflet-tooltip em {
     color: white;
 }
 
+/* ===== RATING AVEC EMOJIS ===== */
+.emoji-rating {
+    display: flex;
+    gap: 6px;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.emoji-btn {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.emoji-btn:hover {
+    transform: scale(1.1);
+    border-color: var(--control-border);
+    background: var(--hover-bg);
+}
+
+.emoji-btn.selected {
+    background: var(--control-border);
+    border-color: var(--control-border);
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Mobile : emojis plus petits */
+@media (max-width: 480px) {
+    .emoji-btn {
+        font-size: 20px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
 /* ===== MENU HAMBURGER MOBILE ===== */
 .hamburger {
     display: none;
@@ -1000,5 +1045,123 @@ html.dark-mode .leaflet-tooltip em {
     .lang-btn {
         padding: 6px 8px;
         font-size: 11px;
+    }
+}
+
+/* ===== MODAL ONBOARDING ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content h2 {
+    margin: 0 0 1rem 0;
+    color: var(--control-border);
+    text-align: center;
+}
+
+.welcome-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
+
+.welcome-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.feature-item {
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.feature-item h3 {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    color: var(--text-primary);
+}
+
+.feature-item p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.welcome-actions {
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--control-border);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1.5rem;
+    }
+    
+    .welcome-features {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
     }
 }
